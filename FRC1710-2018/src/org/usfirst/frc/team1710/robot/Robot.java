@@ -41,7 +41,11 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopPeriodic() {
-		Drive.arcadeDrive(RobotMap.driveStick.getRawAxis(1), RobotMap.driveStick.getRawAxis(4));
+		if(RobotMap.driveStick.getRawButton(1) == true) {
+			Vision.cubeTracking();
+		} else {
+			Drive.arcadeDrive(RobotMap.driveStick.getRawAxis(1), RobotMap.driveStick.getRawAxis(4));
+		}
 	}
 
 	@Override

@@ -22,6 +22,7 @@ public class Robot extends IterativeRobot {
 		RobotMap.wrist = new TalonSRX (9);
 		RobotMap.lift1 = new TalonSRX (10);
 		RobotMap.lift2 = new TalonSRX (11);
+		//makes each spx follow their respective srx
 		RobotMap.R2.follow (RobotMap.R1);
 		RobotMap.R3.follow (RobotMap.R1);
 		RobotMap.L2.follow (RobotMap.L1);

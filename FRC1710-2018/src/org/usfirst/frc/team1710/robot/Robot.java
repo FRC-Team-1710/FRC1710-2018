@@ -3,7 +3,9 @@ package org.usfirst.frc.team1710.robot;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -11,22 +13,24 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void robotInit() {
-		RobotMap.R1 = new TalonSRX (1);
-		RobotMap.R2 = new VictorSPX (2);
-		RobotMap.R3 = new VictorSPX (3);
-		RobotMap.L1 = new TalonSRX (4);
-		RobotMap.L2 = new VictorSPX (5);
-		RobotMap.L3 = new VictorSPX (6);
+		RobotMap.R1 = new TalonSRX (8);
+		RobotMap.R2 = new VictorSPX (1);
+		RobotMap.R3 = new VictorSPX (2);
+		RobotMap.L1 = new TalonSRX (9);
+		RobotMap.L2 = new VictorSPX (3);
+		RobotMap.L3 = new VictorSPX (4);
 		RobotMap.intakeR = new TalonSRX (7);
 		RobotMap.intakeL = new TalonSRX (8);
-		RobotMap.wrist = new TalonSRX (9);
-		RobotMap.lift1 = new TalonSRX (10);
-		RobotMap.lift2 = new TalonSRX (11);
+		RobotMap.wrist = new TalonSRX (6);
+		RobotMap.lift1 = new TalonSRX (7);
+		//RobotMap.lift2 = new TalonSRX (11);
 		//makes each spx follow their respective srx
 		RobotMap.R2.follow (RobotMap.R1);
 		RobotMap.R3.follow (RobotMap.R1);
 		RobotMap.L2.follow (RobotMap.L1);
 		RobotMap.L3.follow (RobotMap.L1);
+		RobotMap.driveStick = new Joystick(0);
+		RobotMap.shifter = new DoubleSolenoid(0,1);
 	}
 
 	@Override
@@ -44,7 +48,8 @@ public class Robot extends IterativeRobot {
 		if(RobotMap.driveStick.getRawButton(1) == true) {
 			Vision.cubeTracking();
 		} else {
-			Drive.arcadeDrive(RobotMap.driveStick.getRawAxis(1), RobotMap.driveStick.getRawAxis(4));
+			//shifting is on left bumper
+			Drive.arcadeDrive(-RobotMap.driveStick.getRawAxis(4), RobotMap.driveStick.getRawAxis(1), RobotMap.driveStick.getRawButton(5));
 		}
 	}
 

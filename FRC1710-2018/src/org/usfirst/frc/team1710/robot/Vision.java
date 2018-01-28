@@ -22,7 +22,7 @@ public class Vision {
 			RobotMap.L1.set(ControlMode.PercentOutput,.3);
 			RobotMap.R1.set(ControlMode.PercentOutput,.3);
 		}else {
-			Drive.arcadeDrive(-(23/ Math.pow(yValue,2)), txValue* kp);
+			Drive.arcadeDrive(-(23/ Math.pow(yValue,2)), txValue* kp, false);
 		}
 
 	}

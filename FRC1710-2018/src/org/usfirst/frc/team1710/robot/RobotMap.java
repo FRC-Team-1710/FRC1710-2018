@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class RobotMap {
@@ -11,4 +12,5 @@ public class RobotMap {
 	public static VictorSPX R2, R3, L2, L3;
 	public static Joystick driveStick, mechStick;
 	public static AHRS navx;
+	public static DoubleSolenoid shifter;
 }

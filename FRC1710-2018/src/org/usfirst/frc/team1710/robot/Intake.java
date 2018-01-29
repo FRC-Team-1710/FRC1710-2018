@@ -17,12 +17,12 @@ public class Intake {
 			toggle = false;
 			if (piston) {
 				piston = false;
-				RobotMap.right.set(DoubleSolenoid.Value.kForward);
+				RobotMap.intakeRight.set(DoubleSolenoid.Value.kForward);
 			} else if(RobotMap.mechStick.getRawButton(6) == false) {
 				toggle = true;
 		} else {
 				piston = true;
-				RobotMap.right.set(DoubleSolenoid.Value.kReverse);
+				RobotMap.intakeRight.set(DoubleSolenoid.Value.kReverse);
 			} 
 			}
 		// Left toggle
@@ -30,12 +30,12 @@ public class Intake {
 			toggle2 = false;
 			if (piston2) {
 				piston2 = false;
-				RobotMap.left.set(DoubleSolenoid.Value.kForward);
+				RobotMap.intakeLeft.set(DoubleSolenoid.Value.kForward);
 			} else if (RobotMap.mechStick.getRawButton(5) == false) {
 			toggle2 = true;
 		} else {
 				piston2 = true;
-				RobotMap.left.set(DoubleSolenoid.Value.kReverse);
+				RobotMap.intakeLeft.set(DoubleSolenoid.Value.kReverse);
 			}
 		}
 	}

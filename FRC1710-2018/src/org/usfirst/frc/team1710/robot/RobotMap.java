@@ -13,6 +13,6 @@ public class RobotMap {
 	public static VictorSPX R2, R3, L2, L3;
 	public static Joystick driveStick, mechStick;
 	public static AHRS navx;
-	public static DoubleSolenoid shifter;
+	public static DoubleSolenoid shifter, intakeRight, intakeLeft;
 	public static DigitalInput liftReset;
 }

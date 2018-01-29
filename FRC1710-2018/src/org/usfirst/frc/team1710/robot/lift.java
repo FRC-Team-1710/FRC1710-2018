@@ -13,11 +13,12 @@ public class lift {
 	public static double distance3 = 6000;
 	public static double distance4 = 8000;
 	public static double setPoint;
+	
 	public static void Lifting(boolean up, boolean down, boolean one,  boolean two,  boolean three, boolean four) {
 	
 		height = RobotMap.lift1.getSelectedSensorPosition(0);
 
-		 if( one == true) {
+		if( one == true) {
 			setPoint = distance1;
 		}else if( two == true) {
 			setPoint = distance2;
@@ -27,7 +28,7 @@ public class lift {
 			setPoint = distance4;
 		} 
 		 
-		 if (RobotMap.mechStick.getRawAxis(1) > 0.2 || RobotMap.mechStick.getRawAxis(1) < -0.2){
+		if (RobotMap.mechStick.getRawAxis(1) > 0.2 || RobotMap.mechStick.getRawAxis(1) < -0.2){
 			RobotMap.lift1.set(ControlMode.PercentOutput, RobotMap.mechStick.getRawAxis(1));	
 			setPoint = height;
 		}else {	
@@ -36,10 +37,9 @@ public class lift {
 		 
 
 		 
-		 if(RobotMap.liftReset.get() == false) {
-			 RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);
-			 
-		 }
+		if(RobotMap.liftReset.get() == false) {
+			 RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);	 
+		}
 
 
 	}	

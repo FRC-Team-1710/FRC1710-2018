@@ -33,4 +33,7 @@ public class Drive {
 		rightDrive(error *kp + power);
 		leftDrive(error*kp - power);
 	}
+	
+	//TODO: make methods that return the position and velocity from each encoder on the robot drive train
+	//example public static double getLeftVelocity() { return RobotMap.R1.getSelectedSensorVelocity(0);}
 }

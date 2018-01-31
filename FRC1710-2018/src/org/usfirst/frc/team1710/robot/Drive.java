@@ -27,8 +27,14 @@ public class Drive {
 		RobotMap.R1.set(ControlMode.PercentOutput, power);
 	}
 	
-	public static void straightDrive (double power) {
+	public static void straightDriveAuto (double power) {
 		double error = RobotMap.navx.getAngle();
+		double kp= .01;
+		rightDrive(error *kp + power);
+		leftDrive(error*kp - power);
+	}
+	public static void straightDriveTele (double power, double heading) {
+		double error = (RobotMap.navx.getAngle() - (heading * 180));
 		double kp= .01;
 		rightDrive(error *kp + power);
 		leftDrive(error*kp - power);

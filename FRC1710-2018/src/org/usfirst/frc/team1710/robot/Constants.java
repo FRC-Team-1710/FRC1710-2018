@@ -8,5 +8,4 @@ public class Constants {
 	public static double distance4 = 8000;
 	public static double kPLift = 0.0008;
 	
-	
 }

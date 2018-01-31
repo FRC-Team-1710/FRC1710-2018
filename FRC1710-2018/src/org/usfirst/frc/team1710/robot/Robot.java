@@ -48,11 +48,11 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopPeriodic() {
-		if(RobotMap.driveStick.getRawButton(1) == true) {
-			Vision.cubeTracking();
+		if(ControllerMap.visionActivate == true) {
+			Vision.cubeTrackLeft();
 		} else {
 			//shifting is on left bumper
-			Drive.arcadeDrive(-RobotMap.driveStick.getRawAxis(4), RobotMap.driveStick.getRawAxis(1), RobotMap.driveStick.getRawButton(5));
+			Drive.arcadeDrive(ControllerMap.turnPower, ControllerMap.forwardPower, ControllerMap.shift);
 		}
 	}
 

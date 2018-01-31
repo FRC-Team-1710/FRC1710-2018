@@ -9,6 +9,7 @@ public class Intake {
 	static boolean toggle2 = true;
 	static boolean piston = false;
 	static boolean piston2 = false;
+	//TODO: reformat and replace uses of RobotMap.mechStick... with their respective values in ControllerMap
 	public static void intake (double right, double left) {
 		RobotMap.intakeR.set(ControlMode.PercentOutput, right);
 		RobotMap.intakeL.set(ControlMode.PercentOutput, left);

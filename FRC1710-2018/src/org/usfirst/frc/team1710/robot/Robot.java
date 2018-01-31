@@ -48,6 +48,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopPeriodic() {
+		//TODO: come up with better, iterative way of handling input
 		if(ControllerMap.visionActivate == true) {
 			Vision.cubeTrackLeft();
 		} else {

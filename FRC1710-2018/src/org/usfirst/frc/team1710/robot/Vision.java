@@ -7,6 +7,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class Vision {
+	//TODO: make this class a child of constants and add kpAim, kpDistance to constants
 	public static void cubeTrackRight() {
 		NetworkTableInstance table = NetworkTableInstance.getDefault();
 		NetworkTable tableTwo = table.getTable("limelight");

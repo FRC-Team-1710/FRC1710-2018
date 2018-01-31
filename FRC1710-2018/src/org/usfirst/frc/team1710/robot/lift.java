@@ -24,6 +24,7 @@ public class lift extends Constants{
 			setPoint = distance4;
 		} 
 
+		//TODO: make a boolean value in constants to replace this expression with: isLiftManualControl
 		if (ControllerMap.liftPower > 0.2 || ControllerMap.liftPower < -0.2){
 						
 			RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower);	

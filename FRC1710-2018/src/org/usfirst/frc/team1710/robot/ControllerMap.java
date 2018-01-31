@@ -9,9 +9,9 @@ public class ControllerMap {
 	static double liftPower = RobotMap.mechStick.getRawAxis(1);
 	static double turnPower = -RobotMap.driveStick.getRawAxis(4);
 	static double forwardPower = RobotMap.driveStick.getRawAxis(1);
-	static boolean visionActivate = RobotMap.driveStick.getRawButton(1) || RobotMap.mechStick.getRawButton(1);
+	static boolean visionActivated = RobotMap.driveStick.getRawButton(1) || RobotMap.mechStick.getRawButton(1);
 	static boolean shift = RobotMap.driveStick.getRawButton(5);
-	static boolean leftIntakeToggle = RobotMap.mechStick.getRawButton(6);
-	static boolean rightIntakeToggle = RobotMap.mechStick.getRawButton(5);
+	static boolean leftIntakePistonToggle = RobotMap.mechStick.getRawButton(6);
+	static boolean rightIntakePistonToggle = RobotMap.mechStick.getRawButton(5);
 	
 }

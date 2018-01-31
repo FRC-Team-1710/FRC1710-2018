@@ -21,11 +21,11 @@ public class Intake {
 				RobotMap.intakeRight.set(DoubleSolenoid.Value.kForward);
 			} else if(RobotMap.mechStick.getRawButton(6) == false) {
 				toggle = true;
-		} else {
+			} else {
 				piston = true;
 				RobotMap.intakeRight.set(DoubleSolenoid.Value.kReverse);
 			} 
-			}
+		}
 		// Left toggle
 		if (toggle2 && RobotMap.mechStick.getRawButton(5)) {
 			toggle2 = false;
@@ -34,10 +34,13 @@ public class Intake {
 				RobotMap.intakeLeft.set(DoubleSolenoid.Value.kForward);
 			} else if (RobotMap.mechStick.getRawButton(5) == false) {
 			toggle2 = true;
-		} else {
+			} else {
 				piston2 = true;
 				RobotMap.intakeLeft.set(DoubleSolenoid.Value.kReverse);
 			}
 		}
+	}
+	//TODO: make this control the wrist motor on the intake using feedback from the encoder
+	public static void wristControl(int position) {
 	}
 }

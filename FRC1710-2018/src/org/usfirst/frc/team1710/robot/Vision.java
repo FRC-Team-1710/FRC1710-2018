@@ -7,23 +7,79 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class Vision {
-	public static void cubeTracking() {
+	public static void cubeTrackRight() {
 		NetworkTableInstance table = NetworkTableInstance.getDefault();
 		NetworkTable tableTwo = table.getTable("limelight");
-		NetworkTableEntry xEntry, yEntry, tvEntry;
-		double kp = .023;
-		xEntry = tableTwo.getEntry("tx");
-		yEntry = tableTwo.getEntry("ty");
-		tvEntry = tableTwo.getEntry("tv");
-		double txValue = xEntry.getDouble(0);
-		double yValue = yEntry.getDouble(0);
+		NetworkTableEntry ledEntry = tableTwo.getEntry("ledMode");
+		double ledValue = ledEntry.getDouble(0);
+		
+		NetworkTableEntry txEntry = tableTwo.getEntry("tx");
+		NetworkTableEntry tyEntry = tableTwo.getEntry("ty");
+		NetworkTableEntry tvEntry = tableTwo.getEntry("tv");
+		double txValue = txEntry.getDouble(0);
+		double tyValue = tyEntry.getDouble(0);
 		double tvValue = tvEntry.getDouble(0);
-		if (tvValue==0) {
-			RobotMap.L1.set(ControlMode.PercentOutput,.3);
-			RobotMap.R1.set(ControlMode.PercentOutput,.3);
+		
+		double kpAim = .02;
+		double kpDistance = .1;
+	
+		if( tvValue==0) {
+				Drive.leftDrive(.3);
+				Drive.rightDrive(.3);
+			
+		 }else {
+				Drive.arcadeDrive(kpAim * txValue, -tyValue * kpDistance, false );
+				
+		 }
+			 
+		
+		
+		if(Math.abs(tyValue) > 12.5) {
+			System.out.println("INTAKING");
+			//Intake.autoIntake(-.75, -.75);
+			//arms closed
 		}else {
-			Drive.arcadeDrive(-(23/ Math.pow(yValue,2)), txValue* kp, false);
-		}
+			System.out.println("NOT INTAKING");
+			//Intake.autoIntake(0, 0);
+			//arms opened
 
+		}
+		
+	}
+	public static void cubeTrackLeft() {
+		NetworkTableInstance table = NetworkTableInstance.getDefault();
+		NetworkTable tableTwo = table.getTable("limelight");
+		NetworkTableEntry ledEntry = tableTwo.getEntry("ledMode");
+		double ledValue = ledEntry.getDouble(0);
+		
+		NetworkTableEntry txEntry = tableTwo.getEntry("tx");
+		NetworkTableEntry tyEntry = tableTwo.getEntry("ty");
+		NetworkTableEntry tvEntry = tableTwo.getEntry("tv");
+		double txValue = txEntry.getDouble(0);
+		double tyValue = tyEntry.getDouble(0);
+		double tvValue = tvEntry.getDouble(0);
+		
+		double kpAim = .02;
+		double kpDistance = .1;
+	
+		if( tvValue==0) {
+				Drive.leftDrive(-.3);
+				Drive.rightDrive(-.3);
+			
+		 }else {
+				Drive.arcadeDrive(kpAim * txValue, -tyValue * kpDistance, false );
+				
+		 }
+	
+		if(Math.abs(tyValue) > 12.5) {
+			System.out.println("INTAKING");
+			//Intake.autoIntake(-.75, -.75);
+			//arms closed
+		}else {
+			System.out.println("NOT INTAKING");
+			//Intake.autoIntake(0, 0);
+			//arms opened
+
+		}
 	}
 }

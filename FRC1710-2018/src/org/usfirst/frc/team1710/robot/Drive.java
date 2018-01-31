@@ -27,10 +27,34 @@ public class Drive {
 		RobotMap.R1.set(ControlMode.PercentOutput, power);
 	}
 	
-	public static void straightDrive (double power) {
+	public static void straightDriveAuto (double power) {
 		double error = RobotMap.navx.getAngle();
 		double kp= .01;
 		rightDrive(error *kp + power);
 		leftDrive(error*kp - power);
 	}
+	
+	public static void straightDriveTele (double power, double heading) {
+		double error = (RobotMap.navx.getAngle() - (heading * 180));
+		double kp= .01;
+		rightDrive(error *kp + power);
+		leftDrive(error*kp - power);
+	}
+	
+	public static double getLeftVelocity() {
+		return RobotMap.L1.getSelectedSensorVelocity(0);
+	}
+	
+	public static double getRightVelocity() {
+		return RobotMap.R1.getSelectedSensorVelocity(0);
+	}
+	
+	public static double getLeftPosition() {
+		return RobotMap.L1.getSelectedSensorPosition(0);
+	}
+	
+	public static double getRightPosition() {
+		return RobotMap.R1.getSelectedSensorPosition(0);
+	}
+
 }

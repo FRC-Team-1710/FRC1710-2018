@@ -1,3 +1,3 @@
 # 2018 Robot
 
-Github repository for Team 1710's 2018 robots: Gorgotron and Gorgozoid.
+Github repository for Team 1710's 2018 robot.

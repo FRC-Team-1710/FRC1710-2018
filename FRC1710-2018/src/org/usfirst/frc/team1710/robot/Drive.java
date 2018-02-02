@@ -29,16 +29,14 @@ public class Drive {
 	
 	public static void straightDriveAuto (double power) {
 		double error = RobotMap.navx.getAngle();
-		double kp= .01;
-		rightDrive(error *kp + power);
-		leftDrive(error*kp - power);
+		rightDrive(error *Constants.kpStraight + power);
+		leftDrive(error*Constants.kpStraight - power);
 	}
 	
 	public static void straightDriveTele (double power, double heading) {
 		double error = (RobotMap.navx.getAngle() - (heading * 180));
-		double kp= .01;
-		rightDrive(error *kp + power);
-		leftDrive(error*kp - power);
+		rightDrive(error *Constants.kpStraight + power);
+		leftDrive(error*Constants.kpStraight - power);
 	}
 	
 	public static double getLeftVelocity() {

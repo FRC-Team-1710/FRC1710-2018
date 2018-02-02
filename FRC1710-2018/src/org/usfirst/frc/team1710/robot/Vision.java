@@ -7,7 +7,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class Vision {
-	//TODO: make this class a child of constants and add kpAim, kpDistance to constants
+	//getting information from limelight and turning right to track cube 
 	public static void cubeTrackRight() {
 		NetworkTableInstance table = NetworkTableInstance.getDefault();
 		NetworkTable tableTwo = table.getTable("limelight");
@@ -20,21 +20,19 @@ public class Vision {
 		double txValue = txEntry.getDouble(0);
 		double tyValue = tyEntry.getDouble(0);
 		double tvValue = tvEntry.getDouble(0);
-		
-		double kpAim = .02;
-		double kpDistance = .1;
 	
+		//if bot cannot find box turn
 		if( tvValue==0) {
 				Drive.leftDrive(.3);
 				Drive.rightDrive(.3);
-			
+		// goes forward to track 
 		 }else {
-				Drive.arcadeDrive(kpAim * txValue, -tyValue * kpDistance, false );
+				Drive.arcadeDrive(Constants.kpAim * txValue, -tyValue * Constants.kpDistance, false );
 				
 		 }
 			 
-		
-		
+	
+		 
 		if(Math.abs(tyValue) > 12.5) {
 			System.out.println("INTAKING");
 			//Intake.autoIntake(-.75, -.75);
@@ -47,6 +45,7 @@ public class Vision {
 		}
 		
 	}
+	//getting information from limelight and turning left to track cube 
 	public static void cubeTrackLeft() {
 		NetworkTableInstance table = NetworkTableInstance.getDefault();
 		NetworkTable tableTwo = table.getTable("limelight");
@@ -60,15 +59,13 @@ public class Vision {
 		double tyValue = tyEntry.getDouble(0);
 		double tvValue = tvEntry.getDouble(0);
 		
-		double kpAim = .02;
-		double kpDistance = .1;
-	
+		//if bot cannot find box turn
 		if( tvValue==0) {
 				Drive.leftDrive(-.3);
 				Drive.rightDrive(-.3);
-			
+		//else go forward to track box
 		 }else {
-				Drive.arcadeDrive(kpAim * txValue, -tyValue * kpDistance, false );
+				Drive.arcadeDrive(Constants.kpAim * txValue, -tyValue * Constants.kpDistance, false );
 				
 		 }
 	

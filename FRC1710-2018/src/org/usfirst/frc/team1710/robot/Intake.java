@@ -16,12 +16,12 @@ public class Intake {
 		RobotMap.intakeR.set(ControlMode.PercentOutput, right);
 		RobotMap.intakeL.set(ControlMode.PercentOutput, left);
 		// Right toggle
-		if (toggle && RobotMap.mechStick.getRawButton(6)) {
+		if (toggle && ControllerMap.rightIntakePistonToggle) {
 			toggle = false;
 			if (piston) {
 				piston = false;
 				RobotMap.intakeRight.set(DoubleSolenoid.Value.kForward);
-			} else if(RobotMap.mechStick.getRawButton(6) == false) {
+			} else if(ControllerMap.rightIntakePistonToggle == false) {
 				toggle = true;
 			} else {
 				piston = true;
@@ -29,12 +29,12 @@ public class Intake {
 			} 
 		}
 		// Left toggle
-		if (toggle2 && RobotMap.mechStick.getRawButton(5)) {
+		if (toggle2 && ControllerMap.leftIntakePistonToggle) {
 			toggle2 = false;
 			if (piston2) {
 				piston2 = false;
 				RobotMap.intakeLeft.set(DoubleSolenoid.Value.kForward);
-			} else if (RobotMap.mechStick.getRawButton(5) == false) {
+			} else if (ControllerMap.leftIntakePistonToggle == false) {
 			toggle2 = true;
 			} else {
 				piston2 = true;

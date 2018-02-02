@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1710.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -74,4 +75,5 @@ public class Vision {
 
 		}
 	}
+	
 }

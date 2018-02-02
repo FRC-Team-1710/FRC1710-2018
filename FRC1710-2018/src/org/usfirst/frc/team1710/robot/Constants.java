@@ -30,7 +30,7 @@ public class Constants {
 	public static int IntakeRtalon=7;
 	public static int IntakeLtalon=8;
 	
-	public static int WrisTalon=6;
+	public static int WristTalon=6;
 	public static int lift1Talon=5;
 	public static int lift2Talon=10;
 	

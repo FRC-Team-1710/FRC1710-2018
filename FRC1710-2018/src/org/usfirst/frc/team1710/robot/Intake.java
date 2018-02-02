@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1710.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
@@ -50,5 +51,10 @@ public class Intake {
 		} else if (ControllerMap.wristDown == true) {
 			wristPosition = Constants.wristDown;
 		}
+	}
+	public static void initilizeIntake () {
+		RobotMap.intakeR = new TalonSRX (Constants.IntakeRtalon);
+		RobotMap.intakeL = new TalonSRX (Constants.IntakeLtalon);
+		RobotMap.wrist = new TalonSRX (Constants.WristTalon);
 	}
 }

@@ -1,14 +1,11 @@
 package org.usfirst.frc.team1710.robot;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
 public class Constants {
 	//constants for the lift
-	public static double distance1 = 0;
-	public static double distance2 = 4000;
-	public static double distance3 = 6000;
-	public static double distance4 = 8000;
+	public static double intake = 0;
+	public static double switchPosition = 4000;
+	public static double lowLevel= 6000;
+	public static double heighLevel = 8000;
 	public static double kPLift = 0.0008;
 	
 	//constants for drive
@@ -30,7 +27,7 @@ public class Constants {
 	public static int IntakeRtalon=7;
 	public static int IntakeLtalon=8;
 	
-	public static int WrisTalon=6;
+	public static int WristTalon=6;
 	public static int lift1Talon=5;
 	public static int lift2Talon=10;
 	

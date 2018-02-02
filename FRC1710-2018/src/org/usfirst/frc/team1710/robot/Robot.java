@@ -3,6 +3,9 @@ package org.usfirst.frc.team1710.robot;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -15,6 +18,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		//setting talonSRXs
+		NetworkTableInstance table = NetworkTableInstance.getDefault();
+		NetworkTable tableTwo = table.getTable("limelight");
+		NetworkTableEntry ledEntry = tableTwo.getEntry("ledMode");
+		ledEntry.forceSetNumber(1);
+		
 		RobotMap.R1 = new TalonSRX (Constants.rightLeaderid);
 		RobotMap.R2 = new VictorSPX (Constants.rightFollowerid);
 		RobotMap.R3 = new VictorSPX (Constants.rightFollowerid2);

@@ -14,17 +14,21 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void robotInit() {
-		RobotMap.R1 = new TalonSRX (8);
-		RobotMap.R2 = new VictorSPX (1);
-		RobotMap.R3 = new VictorSPX (2);
-		RobotMap.L1 = new TalonSRX (9);
-		RobotMap.L2 = new VictorSPX (3);
-		RobotMap.L3 = new VictorSPX (4);
-		RobotMap.intakeR = new TalonSRX (7);
-		RobotMap.intakeL = new TalonSRX (8);
-		RobotMap.wrist = new TalonSRX (6);
-		RobotMap.lift1 = new TalonSRX (5);
-		RobotMap.lift2 = new TalonSRX (10);
+		//setting talonSRXs
+		RobotMap.R1 = new TalonSRX (Constants.rightLeaderid);
+		RobotMap.R2 = new VictorSPX (Constants.rightFollowerid);
+		RobotMap.R3 = new VictorSPX (Constants.rightFollowerid2);
+		RobotMap.L1 = new TalonSRX (Constants.leftLeaderid);
+		RobotMap.L2 = new VictorSPX (Constants.leftFollowerid);
+		RobotMap.L3 = new VictorSPX (Constants.leftFollowerid2);
+		
+		RobotMap.intakeR = new TalonSRX (Constants.IntakeRtalon);
+		RobotMap.intakeL = new TalonSRX (Constants.IntakeLtalon);
+		RobotMap.wrist = new TalonSRX (Constants.WrisTalon);
+		RobotMap.lift1 = new TalonSRX (Constants.lift1Talon);
+		RobotMap.lift2 = new TalonSRX (Constants.lift2Talon);
+		
+		
 		//makes each spx follow their respective srx
 		RobotMap.R2.follow (RobotMap.R1);
 		RobotMap.R3.follow (RobotMap.R1);
@@ -49,7 +53,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		//TODO: come up with better, iterative way of handling input
-		if(ControllerMap.visionActivate == true) {
+		if(ControllerMap.visionActivated == true) {
 			Vision.cubeTrackLeft();
 		} else {
 			//shifting is on left bumper

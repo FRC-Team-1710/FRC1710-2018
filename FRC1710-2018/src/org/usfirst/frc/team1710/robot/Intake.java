@@ -45,12 +45,12 @@ public class Intake {
 	}
 	//TODO: make this control the wrist motor on the intake using feedback from the encoder
 	public static void wristControl(int position) {
-		if (wristToggle && RobotMap.mechStick.getRawButton(1)) {
+		if (wristToggle && ControllerMap.wrist) {
 			wristToggle = false;
 			if (wristPosition) {
 				wristPosition = false;
 				RobotMap.wrist.getSelectedSensorPosition(5);
-		} else if (RobotMap.mechStick.getRawButton(1) == false) {
+		} else if (ControllerMap.wrist == false) {
 			wristToggle = true;
 		} else {
 			wristPosition = true;

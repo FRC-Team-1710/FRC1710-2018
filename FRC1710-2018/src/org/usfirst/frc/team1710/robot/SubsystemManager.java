@@ -5,6 +5,7 @@ public class SubsystemManager {
 		Intake.initilizeIntake();
 		ControllerMap.InitilizeControllerMap();
 		lift.initilizeLift();
+		Vision.initilizeVision();
 		
 	}
 

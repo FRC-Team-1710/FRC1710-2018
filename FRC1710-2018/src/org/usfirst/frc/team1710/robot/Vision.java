@@ -8,21 +8,21 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class Vision {
-	//getting information from limelight and turning right to track cube 
-	public static void cubeTrackRight() {
-		NetworkTableInstance table = NetworkTableInstance.getDefault();
-		NetworkTable tableTwo = table.getTable("limelight");
-		NetworkTableEntry ledEntry = tableTwo.getEntry("ledMode");
-		double ledValue = ledEntry.getDouble(0);
-		
-		NetworkTableEntry txEntry = tableTwo.getEntry("tx");
-		NetworkTableEntry tyEntry = tableTwo.getEntry("ty");
-		NetworkTableEntry tvEntry = tableTwo.getEntry("tv");
-		double txValue = txEntry.getDouble(0);
-		double tyValue = tyEntry.getDouble(0);
-		double tvValue = tvEntry.getDouble(0);
+	static NetworkTableInstance table = NetworkTableInstance.getDefault();
+	static NetworkTable tableTwo = table.getTable("limelight");
+	NetworkTableEntry ledEntry = tableTwo.getEntry("ledMode");
+	double ledValue = ledEntry.getDouble(0);
+
+	static NetworkTableEntry txEntry = tableTwo.getEntry("tx");
+	static NetworkTableEntry tyEntry = tableTwo.getEntry("ty");
+	static NetworkTableEntry tvEntry = tableTwo.getEntry("tv");
 	
-		//if bot cannot find box turn
+	static double txValue = txEntry.getDouble(0);
+	static double tyValue = tyEntry.getDouble(0);
+	static double tvValue = tvEntry.getDouble(0);
+	
+	public static void cubeTrackRight() {
+		//if bot cannot find box turn right
 		if(tvValue==0) {
 			Drive.leftDrive(.3);
 			Drive.rightDrive(.3);
@@ -41,21 +41,8 @@ public class Vision {
 			//arms opened
 		}
 	}
-	//getting information from limelight and turning left to track cube 
 	public static void cubeTrackLeft() {
-		NetworkTableInstance table = NetworkTableInstance.getDefault();
-		NetworkTable tableTwo = table.getTable("limelight");
-		NetworkTableEntry ledEntry = tableTwo.getEntry("ledMode");
-		double ledValue = ledEntry.getDouble(0);
-
-		NetworkTableEntry txEntry = tableTwo.getEntry("tx");
-		NetworkTableEntry tyEntry = tableTwo.getEntry("ty");
-		NetworkTableEntry tvEntry = tableTwo.getEntry("tv");
-		double txValue = txEntry.getDouble(0);
-		double tyValue = tyEntry.getDouble(0);
-		double tvValue = tvEntry.getDouble(0);
-		
-		//if bot cannot find box turn
+		//if bot cannot find box turn left
 		if(tvValue==0) {
 			Drive.leftDrive(-.3);
 			Drive.rightDrive(-.3);
@@ -74,6 +61,12 @@ public class Vision {
 			//arms opened
 
 		}
+	}
+	public static void initilizeVision() {
+		NetworkTableInstance table = NetworkTableInstance.getDefault();
+		NetworkTable tableTwo = table.getTable("limelight");
+		NetworkTableEntry ledEntry = tableTwo.getEntry("ledMode");
+		ledEntry.forceSetNumber(1);
 	}
 	
 }

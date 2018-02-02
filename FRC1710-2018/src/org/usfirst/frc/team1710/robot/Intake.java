@@ -40,8 +40,8 @@ public class Intake {
 			}
 		} else if (ControllerMap.leftIntakePistonToggle == false) {
 			toggle2 = true;
-			}
 		}
+	}
 	//TODO: make this control the wrist motor on the intake using feedback from the encoder
 	public static void wristControl(int position) {
 		if (wristToggle && ControllerMap.wrist) {

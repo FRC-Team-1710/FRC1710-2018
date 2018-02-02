@@ -9,8 +9,7 @@ public class Intake {
 	static boolean toggle2 = true;
 	static boolean piston = false;
 	static boolean piston2 = false;
-	static boolean wristToggle = true;
-	static boolean wristPosition = false;
+	static double wristPosition;
 	//TODO: reformat and replace uses of RobotMap.mechStick... with their respective values in ControllerMap
 	public static void intake (double right, double left) {
 		RobotMap.intakeR.set(ControlMode.PercentOutput, right);
@@ -44,17 +43,12 @@ public class Intake {
 	}
 	//TODO: make this control the wrist motor on the intake using feedback from the encoder
 	public static void wristControl(int position) {
-		if (wristToggle && ControllerMap.wrist) {
-			wristToggle = false;
-			if (wristPosition) {
-				wristPosition = false;
-				RobotMap.wrist.getSelectedSensorPosition(0);
-			} else {
-				wristPosition = true;
-				RobotMap.wrist.getSelectedSensorPosition(0);
-			}
-		} else if (ControllerMap.wrist == false) {
-			wristToggle = true;
+		if (ControllerMap.wristUp == true) {
+			wristPosition = Constants.wristUp;
+		} else if (ControllerMap.wristLaunch == true) {
+			wristPosition = Constants.wristLaunch;
+		} else if (ControllerMap.wristDown == true) {
+			wristPosition = Constants.wristDown;
 		}
 	}
 }

@@ -23,6 +23,7 @@ public class lift extends Constants{
 		}else if(ControllerMap.four == true) {
 			setPoint = distance4;
 		} 
+		//when a button is pressed, the lift will go to that position.
 
 		//TODO: make a boolean value in constants to replace this expression with: isLiftManualControl
 		if (ControllerMap.liftPower > 0.2 || ControllerMap.liftPower < -0.2){

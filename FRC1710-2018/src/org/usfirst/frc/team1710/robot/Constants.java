@@ -34,7 +34,10 @@ public class Constants {
 	public static int lift1Talon=5;
 	public static int lift2Talon=10;
 	
-	
+	//constants for wrist
+	public static int wristUp = 0;
+	public static int wristLaunch = 1;
+	public static int wristDown = 2;
 	
 	
 	

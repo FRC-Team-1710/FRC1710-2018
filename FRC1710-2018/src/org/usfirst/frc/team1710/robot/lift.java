@@ -1,7 +1,9 @@
 package org.usfirst.frc.team1710.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 
 public class lift extends Constants{
@@ -36,5 +38,11 @@ public class lift extends Constants{
 		if(RobotMap.liftReset.get() == false) {
 			RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);	 
 		}
-	}		
+	}	
+	public static void initilizeLift() {
+		RobotMap.lift1 = new TalonSRX (Constants.lift1Talon);
+		RobotMap.lift2 = new TalonSRX (Constants.lift2Talon);
+		RobotMap.lift1.follow (RobotMap.lift2);
+		RobotMap.liftReset = new DigitalInput(0);
+	}
 }

@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1710.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
+
 public class ControllerMap {
 	//TODO: make names better
 	//one, two, three, four are lift position buttons
@@ -15,5 +17,9 @@ public class ControllerMap {
 	static boolean leftIntakePistonToggle = RobotMap.mechStick.getRawButton(5);
 	static boolean rightIntakePistonToggle = RobotMap.mechStick.getRawButton(6);
 	static boolean wrist = RobotMap.mechStick.getRawButton(7);
+	
+	public static void InitilizeControllerMap( ) {
+		RobotMap.driveStick = new Joystick(0);
+	}
 	
 }

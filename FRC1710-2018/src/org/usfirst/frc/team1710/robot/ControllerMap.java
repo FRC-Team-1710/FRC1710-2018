@@ -15,5 +15,7 @@ public class ControllerMap {
 	static boolean leftIntakePistonToggle = RobotMap.mechStick.getRawButton(5);
 	static boolean rightIntakePistonToggle = RobotMap.mechStick.getRawButton(6);
 	static boolean wrist = RobotMap.mechStick.getRawButton(7);
+	static boolean rampDeploy = RobotMap.mechStick.getRawButton(3);
+	static boolean rampLift = RobotMap.mechStick.getRawButton(4);
 	
 }

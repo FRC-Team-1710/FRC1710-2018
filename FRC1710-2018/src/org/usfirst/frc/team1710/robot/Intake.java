@@ -21,12 +21,12 @@ public class Intake {
 			if (piston) {
 				piston = false;
 				RobotMap.intakeRight.set(DoubleSolenoid.Value.kForward);
-			} else if(ControllerMap.rightIntakePistonToggle == false) {
-				toggle = true;
 			} else {
 				piston = true;
 				RobotMap.intakeRight.set(DoubleSolenoid.Value.kReverse);
-			} 
+			}
+		} else if (ControllerMap.rightIntakePistonToggle == false) {
+			toggle = true;
 		}
 		// Left toggle
 		if (toggle2 && ControllerMap.leftIntakePistonToggle) {
@@ -34,28 +34,27 @@ public class Intake {
 			if (piston2) {
 				piston2 = false;
 				RobotMap.intakeLeft.set(DoubleSolenoid.Value.kForward);
-			} else if (ControllerMap.leftIntakePistonToggle == false) {
-			toggle2 = true;
 			} else {
 				piston2 = true;
 				RobotMap.intakeLeft.set(DoubleSolenoid.Value.kReverse);
 			}
+		} else if (ControllerMap.leftIntakePistonToggle == false) {
+			toggle2 = true;
+			}
 		}
-		
-	}
 	//TODO: make this control the wrist motor on the intake using feedback from the encoder
 	public static void wristControl(int position) {
 		if (wristToggle && ControllerMap.wrist) {
 			wristToggle = false;
 			if (wristPosition) {
 				wristPosition = false;
-				RobotMap.wrist.getSelectedSensorPosition(5);
+				RobotMap.wrist.getSelectedSensorPosition(0);
+			} else {
+				wristPosition = true;
+				RobotMap.wrist.getSelectedSensorPosition(0);
+			}
 		} else if (ControllerMap.wrist == false) {
 			wristToggle = true;
-		} else {
-			wristPosition = true;
-			RobotMap.wrist.getSelectedSensorPosition(1);
-		} //stuff happens
 		}
 	}
 }

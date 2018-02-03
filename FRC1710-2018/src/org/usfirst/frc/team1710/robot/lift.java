@@ -17,7 +17,7 @@ public class lift {
 		RobotMap.liftReset = new DigitalInput(0);
 	}
 
-	public static void liftingSetPoint () {
+	public static double getLiftSetPoint () {
 		
 		if( ControllerMap.one == true) {
 			setPoint = Constants.intake;
@@ -28,12 +28,11 @@ public class lift {
 		}else if(ControllerMap.four == true) {
 			setPoint = Constants.highLevel;
 		}
-	}
+	return setPoint;}
 		//when a button is pressed, the lift will go to that position.
 
-		public static void liftMovement() {
+		public static void liftError() {
 		if (ControllerMap.liftPower > 0.2 || ControllerMap.liftPower < -0.2){
-						
 			RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower);	
 			setPoint = getHeight();
 		} else {	

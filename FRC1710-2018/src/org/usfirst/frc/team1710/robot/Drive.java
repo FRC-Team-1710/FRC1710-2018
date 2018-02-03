@@ -69,6 +69,15 @@ public class Drive {
 		return RobotMap.R1.getSelectedSensorVelocity(0);
 	}
 	
+	public static void stopDriving() {
+		RobotMap.R1.set(ControlMode.PercentOutput, 0);
+		RobotMap.L1.set(ControlMode.PercentOutput, 0);
+	}
+	
+	public static double getNavxAngle() {
+		return RobotMap.navx.getAngle();
+	}
+	
 	public static double getLeftPosition() {
 		return RobotMap.L1.getSelectedSensorPosition(0);
 	}

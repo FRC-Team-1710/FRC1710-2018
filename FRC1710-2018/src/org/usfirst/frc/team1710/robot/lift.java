@@ -17,7 +17,7 @@ public class lift {
 		RobotMap.liftReset = new DigitalInput(0);
 	}
 
-	public static void Lifting () {
+	public static void liftingSetPoint () {
 		
 		if( ControllerMap.one == true) {
 			setPoint = Constants.intake;
@@ -27,9 +27,11 @@ public class lift {
 			setPoint = Constants.lowLevel;
 		}else if(ControllerMap.four == true) {
 			setPoint = Constants.highLevel;
-		} 
+		}
+	}
 		//when a button is pressed, the lift will go to that position.
 
+		public static void liftMovement() {
 		if (ControllerMap.liftPower > 0.2 || ControllerMap.liftPower < -0.2){
 						
 			RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower);	
@@ -41,8 +43,7 @@ public class lift {
 		if(isAtBottom() == true) {
 			RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);	 
 		}
-
-	}	
+		}
 
 	public static boolean isAtBottom() {
 		return !RobotMap.liftReset.get();

@@ -24,6 +24,8 @@ public class ControllerMap {
 	//Mechstick Axis
 	
 	static double liftPower = RobotMap.mechStick.getRawAxis(1);
+	static double intakeR = RobotMap.mechStick.getRawAxis(1);
+	static double intakeL = RobotMap.mechStick.getRawAxis(5);
 	
 	//Drivestick PLEASE ORGANIZE
 	static boolean rampDeploy = RobotMap.mechStick.getRawButton(3);

@@ -61,7 +61,7 @@ public class Intake {
 		}
 		return wristSetPoint;
 	}
-	public static void mainpulateWrist() {
+	public static void manipulateWrist() {
 		RobotMap.wrist.set(ControlMode.PercentOutput, getWristError() * Constants.kPWrist);
 	}
 	public static double getWristError() {

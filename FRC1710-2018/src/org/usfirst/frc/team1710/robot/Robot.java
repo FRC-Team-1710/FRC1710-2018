@@ -37,8 +37,10 @@ public class Robot extends IterativeRobot {
 		} else {
 			Drive.arcadeDrive(ControllerMap.turnPower, ControllerMap.forwardPower, ControllerMap.shift);
 		}
+		Intake.intake(ControllerMap.intakeR, ControllerMap.intakeL);
+		Intake.manipulateWrist();
+		lift.Lifting();
 	}
-
 	@Override
 	public void testPeriodic() {
 	}

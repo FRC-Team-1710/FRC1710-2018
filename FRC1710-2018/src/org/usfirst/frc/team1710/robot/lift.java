@@ -59,7 +59,7 @@ public class lift {
 			return "swich";
 		} else if(setPoint == Constants.lowLevel) {
 			return "low level";
-		} else if(setPoint == Constants.heighLevel){
+		} else if(setPoint == Constants.highLevel){
 			return "high level";
 		} else {
 			return "lifting";

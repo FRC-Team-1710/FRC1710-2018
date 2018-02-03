@@ -5,7 +5,7 @@ public class Constants {
 	public static double intake = 0;
 	public static double switchPosition = 4000;
 	public static double lowLevel= 6000;
-	public static double heighLevel = 8000;
+	public static double highLevel = 8000;
 	public static double kPLift = 0.0008;
 	
 	//constants for drive

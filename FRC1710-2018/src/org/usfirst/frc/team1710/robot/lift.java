@@ -26,7 +26,7 @@ public class lift {
 		}else if( ControllerMap.three == true) {
 			setPoint = Constants.lowLevel;
 		}else if(ControllerMap.four == true) {
-			setPoint = Constants.heighLevel;
+			setPoint = Constants.highLevel;
 		} 
 		//when a button is pressed, the lift will go to that position.
 

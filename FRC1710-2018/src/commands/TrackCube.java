@@ -1,15 +1,22 @@
 package commands;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Command;
 
+import org.usfirst.frc.team1710.robot.Vision;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
 /**
  *
  */
 public class TrackCube extends Command {
 
     public TrackCube() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    	Vision.initializeVision();
+    	Vision.cubeTrackLeft();
+    	Vision.cubeTrackRight();
     }
 
     // Called just before this Command runs the first time

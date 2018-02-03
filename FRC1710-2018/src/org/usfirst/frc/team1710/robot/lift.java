@@ -30,8 +30,7 @@ public class lift {
 		}
 		return setPoint;
 	}
-		//when a button is pressed, the lift will go to that position.
-
+	
 	public static void manipulateLift() {
 		if (ControllerMap.liftPower > 0.2 || ControllerMap.liftPower < -0.2){
 			RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower);	
@@ -67,5 +66,8 @@ public class lift {
 			return "lifting";
 		}
 
+	}
+	public static void liftSetPoint(double newSetPoint) {
+		setPoint=newSetPoint;		
 	}
 }

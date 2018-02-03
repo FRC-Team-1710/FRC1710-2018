@@ -53,9 +53,11 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 		SubsystemManager.masterReset();
 		Intake.setWristPosition(Constants.wristUp);
+		lift.liftSetPoint(0);
 	}
 	public void disabledPeriodic() {
 		//reset code for the wrist and intake 
 		Intake.manipulateWrist();
+		lift.manipulateLift();
 	}
 }

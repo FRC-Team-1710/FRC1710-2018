@@ -1,5 +1,6 @@
 package trajectory;
 
+import org.usfirst.frc.team1710.robot.Constants;
 import org.usfirst.frc.team1710.robot.Drive;
 import org.usfirst.frc.team1710.robot.RobotMap;
 import org.usfirst.frc.team1710.robot.SubsystemManager;
@@ -42,13 +43,13 @@ public class FollowTrajectory extends Command {
 
     	Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH, 0.02, maxV, maxAccel, 60);
     	trajectory = Pathfinder.generate(waypoints, config);
-    	TankModifier modifier = new TankModifier(trajectory).modify(.711);
+    	TankModifier modifier = new TankModifier(trajectory).modify(Constants.robotDriveBaseWidth);
     	
     	left = new EncoderFollower(modifier.getLeftTrajectory());
     	right = new EncoderFollower(modifier.getRightTrajectory());
     	
-    	left.configureEncoder(RobotMap.L1.getSelectedSensorPosition(0), 1500, .101);
-    	right.configureEncoder(RobotMap.R1.getSelectedSensorPosition(0), 1500, .101);
+    	left.configureEncoder(RobotMap.L1.getSelectedSensorPosition(0), 1500, Constants.wheelDiameter);
+    	right.configureEncoder(RobotMap.R1.getSelectedSensorPosition(0), 1500, Constants.wheelDiameter);
     	
     	left.configurePIDVA(kP, kI, kD, 1/ maxV, accGain);
     	right.configurePIDVA(kP, kI, kD, 1/ maxV, accGain);

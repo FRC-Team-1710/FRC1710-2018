@@ -37,6 +37,8 @@ public class Constants {
 	public static int wristDown = 2;
 	public static double kPWrist = .01;
 	
-	
-	
+	//pathfinder
+	public static double robotDriveBaseWidth = 0;
+	public static double wheelDiameter = 0;
+	public static int ticksPerRev = 1500;
 }

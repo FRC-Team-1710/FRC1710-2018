@@ -1,5 +1,6 @@
 package commands;
 
+import org.usfirst.frc.team1710.robot.Constants;
 import org.usfirst.frc.team1710.robot.Drive;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -9,10 +10,12 @@ public class DriveToPosition extends Command {
 
 	double _speed;
 	int _encGoal;
-	
+	double _slowPercent;
+	double _speedFactor;
+
     public DriveToPosition(int encGoal, double speed) {
-    	_speed = speed;
-    	_encGoal = encGoal;
+    //	_speed = speed;
+    //	_encGoal = encGoal;
     }
 
 
@@ -21,8 +24,12 @@ public class DriveToPosition extends Command {
 
 
     protected void execute() {
-    	if(Drive.getLeftPosition() < _encGoal) {
+    	_slowPercent=.9;
+    	if(Drive.getLeftPosition() < _encGoal*_slowPercent) {
     		Drive.straightDriveAuto(_speed);
+    	}else {
+    		_speedFactor=((_encGoal-Drive.getLeftPosition())/(_encGoal-(_encGoal*_slowPercent)));
+    		Drive.straightDriveAuto(_speed*_speedFactor);
     	}
     	
     }

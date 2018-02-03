@@ -37,7 +37,7 @@ public class lift {
 			RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower);	
 			setPoint = getLiftEncPosition();
 		} else {	
-			RobotMap.lift1.set(ControlMode.PercentOutput, (-1 * (((getLiftSetPoint() - getLiftEncPosition()) *  Constants.kPLift))));
+			RobotMap.lift1.set(ControlMode.PercentOutput, (-1 * ((getLiftError()) *  Constants.kPLift)));
 		}	
 		if(isAtBottom() == true) {
 			RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);	 

@@ -39,7 +39,7 @@ public class Robot extends IterativeRobot {
 		}
 		Intake.intake(ControllerMap.intakeR, ControllerMap.intakeL);
 		Intake.manipulateWrist();
-		lift.Lifting();
+		lift.manipulateLift();
 	}
 	@Override
 	public void testPeriodic() {

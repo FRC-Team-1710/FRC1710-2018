@@ -10,7 +10,7 @@ public class Intake {
 	static boolean toggle2 = true;
 	static boolean piston = false;
 	static boolean piston2 = false;
-	static double wristPosition;
+	static double wristSetPoint;
 
 	public static void initializeIntake () {
 		RobotMap.intakeR = new TalonSRX (Constants.IntakeRtalon);
@@ -51,14 +51,21 @@ public class Intake {
 	public static int getWristEncPosition() {
 		return RobotMap.wrist.getSelectedSensorPosition(0);
 	}
-	public static void wristControl(int position) {
+	public static double getWristSetPoint() {
 		if (ControllerMap.wristUp == true) {
-			wristPosition = Constants.wristUp;
+			wristSetPoint = Constants.wristUp;
 		} else if (ControllerMap.wristLaunch == true) {
-			wristPosition = Constants.wristLaunch;
+			wristSetPoint = Constants.wristLaunch;
 		} else if (ControllerMap.wristDown == true) {
-			wristPosition = Constants.wristDown;
+			wristSetPoint = Constants.wristDown;
 		}
+		return wristSetPoint;
+	}
+	public static void mainpulateWrist() {
+		RobotMap.wrist.set(ControlMode.PercentOutput, getWristError() * Constants.kPWrist);
+	}
+	public static double getWristError() {
+		return getWristSetPoint() - getWristEncPosition();
 	}
 	public static String getWristPosition() {
 		if (getWristEncPosition() > Constants.wristUp + 5 || getWristEncPosition() < Constants.wristUp - 5) {

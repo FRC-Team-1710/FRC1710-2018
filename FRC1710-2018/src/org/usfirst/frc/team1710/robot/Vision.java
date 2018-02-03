@@ -60,11 +60,11 @@ public class Vision {
 	
 		if(Math.abs(tyValue) > 12.5) {
 			System.out.println("INTAKING");
-			//Intake.autoIntake(-.75, -.75);
+			Intake.intake(0, 0);
 			//arms closed
 		} else {
 			System.out.println("NOT INTAKING");
-			//Intake.autoIntake(0, 0);
+			Intake.intake(-1, 1);
 			//arms opened
 
 		}

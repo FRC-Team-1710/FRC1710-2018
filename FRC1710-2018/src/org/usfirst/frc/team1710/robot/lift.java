@@ -57,7 +57,7 @@ public class lift {
 		if(setPoint == Constants.intake) {
 			return "intake";
 		} else if(setPoint == Constants.switchPosition) {
-			return "swich";
+			return "switch";
 		} else if(setPoint == Constants.lowLevel) {
 			return "low level";
 		} else if(setPoint == Constants.highLevel){

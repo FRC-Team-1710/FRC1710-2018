@@ -78,4 +78,7 @@ public class Intake {
 			return "changing position. Or broken";
 		}
 	}
+	public static void setWristPosition(double setPoint) {
+		wristSetPoint = setPoint;
+	}
 }

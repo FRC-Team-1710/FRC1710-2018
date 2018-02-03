@@ -20,14 +20,14 @@ public class Constants {
 	public static int rightFollowerid=1;
 	public static int rightFollowerid2=3;
 	public static int leftLeaderid=9;
-	public static int leftFollowerid= 3;
+	public static int leftFollowerid= 2;
 	public static int leftFollowerid2= 4;
 	
 	//constants for intake 
-	public static int IntakeRtalon=7;
-	public static int IntakeLtalon=8;
+	public static int intakeRSpark=0;
+	public static int intakeLSpark=1;
 	
-	public static int WristTalon=6;
+	public static int wristTalon=6;
 	public static int lift1Talon=5;
 	public static int lift2Talon=10;
 	

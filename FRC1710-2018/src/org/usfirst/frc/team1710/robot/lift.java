@@ -28,31 +28,33 @@ public class lift {
 		}else if(ControllerMap.four == true) {
 			setPoint = Constants.highLevel;
 		}
-	return setPoint;}
+		return setPoint;
+	}
 		//when a button is pressed, the lift will go to that position.
 
-		public static void liftError() {
+	public static void manipulateLift() {
 		if (ControllerMap.liftPower > 0.2 || ControllerMap.liftPower < -0.2){
 			RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower);	
-			setPoint = getHeight();
+			setPoint = getLiftEncPosition();
 		} else {	
-			RobotMap.lift1.set(ControlMode.PercentOutput, (-1 * (((setPoint - getHeight()) *  Constants.kPLift))));
+			RobotMap.lift1.set(ControlMode.PercentOutput, (-1 * (((getLiftSetPoint() - getLiftEncPosition()) *  Constants.kPLift))));
 		}	
-		 
 		if(isAtBottom() == true) {
 			RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);	 
 		}
-		}
-
+	}
+	public static double getLiftError() {
+		return getLiftSetPoint() - getLiftEncPosition();
+	}
 	public static boolean isAtBottom() {
 		return !RobotMap.liftReset.get();
 	}
 	
-	public static double getHeight() {
+	public static double getLiftEncPosition() {
 		return RobotMap.lift1.getSelectedSensorPosition(0);
 	}
 	
-	public static String getLiftPostion() {
+	public static String getLiftPosition() {
 		if(setPoint == Constants.intake) {
 			return "intake";
 		} else if(setPoint == Constants.switchPosition) {

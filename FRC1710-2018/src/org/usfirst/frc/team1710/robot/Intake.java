@@ -41,6 +41,9 @@ public class Intake {
 			toggle2 = true;
 		}
 	}
+	public static int getWristEncPosition() {
+		return RobotMap.wrist.getSelectedSensorPosition(0);
+	}
 	//TODO: make this control the wrist motor on the intake using feedback from the encoder
 	public static void wristControl(int position) {
 		if (ControllerMap.wristUp == true) {
@@ -49,6 +52,17 @@ public class Intake {
 			wristPosition = Constants.wristLaunch;
 		} else if (ControllerMap.wristDown == true) {
 			wristPosition = Constants.wristDown;
+		}
+	}
+	public static String getWristPosition() {
+		if (getWristEncPosition() > Constants.wristUp + 5 || getWristEncPosition() < Constants.wristUp - 5) {
+			return "Keeping cube in";
+		} else if (getWristEncPosition() > Constants.wristLaunch + 5 || getWristEncPosition() < Constants.wristLaunch - 5) {
+			return "Launch cube upward, at angle";
+		} else if (getWristEncPosition() > Constants.wristDown + 5 || getWristEncPosition () < Constants.wristDown - 5) {
+			return "Wrist is parallell to the ground";
+		} else {
+			return "changing position. Or broken";
 		}
 	}
 }

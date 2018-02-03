@@ -35,6 +35,7 @@ public class Constants {
 	public static int wristUp = 0;
 	public static int wristLaunch = 1;
 	public static int wristDown = 2;
+	public static double kPWrist = .01;
 	
 	
 	

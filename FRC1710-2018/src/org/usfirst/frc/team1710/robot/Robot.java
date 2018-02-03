@@ -42,4 +42,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void testPeriodic() {
 	}
+	@Override
+	public void disabledInit() {
+	 SubsystemManager.masterReset();
+	}
+	public void disabledPeriodic() {
+		//reset code for the wrist and intake 
+	}
 }

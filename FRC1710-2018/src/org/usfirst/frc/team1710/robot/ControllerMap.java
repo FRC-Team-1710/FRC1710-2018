@@ -3,8 +3,7 @@ package org.usfirst.frc.team1710.robot;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class ControllerMap {
-	//TODO: make names better
-	public static void InitilizeControllerMap( ) {
+	public static void InitializeControllerMap() {
 		RobotMap.driveStick = new Joystick(0);
 		RobotMap.mechStick = new Joystick (1);
 	}

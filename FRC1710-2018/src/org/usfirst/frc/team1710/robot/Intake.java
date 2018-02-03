@@ -11,7 +11,13 @@ public class Intake {
 	static boolean piston = false;
 	static boolean piston2 = false;
 	static double wristPosition;
-	//TODO: reformat and replace uses of RobotMap.mechStick... with their respective values in ControllerMap
+
+	public static void initializeIntake () {
+		RobotMap.intakeR = new TalonSRX (Constants.IntakeRtalon);
+		RobotMap.intakeL = new TalonSRX (Constants.IntakeLtalon);
+		RobotMap.wrist = new TalonSRX (Constants.WristTalon);
+	}
+	
 	public static void intake (double right, double left) {
 		RobotMap.intakeR.set(ControlMode.PercentOutput, right);
 		RobotMap.intakeL.set(ControlMode.PercentOutput, left);
@@ -42,7 +48,6 @@ public class Intake {
 			toggle2 = true;
 		}
 	}
-	//TODO: make this control the wrist motor on the intake using feedback from the encoder
 	public static void wristControl(int position) {
 		if (ControllerMap.wristUp == true) {
 			wristPosition = Constants.wristUp;
@@ -52,9 +57,5 @@ public class Intake {
 			wristPosition = Constants.wristDown;
 		}
 	}
-	public static void initilizeIntake () {
-		RobotMap.intakeR = new TalonSRX (Constants.IntakeRtalon);
-		RobotMap.intakeL = new TalonSRX (Constants.IntakeLtalon);
-		RobotMap.wrist = new TalonSRX (Constants.WristTalon);
-	}
+
 }

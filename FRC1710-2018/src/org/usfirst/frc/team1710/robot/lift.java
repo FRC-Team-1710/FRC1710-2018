@@ -10,12 +10,11 @@ public class lift {
 
 	public static double setPoint;	
 	
-	public static void initilizeLift() {
+	public static void initializeLift() {
 		RobotMap.lift1 = new TalonSRX (Constants.lift1Talon);
 		RobotMap.lift2 = new TalonSRX (Constants.lift2Talon);
 		RobotMap.lift1.follow (RobotMap.lift2);
 		RobotMap.liftReset = new DigitalInput(0);
-
 	}
 
 	public static void Lifting () {
@@ -31,7 +30,6 @@ public class lift {
 		} 
 		//when a button is pressed, the lift will go to that position.
 
-		//TODO: make a boolean value in constants to replace this expression with: isLiftManualControl
 		if (ControllerMap.liftPower > 0.2 || ControllerMap.liftPower < -0.2){
 						
 			RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower);	
@@ -57,13 +55,13 @@ public class lift {
 	public static String getLiftPostion() {
 		if(setPoint == Constants.intake) {
 			return "intake";
-		}else if(setPoint == Constants.switchPosition) {
+		} else if(setPoint == Constants.switchPosition) {
 			return "swich";
-		}else if(setPoint == Constants.lowLevel) {
+		} else if(setPoint == Constants.lowLevel) {
 			return "low level";
-		}else if(setPoint == Constants.heighLevel){
+		} else if(setPoint == Constants.heighLevel){
 			return "high level";
-		}else {
+		} else {
 			return "lifting";
 		}
 

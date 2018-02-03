@@ -17,11 +17,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void robotInit() {
-		NetworkTableInstance table = NetworkTableInstance.getDefault();
-		NetworkTable tableTwo = table.getTable("limelight");
-		NetworkTableEntry ledEntry = tableTwo.getEntry("ledMode");
-		ledEntry.forceSetNumber(1);
-		SubsystemManager.masterinitilization();
+		SubsystemManager.masterinitialization();
 	}
 
 	@Override
@@ -36,11 +32,9 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopPeriodic() {
-		//TODO: come up with better, iterative way of handling input
 		if(ControllerMap.visionActivated == true) {
 			Vision.cubeTrackLeft();
 		} else {
-			//shifting is on left bumper
 			Drive.arcadeDrive(ControllerMap.turnPower, ControllerMap.forwardPower, ControllerMap.shift);
 		}
 	}

@@ -21,6 +21,13 @@ public class Vision {
 	static double tyValue = tyEntry.getDouble(0);
 	static double tvValue = tvEntry.getDouble(0);
 	
+	public static void initializeVision() {
+		NetworkTableInstance table = NetworkTableInstance.getDefault();
+		NetworkTable tableTwo = table.getTable("limelight");
+		NetworkTableEntry ledEntry = tableTwo.getEntry("ledMode");
+		ledEntry.forceSetNumber(1);
+	}
+	
 	public static void cubeTrackRight() {
 		//if bot cannot find box turn right
 		if(tvValue==0) {
@@ -61,12 +68,6 @@ public class Vision {
 			//arms opened
 
 		}
-	}
-	public static void initilizeVision() {
-		NetworkTableInstance table = NetworkTableInstance.getDefault();
-		NetworkTable tableTwo = table.getTable("limelight");
-		NetworkTableEntry ledEntry = tableTwo.getEntry("ledMode");
-		ledEntry.forceSetNumber(1);
 	}
 	
 }

@@ -28,8 +28,8 @@ public class Constants {
 	public static int intakeLSpark=1;
 	
 	public static int wristTalon=6;
-	public static int lift1Talon=5;
-	public static int lift2Talon=10;
+	public static int liftRightTalon=5;
+	public static int liftLeftTalon=10;
 	
 	//constants for wrist
 	public static int wristUp = 0;

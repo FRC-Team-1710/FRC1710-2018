@@ -21,6 +21,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		SubsystemManager.masterinitialization();
+		RobotMap.driveStick = new Joystick(0);
+		RobotMap.mechStick = new Joystick(1);
 	}
 
 	@Override
@@ -42,8 +44,9 @@ public class Robot extends IterativeRobot {
 		} else {
 			Drive.arcadeDrive(ControllerMap.turnPower, ControllerMap.forwardPower, ControllerMap.shift);
 		}
-		Intake.intake(ControllerMap.intakeR, ControllerMap.intakeL);
-		Intake.manipulateWrist();
+		//Intake.intake(ControllerMap.intakeR, ControllerMap.intakeL);
+		//Intake.manipulateWrist();
+		ControllerMap.updateControllers();
 		lift.manipulateLift();
 	}
 	

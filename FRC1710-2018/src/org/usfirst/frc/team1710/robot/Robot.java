@@ -46,7 +46,10 @@ public class Robot extends IterativeRobot {
 		}
 		//Intake.intake(ControllerMap.intakeR, ControllerMap.intakeL);
 		//Intake.manipulateWrist();
+		
+		//we dont't want this, make getter methods that are called only when the controller input is needed:
 		ControllerMap.updateControllers();
+		
 		lift.manipulateLift();
 	}
 	

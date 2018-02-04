@@ -11,6 +11,11 @@ public class ControllerMap {
 		RobotMap.mechStick = new Joystick (1);
 	}
 	
+	//example getter method:
+	public static double getTurnPower() {
+		return -RobotMap.driveStick.getRawAxis(4);
+	}
+	
 	public static void updateControllers() {
 		one = RobotMap.mechStick.getRawButton(1);
 		two = RobotMap.mechStick.getRawButton(2);

@@ -20,21 +20,21 @@ public class lift {
 	}
 
 	public static double getLiftSetPoint () {
-		if(ControllerMap.one == true) {
+		if(ControllerMap.mechStickOne() == true) {
 			setPoint = Constants.intake;
-		}else if(ControllerMap.two == true) {
+		}else if(ControllerMap.mechStickTwo() == true) {
 			setPoint = Constants.switchPosition;
-		}else if(ControllerMap.three == true) {
+		}else if(ControllerMap.mechStickThree() == true) {
 			setPoint = Constants.lowLevel;
-		}else if(ControllerMap.four == true) {
+		}else if(ControllerMap.mechStickFour() == true) {
 			setPoint = Constants.highLevel;
 		}
 		return setPoint;
 	}
 	
 	public static void manipulateLift() {
-		if (ControllerMap.liftPower > 0.2 || ControllerMap.liftPower < -0.2){
-			RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower);	
+		if (ControllerMap.liftPower() > 0.2 || ControllerMap.liftPower() < -0.2){
+			RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower());	
 			//RobotMap.lift2.set(ControlMode.PercentOutput, -ControllerMap.liftPower);	
 			setPoint = getLiftEncPosition();
 		} else {	
@@ -46,10 +46,10 @@ public class lift {
 	}
 	
 	public static void testing() {
-		if(RobotMap.mechStick.getRawButton(1) == true) {
-			RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower);
+		if(ControllerMap.mechStickOne() == true) {
+			RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower());
 		} else {
-			RobotMap.lift2.set(ControlMode.PercentOutput, ControllerMap.liftPower);
+			RobotMap.lift2.set(ControlMode.PercentOutput, ControllerMap.liftPower());
 		}
 	}
 	public static double getLiftError() {

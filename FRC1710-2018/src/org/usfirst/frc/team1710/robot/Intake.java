@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Spark;
 
 public class Intake {
 	static boolean toggle = true;
@@ -13,14 +14,14 @@ public class Intake {
 	static double wristSetPoint;
 
 	public static void initializeIntake () {
-		RobotMap.intakeR = new TalonSRX (Constants.IntakeRtalon);
-		RobotMap.intakeL = new TalonSRX (Constants.IntakeLtalon);
-		RobotMap.wrist = new TalonSRX (Constants.WristTalon);
+		RobotMap.intakeR = new Spark (Constants.intakeRSpark);
+		RobotMap.intakeL = new Spark (Constants.intakeLSpark);
+		RobotMap.wrist = new TalonSRX (Constants.wristTalon);
 	}
 	
 	public static void intake (double right, double left) {
-		RobotMap.intakeR.set(ControlMode.PercentOutput, right);
-		RobotMap.intakeL.set(ControlMode.PercentOutput, left);
+		RobotMap.intakeR.set(right);
+		RobotMap.intakeL.set(left);
 		// Right toggle
 		if (toggle && ControllerMap.rightIntakePistonToggle) {
 			toggle = false;

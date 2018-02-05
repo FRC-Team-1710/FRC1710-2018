@@ -4,7 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
-
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
@@ -67,6 +67,15 @@ public class Drive {
 	
 	public static double getRightVelocity() {
 		return RobotMap.R1.getSelectedSensorVelocity(0);
+	}
+	
+	public static void stopDriving() {
+		RobotMap.R1.set(ControlMode.PercentOutput, 0);
+		RobotMap.L1.set(ControlMode.PercentOutput, 0);
+	}
+	
+	public static double getNavxAngle() {
+		return RobotMap.navx.getAngle();
 	}
 	
 	public static double getLeftPosition() {

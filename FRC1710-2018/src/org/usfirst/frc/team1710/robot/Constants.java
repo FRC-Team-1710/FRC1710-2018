@@ -20,16 +20,16 @@ public class Constants {
 	public static int rightFollowerid=1;
 	public static int rightFollowerid2=3;
 	public static int leftLeaderid=9;
-	public static int leftFollowerid= 3;
+	public static int leftFollowerid= 2;
 	public static int leftFollowerid2= 4;
 	
 	//constants for intake 
-	public static int IntakeRtalon=7;
-	public static int IntakeLtalon=8;
+	public static int intakeRSpark=0;
+	public static int intakeLSpark=1;
 	
-	public static int WristTalon=6;
-	public static int lift1Talon=5;
-	public static int lift2Talon=10;
+	public static int wristTalon=6;
+	public static int liftRightTalon=5;
+	public static int liftLeftTalon=10;
 	
 	//constants for wrist
 	public static int wristUp = 0;
@@ -41,4 +41,10 @@ public class Constants {
 	public static double robotDriveBaseWidth = .6985;
 	public static double wheelDiameter = .1524;
 	public static int ticksPerRev = 1500;
+	
+	public static double dt = 0.02;
+	public static double maxV = 2.55;
+	public static double maxAccel = 3;
+	public static double accGain = 0.01;
+	public static double maxJerk = 60;
 }

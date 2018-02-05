@@ -18,11 +18,11 @@ public class SubsystemManager {
 		RobotMap.wrist.setSelectedSensorPosition(0, 0, 0);
 		RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);
 		RobotMap.shifter.set(DoubleSolenoid.Value.kOff);
-		RobotMap.intakeRight.set(DoubleSolenoid.Value.kOff);
+		/*RobotMap.intakeRight.set(DoubleSolenoid.Value.kOff);
 		RobotMap.intakeLeft.set(DoubleSolenoid.Value.kOff);
 		RobotMap.rampDeploy.set(DoubleSolenoid.Value.kOff);
 		RobotMap.rampExtendo.set(DoubleSolenoid.Value.kOff);
-		RobotMap.rampLifto.set(DoubleSolenoid.Value.kOff);
+		RobotMap.rampLifto.set(DoubleSolenoid.Value.kOff);*/
 	}
 	public static void encoderReset() {
 		RobotMap.R1.setSelectedSensorPosition(0, 0, 0);

@@ -23,7 +23,7 @@ public class Intake {
 		RobotMap.intakeR.set(right);
 		RobotMap.intakeL.set(left);
 		// Right toggle
-		if (toggle && ControllerMap.rightIntakePistonToggle) {
+		if (toggle && ControllerMap.rightIntakeToggle()) {
 			toggle = false;
 			if (piston) {
 				piston = false;
@@ -32,11 +32,11 @@ public class Intake {
 				piston = true;
 				RobotMap.intakeRight.set(DoubleSolenoid.Value.kReverse);
 			}
-		} else if (ControllerMap.rightIntakePistonToggle == false) {
+		} else if (ControllerMap.rightIntakeToggle() == false) {
 			toggle = true;
 		}
 		// Left toggle
-		if (toggle2 && ControllerMap.leftIntakePistonToggle) {
+		if (toggle2 && ControllerMap.leftIntakeToggle()) {
 			toggle2 = false;
 			if (piston2) {
 				piston2 = false;
@@ -45,7 +45,7 @@ public class Intake {
 				piston2 = true;
 				RobotMap.intakeLeft.set(DoubleSolenoid.Value.kReverse);
 			}
-		} else if (ControllerMap.leftIntakePistonToggle == false) {
+		} else if (ControllerMap.leftIntakeToggle() == false) {
 			toggle2 = true;
 		}
 	}
@@ -53,11 +53,11 @@ public class Intake {
 		return RobotMap.wrist.getSelectedSensorPosition(0);
 	}
 	public static double getWristSetPoint() {
-		if (ControllerMap.wristUp == true) {
+		if (ControllerMap.wristUp() == true) {
 			wristSetPoint = Constants.wristUp;
-		} else if (ControllerMap.wristLaunch == true) {
+		} else if (ControllerMap.wristLaunch() == true) {
 			wristSetPoint = Constants.wristLaunch;
-		} else if (ControllerMap.wristDown == true) {
+		} else if (ControllerMap.wristDown() == true) {
 			wristSetPoint = Constants.wristDown;
 		}
 		return wristSetPoint;

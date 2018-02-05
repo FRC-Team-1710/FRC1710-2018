@@ -38,16 +38,16 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopPeriodic() {
-		if(ControllerMap.visionActivated == true) {
+		if(ControllerMap.visionActivated() == true) {
 			Vision.cubeTrackLeft();
 		} else {
-			Drive.arcadeDrive(ControllerMap.turnPower, ControllerMap.forwardPower, ControllerMap.shift);
+			Drive.arcadeDrive(ControllerMap.getTurnPower(), ControllerMap.getForwardPower(), ControllerMap.shift());
 		}
-		//Intake.intake(ControllerMap.intakeR, ControllerMap.intakeL);
+		//Intake.intake(ControllerMap.intakeR(), ControllerMap.intakeL());
 		//Intake.manipulateWrist();
 		//we dont't want this, make getter methods that are called only when the controller input is needed:
 		//we dont wanna do this any more, make getter methods in ControllerMap that handle inputs
-		ControllerMap.updateControllers();
+		//ControllerMap.updateControllers();
 		
 		lift.manipulateLift();
 	}

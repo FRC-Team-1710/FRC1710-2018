@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -17,59 +19,54 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void robotInit() {
-		//setting talonSRXs
-		NetworkTableInstance table = NetworkTableInstance.getDefault();
-		NetworkTable tableTwo = table.getTable("limelight");
-		NetworkTableEntry ledEntry = tableTwo.getEntry("ledMode");
-		ledEntry.forceSetNumber(1);
-		
-		RobotMap.R1 = new TalonSRX (Constants.rightLeaderid);
-		RobotMap.R2 = new VictorSPX (Constants.rightFollowerid);
-		RobotMap.R3 = new VictorSPX (Constants.rightFollowerid2);
-		RobotMap.L1 = new TalonSRX (Constants.leftLeaderid);
-		RobotMap.L2 = new VictorSPX (Constants.leftFollowerid);
-		RobotMap.L3 = new VictorSPX (Constants.leftFollowerid2);
-		
-		RobotMap.intakeR = new TalonSRX (Constants.IntakeRtalon);
-		RobotMap.intakeL = new TalonSRX (Constants.IntakeLtalon);
-		RobotMap.wrist = new TalonSRX (Constants.WrisTalon);
-		RobotMap.lift1 = new TalonSRX (Constants.lift1Talon);
-		RobotMap.lift2 = new TalonSRX (Constants.lift2Talon);
-		
-		
-		//makes each spx follow their respective srx
-		RobotMap.R2.follow (RobotMap.R1);
-		RobotMap.R3.follow (RobotMap.R1);
-		RobotMap.L2.follow (RobotMap.L1);
-		RobotMap.L3.follow (RobotMap.L1);
-		RobotMap.lift1.follow (RobotMap.lift2);
-		RobotMap.liftReset = new DigitalInput(0);
+		SubsystemManager.masterinitialization();
 		RobotMap.driveStick = new Joystick(0);
-		RobotMap.shifter = new DoubleSolenoid(0,1);
+		RobotMap.mechStick = new Joystick(1);
 	}
 
 	@Override
 	public void autonomousInit() {
-		
+		//CommandGroup autoMode = new trajectoryTestCGroup();
+		//autoMode.start();
 	}
 
 
 	@Override
 	public void autonomousPeriodic() {
+		Scheduler.getInstance().run();
 	}
 
 	@Override
 	public void teleopPeriodic() {
-		//TODO: come up with better, iterative way of handling input
-		if(ControllerMap.visionActivated == true) {
+		if(ControllerMap.visionActivated() == true) {
 			Vision.cubeTrackLeft();
 		} else {
-			//shifting is on left bumper
-			Drive.arcadeDrive(ControllerMap.turnPower, ControllerMap.forwardPower, ControllerMap.shift);
+			Drive.arcadeDrive(ControllerMap.getTurnPower(), ControllerMap.getForwardPower(), ControllerMap.shift());
 		}
+		//Intake.intake(ControllerMap.intakeR(), ControllerMap.intakeL());
+		//Intake.manipulateWrist();
+		//we dont't want this, make getter methods that are called only when the controller input is needed:
+		//we dont wanna do this any more, make getter methods in ControllerMap that handle inputs
+		//ControllerMap.updateControllers();
+		
+		lift.manipulateLift();
 	}
-
+	
 	@Override
 	public void testPeriodic() {
+	}
+	
+	@Override
+	public void disabledInit() {
+		SubsystemManager.masterReset();
+		Intake.setWristPosition(Constants.wristUp);
+		lift.liftSetPoint(Constants.wristUp);
+	}
+	
+	@Override
+	public void disabledPeriodic() {
+		//reset code for the wrist and intake 
+		Intake.manipulateWrist();
+		lift.manipulateLift();
 	}
 }

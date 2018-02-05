@@ -7,9 +7,11 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Spark;
 
 public class RobotMap {
-	public static TalonSRX R1, L1, intakeR, intakeL, wrist, lift1, lift2;
+	public static TalonSRX R1, L1, wrist, lift1, lift2;
+	public static Spark intakeL, intakeR;
 	public static VictorSPX R2, R3, L2, L3;
 	public static Joystick driveStick, mechStick;
 	public static AHRS navx;

@@ -1,14 +1,11 @@
 package org.usfirst.frc.team1710.robot;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
 public class Constants {
 	//constants for the lift
-	public static double distance1 = 0;
-	public static double distance2 = 4000;
-	public static double distance3 = 6000;
-	public static double distance4 = 8000;
+	public static double intake = 0;
+	public static double switchPosition = 4000;
+	public static double lowLevel= 6000;
+	public static double highLevel = 8000;
 	public static double kPLift = 0.0008;
 	
 	//constants for drive
@@ -23,19 +20,31 @@ public class Constants {
 	public static int rightFollowerid=1;
 	public static int rightFollowerid2=3;
 	public static int leftLeaderid=9;
-	public static int leftFollowerid= 3;
+	public static int leftFollowerid= 2;
 	public static int leftFollowerid2= 4;
 	
 	//constants for intake 
-	public static int IntakeRtalon=7;
-	public static int IntakeLtalon=8;
+	public static int intakeRSpark=0;
+	public static int intakeLSpark=1;
 	
-	public static int WrisTalon=6;
-	public static int lift1Talon=5;
-	public static int lift2Talon=10;
+	public static int wristTalon=6;
+	public static int liftRightTalon=5;
+	public static int liftLeftTalon=10;
 	
+	//constants for wrist
+	public static int wristUp = 0;
+	public static int wristLaunch = 1;
+	public static int wristDown = 2;
+	public static double kPWrist = .01;
 	
+	//pathfinder (dimensions in meters)
+	public static double robotDriveBaseWidth = .6985;
+	public static double wheelDiameter = .1524;
+	public static int ticksPerRev = 1500;
 	
-	
-	
+	public static double dt = 0.02;
+	public static double maxV = 2.55;
+	public static double maxAccel = 3;
+	public static double accGain = 0.01;
+	public static double maxJerk = 60;
 }

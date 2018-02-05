@@ -1,17 +1,6 @@
 package org.usfirst.frc.team1710.robot;
-
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.command.Scheduler;
 
 public class Robot extends IterativeRobot {
 
@@ -28,6 +17,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousPeriodic() {
+		Scheduler.getInstance().run();
 	}
 
 	@Override
@@ -49,8 +39,7 @@ public class Robot extends IterativeRobot {
 		SubsystemManager.masterReset();
 		Intake.setWristPosition(Constants.wristUp);
 	}
-	public void disabledPeriodic() {
-		//reset code for the wrist and intake 
+	public void disabledPeriodic() { 
 		Intake.manipulateWrist();
 	}
 }

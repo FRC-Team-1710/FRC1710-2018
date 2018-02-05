@@ -1,39 +1,26 @@
 package commands;
-
+import org.usfirst.frc.team1710.robot.Intake;
 import org.usfirst.frc.team1710.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 
-
 public class PitchIntake extends Command {
 
-	boolean piston;
-	boolean toggle;
-	
-    public PitchIntake() {
-
+	double _goalWrist;
+    public PitchIntake(double goalWrist) {
+    	_goalWrist = goalWrist;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Intake.setWristPosition(_goalWrist);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (piston) {
-			piston = false;
-			RobotMap.intakeRight.set(DoubleSolenoid.Value.kForward);
-			
-		} else if(RobotMap.mechStick.getRawButton(6) == false) {
-			toggle = true;
-			
-		} else {
-			piston = true;
-			RobotMap.intakeRight.set(DoubleSolenoid.Value.kReverse);
-			
+    	Intake.manipulateWrist();    	
 			} 
-    }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
@@ -44,8 +31,6 @@ public class PitchIntake extends Command {
     protected void end() {
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
+     protected void interrupted() {
     }
 }

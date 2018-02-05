@@ -26,12 +26,6 @@ public class FollowTrajectory extends Command {
 	double kP = 0.01;
 	double kI = 0;
 	double kD = 0.001;
-	//.01
-	double accGain = 0.01;
-	//also good!!! (maybe make them both twelve... if all else fails)
-	//2.55 3
-	double maxV = 2.55;
-	double maxAccel = 3;
 	
     public FollowTrajectory(Waypoint[] points) {
     	waypoints = points;
@@ -41,18 +35,18 @@ public class FollowTrajectory extends Command {
     protected void initialize() {
     	SubsystemManager.masterReset();
 
-    	Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH, 0.02, maxV, maxAccel, 60);
+    	Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH, Constants.dt, Constants.maxV, Constants.maxAccel, 60);
     	trajectory = Pathfinder.generate(waypoints, config);
     	TankModifier modifier = new TankModifier(trajectory).modify(Constants.robotDriveBaseWidth);
     	
     	left = new EncoderFollower(modifier.getLeftTrajectory());
     	right = new EncoderFollower(modifier.getRightTrajectory());
     	
-    	left.configureEncoder(RobotMap.L1.getSelectedSensorPosition(0), 1500, Constants.wheelDiameter);
-    	right.configureEncoder(RobotMap.R1.getSelectedSensorPosition(0), 1500, Constants.wheelDiameter);
+    	left.configureEncoder((int) Drive.getLeftPosition(), Constants.ticksPerRev, Constants.wheelDiameter);
+    	right.configureEncoder((int) Drive.getRightPosition(), Constants.ticksPerRev, Constants.wheelDiameter);
     	
-    	left.configurePIDVA(kP, kI, kD, 1/ maxV, accGain);
-    	right.configurePIDVA(kP, kI, kD, 1/ maxV, accGain);
+    	left.configurePIDVA(kP, kI, kD, 1/ Constants.maxV, Constants.accGain);
+    	right.configurePIDVA(kP, kI, kD, 1/ Constants.maxV, Constants.accGain);
     }
 
     // Called repeatedly when this Command is scheduled to run

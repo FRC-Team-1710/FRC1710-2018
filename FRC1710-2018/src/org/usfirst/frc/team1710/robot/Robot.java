@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import trajectory.trajectoryTestCGroup;
 
 public class Robot extends IterativeRobot {
 
@@ -27,8 +26,8 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
-		CommandGroup autoMode = new trajectoryTestCGroup();
-		autoMode.start();
+		//CommandGroup autoMode = new trajectoryTestCGroup();
+		//autoMode.start();
 	}
 
 

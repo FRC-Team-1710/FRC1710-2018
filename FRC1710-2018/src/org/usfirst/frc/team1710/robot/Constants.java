@@ -41,4 +41,10 @@ public class Constants {
 	public static double robotDriveBaseWidth = .6985;
 	public static double wheelDiameter = .1524;
 	public static int ticksPerRev = 1500;
+	
+	public static double dt = 0.02;
+	public static double maxV = 2.55;
+	public static double maxAccel = 3;
+	public static double accGain = 0.01;
+	public static double maxJerk = 60;
 }

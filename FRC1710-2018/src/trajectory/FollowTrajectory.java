@@ -27,6 +27,7 @@ public class FollowTrajectory extends Command {
 	double kI = 0;
 	double kD = 0.001;
 	
+	//TODO: don't pass through waypoints, pass through a trajectory that has already been calculated from path manager
     public FollowTrajectory(Waypoint[] points) {
     	waypoints = points;
     }

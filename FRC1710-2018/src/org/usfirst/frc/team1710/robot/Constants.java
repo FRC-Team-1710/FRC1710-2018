@@ -8,8 +8,12 @@ public class Constants {
 	public static double highLevel = 8000;
 	public static double kPLift = 0.0008;
 	
+	public static int shifterReverse = 0;
+	public static int shifterForward = 1;
+	
 	//constants for drive
 	public static double kpStraight = .01;
+	public static double kpTurn = 0.01;
 	
 	//constants for Vision
 	public static double kpAim = .02;
@@ -47,4 +51,8 @@ public class Constants {
 	public static double maxAccel = 3;
 	public static double accGain = 0.01;
 	public static double maxJerk = 60;
+	
+	//rotate to angle
+	public static double rotateToAngleHiEnd = 5;
+	public static double rotateToAngleLoEnd = 5;
 }

@@ -1,5 +1,6 @@
 package commands;
 
+import org.usfirst.frc.team1710.robot.Constants;
 import org.usfirst.frc.team1710.robot.Drive;
 import org.usfirst.frc.team1710.robot.RobotMap;
 import org.usfirst.frc.team1710.robot.SubsystemManager;
@@ -9,9 +10,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class TurnToAngle extends Command {
 	
 	double _angle;
-	double _speed;
-	double _goal;
-	double mult = .005;
 	
     public TurnToAngle(double angle) {
     	_angle = angle;
@@ -24,11 +22,11 @@ public class TurnToAngle extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Drive.arcadeDrive(0, (RobotMap.navx.getAngle() - _angle) * mult, false);
+    	Drive.setRobotHeading(_angle);
     }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return RobotMap.navx.getAngle() < _goal + 5 || RobotMap.navx.getAngle() > _goal - 5;
+        return RobotMap.navx.getAngle() < _angle + Constants.rotateToAngleHiEnd || RobotMap.navx.getAngle() > _angle - Constants.rotateToAngleLoEnd;
     }
 
     // Called once after isFinished returns true

@@ -23,7 +23,7 @@ public class Drive {
 		RobotMap.L2.follow (RobotMap.L1);
 		RobotMap.L3.follow (RobotMap.L1);
 		
-		RobotMap.shifter = new DoubleSolenoid(0,1);
+		RobotMap.shifter = new DoubleSolenoid(Constants.shifterForward,Constants.shifterReverse);
 		
 		RobotMap.navx = new AHRS(SPI.Port.kMXP);
 	}
@@ -59,6 +59,12 @@ public class Drive {
 		double error = (RobotMap.navx.getAngle() - (heading * 180));
 		rightDrive(error *Constants.kpStraight + power);
 		leftDrive(error*Constants.kpStraight - power);
+	}
+	
+	public static void setRobotHeading(double heading) {
+		double error = (RobotMap.navx.getAngle() - heading);
+		rightDrive(error*Constants.kpTurn);
+		leftDrive(error*Constants.kpTurn);
 	}
 	
 	public static double getLeftVelocity() {

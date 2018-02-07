@@ -32,7 +32,7 @@ public class Drive {
 		RobotMap.navx = new AHRS(SPI.Port.kMXP);
 	}
 	
-	public static void arcadeDrive (double forward, double side, boolean shift) {
+	public static void arcadeDrive (double side, double forward, boolean shift) {
 		if (shift == true) {
 			if(navxReset == false) {
 				RobotMap.navx.reset();
@@ -41,12 +41,12 @@ public class Drive {
 			//high gear
 			RobotMap.shifter.set(Value.kReverse); 
 			//side is forward for some reason
-			straightDriveAuto(-side);
+			straightDriveAuto(-forward);
 		} else {
 			//low gear
 			RobotMap.shifter.set(Value.kForward);
-			RobotMap.R1.set(ControlMode.PercentOutput, forward - side);
-			RobotMap.L1.set(ControlMode.PercentOutput, forward + side);
+			RobotMap.R1.set(ControlMode.PercentOutput, side - forward);
+			RobotMap.L1.set(ControlMode.PercentOutput, side + forward);
 			navxReset = false;
 		}
 	}

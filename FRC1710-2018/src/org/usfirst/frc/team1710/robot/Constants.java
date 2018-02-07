@@ -1,12 +1,16 @@
 package org.usfirst.frc.team1710.robot;
 
 public class Constants {
-	//constants for the lift
-	public static double intake = 0;
-	public static double switchPosition = 4000;
-	public static double lowLevel= 6000;
-	public static double highLevel = 8000;
-	public static double kPLift = 0.0008;
+	//constants for the lift 0 to 9700
+	public static double intake = 500;
+	public static double switchPosition = 2000;
+	public static double scaleLow= 4000;
+	public static double scaleNormal = 7000;
+	public static double scaleHigh = 9000;
+	//the constant for moving down is less bc when we go down we work with gravity and that prevents things from 
+	//getting too violent
+	public static double kPLiftUp = 0.0006;
+	public static double kPLiftDown = 0.00025;
 	
 	public static int shifterReverse = 0;
 	public static int shifterForward = 1;

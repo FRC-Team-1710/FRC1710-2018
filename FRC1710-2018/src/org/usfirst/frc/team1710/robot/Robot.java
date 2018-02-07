@@ -1,5 +1,9 @@
 package org.usfirst.frc.team1710.robot;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
@@ -14,11 +18,17 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import trajectory.trajectoryTestCGroup;
 
 public class Robot extends IterativeRobot {
 
+	static List<Object> thingsToPutOnDashboard = new ArrayList<Object>();
+	
 	@Override
 	public void robotInit() {
+		thingsToPutOnDashboard.add(RobotMap.R1);
+		thingsToPutOnDashboard.add(RobotMap.L1);
+		thingsToPutOnDashboard.add(RobotMap.lift1);
 		SubsystemManager.masterinitialization();
 		RobotMap.driveStick = new Joystick(0);
 		RobotMap.mechStick = new Joystick(1);
@@ -26,8 +36,8 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
-		//CommandGroup autoMode = new trajectoryTestCGroup();
-		//autoMode.start();
+		CommandGroup autoMode = new trajectoryTestCGroup();
+		autoMode.start();
 	}
 
 
@@ -37,6 +47,12 @@ public class Robot extends IterativeRobot {
 	}
 
 	@Override
+	public void teleopInit() {
+		SubsystemManager.masterReset();
+		lift.liftSetPoint(Constants.intake);
+	}
+	
+	@Override
 	public void teleopPeriodic() {
 		if(ControllerMap.visionActivated() == true) {
 			Vision.cubeTrackLeft();
@@ -45,11 +61,10 @@ public class Robot extends IterativeRobot {
 		}
 		//Intake.intake(ControllerMap.intakeR(), ControllerMap.intakeL());
 		//Intake.manipulateWrist();
-		//we dont't want this, make getter methods that are called only when the controller input is needed:
-		//we dont wanna do this any more, make getter methods in ControllerMap that handle inputs
-		//ControllerMap.updateControllers();
-		
+		//DashboardInput.updateDashboard(new DashboardReport(thingsToPutOnDashboard));
 		lift.manipulateLift();
+		SmartDashboard.putNumber("Lift enc", lift.getLiftEncPosition());
+		SmartDashboard.putString("Lift Position", lift.getLiftPosition());
 	}
 	
 	@Override
@@ -59,14 +74,14 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledInit() {
 		SubsystemManager.masterReset();
-		Intake.setWristPosition(Constants.wristUp);
-		lift.liftSetPoint(Constants.wristUp);
+		lift.liftSetPoint(Constants.intake);
+		//Intake.setWristPosition(Constants.wristUp);
 	}
 	
 	@Override
 	public void disabledPeriodic() {
 		//reset code for the wrist and intake 
-		Intake.manipulateWrist();
-		lift.manipulateLift();
+		//Intake.manipulateWrist();
+		//lift.manipulateLift();
 	}
 }

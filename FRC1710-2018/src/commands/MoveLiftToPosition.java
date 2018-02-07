@@ -21,20 +21,20 @@ public class MoveLiftToPosition extends Command {
     	}else if(_level == 1) {
     		setPoint = Constants.switchPosition;
     	}else if(_level == 2) {
-    		setPoint = Constants.lowLevel;
+    		setPoint = Constants.scaleLow;
     	}else if(_level == 3) {
-    		setPoint = Constants.highLevel;
+    		setPoint = Constants.scaleHigh;
     	}
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	RobotMap.lift1.set(ControlMode.PercentOutput, (-1 * ((setPoint - RobotMap.lift1.getSelectedSensorPosition(0)) * Constants.kPLift)));
+    	RobotMap.lift1.set(ControlMode.PercentOutput, (-1 * ((setPoint - RobotMap.lift1.getSelectedSensorPosition(0)) * Constants.kPLiftDown)));
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return (-1 * ((setPoint - RobotMap.lift1.getSelectedSensorPosition(0)) * Constants.kPLift)) <= 0.1 || (-1 * ((setPoint - RobotMap.lift1.getSelectedSensorPosition(0)) * Constants.kPLift)) >= 0.1;
+        return (-1 * ((setPoint - RobotMap.lift1.getSelectedSensorPosition(0)) * Constants.kPLiftDown)) <= 0.1 || (-1 * ((setPoint - RobotMap.lift1.getSelectedSensorPosition(0)) * Constants.kPLiftDown)) >= 0.1;
     }
 
     // Called once after isFinished returns true

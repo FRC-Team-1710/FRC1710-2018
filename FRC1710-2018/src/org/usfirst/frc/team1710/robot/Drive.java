@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class Drive {
 	
+	static boolean navxReset = false;
+	
 	public static void initializeDrive () {
 		RobotMap.R1 = new TalonSRX (Constants.rightLeaderid);
 		RobotMap.R2 = new VictorSPX (Constants.rightFollowerid);
@@ -19,9 +21,11 @@ public class Drive {
 		RobotMap.L3 = new VictorSPX (Constants.leftFollowerid2);
 		
 		RobotMap.R2.follow (RobotMap.R1);
+		RobotMap.R2.setInverted(true);
 		RobotMap.R3.follow (RobotMap.R1);
 		RobotMap.L2.follow (RobotMap.L1);
 		RobotMap.L3.follow (RobotMap.L1);
+		RobotMap.L3.setInverted(true);
 		
 		RobotMap.shifter = new DoubleSolenoid(Constants.shifterForward,Constants.shifterReverse);
 		
@@ -30,15 +34,21 @@ public class Drive {
 	
 	public static void arcadeDrive (double forward, double side, boolean shift) {
 		if (shift == true) {
+			if(navxReset == false) {
+				RobotMap.navx.reset();
+				navxReset = true;
+			}
 			//high gear
 			RobotMap.shifter.set(Value.kReverse); 
+			//side is forward for some reason
+			straightDriveAuto(-side);
 		} else {
 			//low gear
 			RobotMap.shifter.set(Value.kForward);
+			RobotMap.R1.set(ControlMode.PercentOutput, forward - side);
+			RobotMap.L1.set(ControlMode.PercentOutput, forward + side);
+			navxReset = false;
 		}
-		
-		RobotMap.R1.set(ControlMode.PercentOutput, forward - side);
-		RobotMap.L1.set(ControlMode.PercentOutput, forward + side);
 	}
 	
 	public static void leftDrive(double power) {

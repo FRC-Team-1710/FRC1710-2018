@@ -23,7 +23,7 @@ public class FollowTrajectory extends Command {
 	EncoderFollower left, right;
 	Trajectory trajectory;
 	//p is good, I does nothing. play with d
-	double kP = 0.01;
+	double kP = 0.1;
 	double kI = 0;
 	double kD = 0.001;
 	
@@ -63,8 +63,8 @@ public class FollowTrajectory extends Command {
     	//maybe say if seg.y >= 0 -> (-1/80) else -> (1/80)
     	//.65
 		double turn = .65 * (-1.0/80.0) * angleDifference;
-    	Drive.leftDrive(turn + l);
-    	Drive.rightDrive(turn- r);
+    	Drive.leftDrive(turn - l);
+    	Drive.rightDrive(turn + r);
     	
     	/*for (int i = 0; i < trajectory.length(); i++) {
     	    Trajectory.Segment seg = trajectory.get(i);

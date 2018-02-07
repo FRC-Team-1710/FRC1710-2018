@@ -25,8 +25,8 @@ public class waypoints {
 	
 	public static Waypoint[] testPoints = new Waypoint[] {
 			new Waypoint(0,0,0),
-			new Waypoint(1,-1,0),
-			new Waypoint(2,0,Pathfinder.d2r(-90)),
+			new Waypoint(1,-2,0),
+			new Waypoint(4,0,Pathfinder.d2r(-90)),
 	};
 	
 	public static Waypoint[] leftStartLeftSwitch = new Waypoint[] {
@@ -40,6 +40,11 @@ public class waypoints {
 			new Waypoint(3,-1.75,0),
 			new Waypoint(5,0,Pathfinder.d2r(55)),
 			new Waypoint(6,2,Pathfinder.d2r(100)),
+	};
+	
+	public static Waypoint[] safePoints = new Waypoint[] {
+			new Waypoint(0,0,0),
+			new Waypoint(1,0,0),
 	};
 	
 }

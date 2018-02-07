@@ -1,8 +1,11 @@
 package org.usfirst.frc.team1710.robot;
 
+import java.util.Iterator;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DashboardInput {
 	static NetworkTableInstance table = NetworkTableInstance.getDefault();
@@ -14,7 +17,12 @@ public class DashboardInput {
 	static NetworkTableEntry positionTwo = autoChoices.getEntry("starting_position_Middle");
 	static NetworkTableEntry positionThree = autoChoices.getEntry("starting_position_Right");
 	
-	
+	public static void updateDashboard(DashboardReport report) {
+		for (int i = 0; i < report.getEncoderValues().size(); i++) {
+			SmartDashboard.putNumber(Integer.toString(report.getSrxs().get(i).getDeviceID()),
+					report.getEncoderValues().get(i));
+		}
+	}
 	
 	public static boolean isRobotStartingLeft() {
 		return destinationOne.getBoolean(false);

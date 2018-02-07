@@ -8,17 +8,20 @@ public class ControllerMap {
 		RobotMap.mechStick = new Joystick (1);
 	}
 	//buttons 
-	public static boolean mechStickOne() {
-		return RobotMap.mechStick.getRawButton(1);
+	public static boolean bottomLift() {
+		return RobotMap.mechStick.getRawButton(7);
 	}
-	public static boolean mechStickTwo() {
-		return RobotMap.mechStick.getRawButton(2);
+	public static boolean liftAtSwitchHeight() {
+		return RobotMap.mechStick.getRawButton(8);
 	}
-	public static boolean mechStickThree() {
-		return RobotMap.mechStick.getRawButton(3);
+	public static boolean liftAtScaleLow() {
+		return RobotMap.mechStick.getRawButton(9);
 	}
-	public static boolean mechStickFour() {
-		return RobotMap.mechStick.getRawButton(4);
+	public static boolean liftAtScaleNormal() {
+		return RobotMap.mechStick.getRawButton(10);
+	}
+	public static boolean liftAtScaleHigh() {
+		return RobotMap.mechStick.getRawButton(11);
 	}
 	public static boolean leftIntakeToggle() {
 		return RobotMap.mechStick.getRawButton(5);
@@ -27,20 +30,15 @@ public class ControllerMap {
 		return RobotMap.mechStick.getRawButton(6);
 	}
 	public static boolean wristUp() {
-		return RobotMap.mechStick.getRawButton(8);
+		return RobotMap.mechStick.getRawButton(2);
 	}
 	public static boolean wristLaunch() {
-		return RobotMap.mechStick.getRawButton(9);
-	}
-	public static boolean wristDown() {
-		return RobotMap.mechStick.getRawButton(10);
-	}
-	public static boolean rampDeploy() {
 		return RobotMap.mechStick.getRawButton(3);
 	}
-	public static boolean rampLift() {
+	public static boolean wristDown() {
 		return RobotMap.mechStick.getRawButton(4);
 	}
+
 	public static boolean shift() {
 		return RobotMap.driveStick.getRawButton(5);
 	}

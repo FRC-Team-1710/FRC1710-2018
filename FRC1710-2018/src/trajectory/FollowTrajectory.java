@@ -1,5 +1,7 @@
 package trajectory;
 
+import java.io.File;
+
 import org.usfirst.frc.team1710.robot.Constants;
 import org.usfirst.frc.team1710.robot.Drive;
 import org.usfirst.frc.team1710.robot.RobotMap;
@@ -23,9 +25,11 @@ public class FollowTrajectory extends Command {
 	EncoderFollower left, right;
 	Trajectory trajectory;
 	//p is good, I does nothing. play with d
-	double kP = 0.1;
+	//.13
+	double kP = .13;
 	double kI = 0;
-	double kD = 0.001;
+	//.05
+	double kD = .05;
 	
 	//TODO: don't pass through waypoints, pass through a trajectory that has already been calculated from path manager
     public FollowTrajectory(Waypoint[] points) {
@@ -35,9 +39,16 @@ public class FollowTrajectory extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	SubsystemManager.masterReset();
+    	RobotMap.navx.reset();
 
-    	Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH, Constants.dt, Constants.maxV, Constants.maxAccel, 60);
-    	trajectory = Pathfinder.generate(waypoints, config);
+    	//Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH, Constants.dt, Constants.maxV, Constants.maxAccel, 60);
+    	//trajectory = Pathfinder.generate(waypoints, config);
+    	//File file = new File("simple.traj");
+    	//saves trajectory to file... put this in a different method/command later
+    	//Pathfinder.writeToFile(file, trajectory);
+    	File file = new File("simple.traj");
+    	 //*reads the trajectory from file
+    	trajectory = Pathfinder.readFromFile(file);
     	TankModifier modifier = new TankModifier(trajectory).modify(Constants.robotDriveBaseWidth);
     	
     	left = new EncoderFollower(modifier.getLeftTrajectory());
@@ -59,20 +70,10 @@ public class FollowTrajectory extends Command {
     	double desiredHeading = Pathfinder.r2d(left.getHeading());
     	//take away the bound half degrees method and see what it do
     	double angleDifference = Pathfinder.boundHalfDegrees(desiredHeading - gyroHeading);
-    	//whether or not the (1/80) is neg/pos messes up the path when the y coord is pos/neg
-    	//maybe say if seg.y >= 0 -> (-1/80) else -> (1/80)
-    	//.65
-		double turn = .65 * (-1.0/80.0) * angleDifference;
+    	//2
+		double turn = 2.5 * (-1.0/80.0) * angleDifference;
     	Drive.leftDrive(turn - l);
     	Drive.rightDrive(turn + r);
-    	
-    	/*for (int i = 0; i < trajectory.length(); i++) {
-    	    Trajectory.Segment seg = trajectory.get(i);
-    	    
-    	    System.out.printf("%f,%f,%f,%f,%f,%f,%f,%f\n", 
-    	        seg.dt, seg.x, seg.y, seg.position, seg.velocity, 
-    	            seg.acceleration, seg.jerk, seg.heading);
-    	}*/
     	
     	System.out.println("Left " + (turn + l) + " Right " + (turn -r) + " turn " + turn);
     }

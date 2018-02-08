@@ -2,7 +2,7 @@ package org.usfirst.frc.team1710.robot;
 
 public class Constants {
 	//constants for the lift 0 to 9700
-	public static double intake = 500;
+	public static double intake = 100;
 	public static double switchPosition = 2000;
 	public static double scaleLow= 4000;
 	public static double scaleNormal = 7000;
@@ -20,8 +20,8 @@ public class Constants {
 	public static double kpTurn = 0.01;
 	
 	//constants for Vision
-	public static double kpAim = .02;
-	public static double kpDistance= .1;
+	public static double kpAim = .035;
+	public static double kpDistance= .05;
 	
 	//constants for talons srx 
 	public static int rightLeaderid=8;
@@ -48,11 +48,11 @@ public class Constants {
 	//pathfinder (dimensions in meters)
 	public static double robotDriveBaseWidth = .6985;
 	public static double wheelDiameter = .1524;
-	public static int ticksPerRev = 1500;
+	public static int ticksPerRev = 3900;
 	
 	public static double dt = 0.02;
-	public static double maxV = 2.55;
-	public static double maxAccel = 3;
+	public static double maxV = 1.275;
+	public static double maxAccel = 1.5;
 	public static double accGain = 0.01;
 	public static double maxJerk = 60;
 	

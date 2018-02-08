@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -36,6 +37,8 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
+		Vision.ledEntry.forceSetNumber(0);
+		Vision.ledEntry.forceSetNumber(1);
 		CommandGroup autoMode = new trajectoryTestCGroup();
 		autoMode.start();
 	}
@@ -50,6 +53,9 @@ public class Robot extends IterativeRobot {
 	public void teleopInit() {
 		SubsystemManager.masterReset();
 		lift.liftSetPoint(Constants.intake);
+		Vision.ledEntry.forceSetNumber(0);
+		Vision.ledEntry.forceSetNumber(1);
+		RobotMap.R1.setSelectedSensorPosition(0, 0, 0);
 	}
 	
 	@Override
@@ -65,6 +71,9 @@ public class Robot extends IterativeRobot {
 		lift.manipulateLift();
 		SmartDashboard.putNumber("Lift enc", lift.getLiftEncPosition());
 		SmartDashboard.putString("Lift Position", lift.getLiftPosition());
+		SmartDashboard.putNumber("tx", Vision.txValue);
+		SmartDashboard.putNumber("Tv", Vision.tvValue);
+		SmartDashboard.putNumber("ticks", RobotMap.R1.getSelectedSensorPosition(0));
 	}
 	
 	@Override
@@ -75,6 +84,7 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 		SubsystemManager.masterReset();
 		lift.liftSetPoint(Constants.intake);
+		Vision.ledEntry.forceSetNumber(0);
 		//Intake.setWristPosition(Constants.wristUp);
 	}
 	

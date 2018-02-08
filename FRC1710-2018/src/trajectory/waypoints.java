@@ -44,7 +44,8 @@ public class waypoints {
 	
 	public static Waypoint[] safePoints = new Waypoint[] {
 			new Waypoint(0,0,0),
-			new Waypoint(1,0,0),
+			new Waypoint(1,1,0),
+			new Waypoint(3,0,0),
 	};
 	
 }

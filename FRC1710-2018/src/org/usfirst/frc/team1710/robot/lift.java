@@ -103,13 +103,13 @@ public class lift {
 	public static String getLiftPosition() {
 		if(setPoint == Constants.intake) {
 			return "intake";
-		} else if(setPoint >= (Constants.switchPosition - 250) || setPoint <= (Constants.switchPosition + 250)) {
+		} else if(setPoint >= (Constants.switchPosition - 250) && setPoint <= (Constants.switchPosition + 250)) {
 			return "switch";
-		} else if(setPoint >= (Constants.scaleLow - 250) || setPoint <= (Constants.scaleLow + 250)) {
+		} else if(setPoint >= (Constants.scaleLow - 250) && setPoint <= (Constants.scaleLow + 250)) {
 			return "low level";
-		} else if(setPoint >= (Constants.scaleNormal - 250) || setPoint <= (Constants.scaleNormal + 250)){
+		} else if(setPoint >= (Constants.scaleNormal - 250) && setPoint <= (Constants.scaleNormal + 250)){
 			return "Scale Normal";
-		} else if(setPoint >= (Constants.scaleHigh - 250) || setPoint <= (Constants.scaleHigh + 250)) {
+		} else if(setPoint >= (Constants.scaleHigh - 250) && setPoint <= (Constants.scaleHigh + 250)) {
 			return "Scale High";
 		} else {
 			return "lifting";

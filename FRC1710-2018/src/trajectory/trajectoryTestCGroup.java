@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class trajectoryTestCGroup extends CommandGroup {
 
     public trajectoryTestCGroup() {
-    	addParallel(new FollowTrajectory(waypoints.safePoints));
-    	addSequential(new MoveLiftToPosition(Constants.scaleLow));
+    	addParallel(new MoveLiftToPosition(Constants.scaleLow));
+    	addSequential(new FollowTrajectory(waypoints.safePoints));
     	addSequential(new MoveLiftToPosition(Constants.intake));
     }
 }

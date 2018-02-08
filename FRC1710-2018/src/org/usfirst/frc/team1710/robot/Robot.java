@@ -55,6 +55,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		lift.setSetpoint(Constants.intake);
+		//RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);
 		Vision.ledEntry.forceSetNumber(0);
 		Vision.ledEntry.forceSetNumber(1);
 	}

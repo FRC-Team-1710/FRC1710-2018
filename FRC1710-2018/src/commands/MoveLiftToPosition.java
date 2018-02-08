@@ -31,7 +31,7 @@ public class MoveLiftToPosition extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return lift.getLiftOutput() < .1 && lift.getLiftOutput() > -.1;
+        return lift.getLiftPosition() != "lifting" && lift.getLiftPosition() != initialLiftPosition;
     }
 
     // Called once after isFinished returns true

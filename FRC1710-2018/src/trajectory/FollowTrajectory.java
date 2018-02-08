@@ -72,7 +72,7 @@ public class FollowTrajectory extends Command {
     	Drive.leftDrive(turn - l);
     	Drive.rightDrive(turn + r);
     	
-    	System.out.println("Left " + (turn + l) + " Right " + (turn -r) + " turn " + turn);
+    	//System.out.println("Left " + (turn + l) + " Right " + (turn -r) + " turn " + turn);
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -32,6 +32,14 @@ public class Drive {
 		RobotMap.navx = new AHRS(SPI.Port.kMXP);
 	}
 	
+	public static void setShifters(boolean isShifted) {
+		if(isShifted == true) {
+			RobotMap.shifter.set(Value.kReverse);
+		}else {
+			RobotMap.shifter.set(Value.kForward);
+		}
+	}
+	
 	public static void arcadeDrive (double side, double forward, boolean shift) {
 		if (shift == true) {
 			if(navxReset == false) {
@@ -39,12 +47,12 @@ public class Drive {
 				navxReset = true;
 			}
 			//high gear
-			RobotMap.shifter.set(Value.kReverse); 
+			setShifters(true);
 			//side is forward for some reason
 			straightDriveAuto(-forward);
 		} else {
 			//low gear
-			RobotMap.shifter.set(Value.kForward);
+			setShifters(false);
 			RobotMap.R1.set(ControlMode.PercentOutput, side - forward);
 			RobotMap.L1.set(ControlMode.PercentOutput, side + forward);
 			navxReset = false;

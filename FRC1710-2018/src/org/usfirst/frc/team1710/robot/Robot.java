@@ -47,15 +47,16 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putString("lift position", lift.getLiftPosition());
+		SmartDashboard.putNumber("lift setpoint", lift.getLiftSetpoint());
+		SmartDashboard.putNumber("lift enc", lift.getLiftEncPosition());
 	}
 
 	@Override
 	public void teleopInit() {
-		SubsystemManager.masterReset();
-		lift.liftSetPoint(Constants.intake);
+		lift.setSetpoint(Constants.intake);
 		Vision.ledEntry.forceSetNumber(0);
 		Vision.ledEntry.forceSetNumber(1);
-		RobotMap.R1.setSelectedSensorPosition(0, 0, 0);
 	}
 	
 	@Override
@@ -82,9 +83,8 @@ public class Robot extends IterativeRobot {
 	
 	@Override
 	public void disabledInit() {
-		SubsystemManager.masterReset();
-		lift.liftSetPoint(Constants.intake);
-		Vision.ledEntry.forceSetNumber(0);
+		lift.setSetpoint(Constants.intake);
+		Vision.ledEntry.forceSetNumber(1);
 		//Intake.setWristPosition(Constants.wristUp);
 	}
 	

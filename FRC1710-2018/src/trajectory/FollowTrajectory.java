@@ -26,10 +26,10 @@ public class FollowTrajectory extends Command {
 	Trajectory trajectory;
 	//p is good, I does nothing. play with d
 	//.13
-	double kP = .13;
+	double kP = .1;
 	double kI = 0;
 	//.05
-	double kD = .05;
+	double kD = .01;
 	
 	//TODO: don't pass through waypoints, pass through a trajectory that has already been calculated from path manager
     public FollowTrajectory(Waypoint[] points) {
@@ -40,19 +40,16 @@ public class FollowTrajectory extends Command {
     protected void initialize() {
     	SubsystemManager.masterReset();
     	RobotMap.navx.reset();
-
-    	//Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH, Constants.dt, Constants.maxV, Constants.maxAccel, 60);
-    	//trajectory = Pathfinder.generate(waypoints, config);
-    	//File file = new File("simple.traj");
-    	//saves trajectory to file... put this in a different method/command later
-    	//Pathfinder.writeToFile(file, trajectory);
-    	File file = new File("simple.traj");
-    	 //*reads the trajectory from file
-    	trajectory = Pathfinder.readFromFile(file);
+    	
+		//PathManager.writePathToFile(waypoints, "simple.traj");
+    	trajectory = PathManager.readTrajFromFile("simple.traj");
     	TankModifier modifier = new TankModifier(trajectory).modify(Constants.robotDriveBaseWidth);
     	
     	left = new EncoderFollower(modifier.getLeftTrajectory());
     	right = new EncoderFollower(modifier.getRightTrajectory());
+    	
+    	left.reset();
+    	right.reset();
     	
     	left.configureEncoder((int) Drive.getLeftPosition(), Constants.ticksPerRev, Constants.wheelDiameter);
     	right.configureEncoder((int) Drive.getRightPosition(), Constants.ticksPerRev, Constants.wheelDiameter);
@@ -70,8 +67,8 @@ public class FollowTrajectory extends Command {
     	double desiredHeading = Pathfinder.r2d(left.getHeading());
     	//take away the bound half degrees method and see what it do
     	double angleDifference = Pathfinder.boundHalfDegrees(desiredHeading - gyroHeading);
-    	//2
-		double turn = 2.5 * (-1.0/80.0) * angleDifference;
+    	//the exit heading is accurate, but a little bit violent sometimes... so if the robot is freaking out then 5.75 is why
+		double turn = 5.75 * (-1.0/80.0) * angleDifference;
     	Drive.leftDrive(turn - l);
     	Drive.rightDrive(turn + r);
     	
@@ -85,10 +82,10 @@ public class FollowTrajectory extends Command {
 
     protected void end() {
     	Drive.stopDriving();
-    	System.out.println("Path Complete");
+    	System.out.println("Path Complete " + RobotMap.navx.getAngle());
     	left.reset();
     	right.reset();
-    	RobotMap.navx.reset();
+    	//RobotMap.navx.reset();
     }
 
     protected void interrupted() {

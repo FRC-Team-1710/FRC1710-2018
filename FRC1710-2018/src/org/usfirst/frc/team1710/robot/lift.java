@@ -20,7 +20,7 @@ public class lift {
 		RobotMap.liftReset = new DigitalInput(0);
 	}
 
-	public static double getLiftSetPoint () {
+	public static double getLiftSetpoint () {
 		if(ControllerMap.bottomLift() == true) {
 			setPoint = Constants.intake;
 		}else if(ControllerMap.liftAtSwitchHeight() == true) {
@@ -35,7 +35,19 @@ public class lift {
 		return setPoint;
 	}
 	
+	public static double getLiftOutput() {
+		if(getMovementDirection() == "moving up") {
+			return (-1 * ((getLiftError()) *  Constants.kPLiftUp));
+		} else {
+			return (-1 * ((getLiftError()) *  Constants.kPLiftDown));
+		}
+	}
+	
 	public static void manipulateLift() {
+		
+		double outputUp = (-1 * ((getLiftError()) *  Constants.kPLiftUp));
+		double outputDown = (-1 * ((getLiftError()) *  Constants.kPLiftDown));
+		
 		//if the stick is being moved...
 		if (ControllerMap.liftPower() > 0.2 || ControllerMap.liftPower() < -0.2){
 			//if the stick is being moved down and the lift isn't near the bottom
@@ -51,9 +63,17 @@ public class lift {
 			setPoint = getLiftEncPosition();
 		} else {	
 			if(getMovementDirection() == "moving up") {
-				RobotMap.lift1.set(ControlMode.PercentOutput, (-1 * ((getLiftError()) *  Constants.kPLiftUp)));
+				if(getLiftEncPosition() > 9000) {
+					stopLift();
+				} else {
+					RobotMap.lift1.set(ControlMode.PercentOutput, outputUp);
+				}
 			} else {
-				RobotMap.lift1.set(ControlMode.PercentOutput, (-1 * ((getLiftError()) *  Constants.kPLiftDown)));
+				if(getLiftEncPosition() < 100) {
+					stopLift();
+				} else {
+					RobotMap.lift1.set(ControlMode.PercentOutput, outputDown);
+				}
 			}
 		}	
 		if(isAtBottom() == true) {
@@ -70,7 +90,7 @@ public class lift {
 	}
 	
 	public static double getLiftError() {
-		return getLiftSetPoint() - getLiftEncPosition();
+		return getLiftSetpoint() - getLiftEncPosition();
 	}
 	public static boolean isAtBottom() {
 		return !RobotMap.liftReset.get();
@@ -83,13 +103,13 @@ public class lift {
 	public static String getLiftPosition() {
 		if(setPoint == Constants.intake) {
 			return "intake";
-		} else if(setPoint == Constants.switchPosition) {
+		} else if(setPoint >= (Constants.switchPosition - 250) || setPoint <= (Constants.switchPosition + 250)) {
 			return "switch";
-		} else if(setPoint == Constants.scaleLow) {
+		} else if(setPoint >= (Constants.scaleLow - 250) || setPoint <= (Constants.scaleLow + 250)) {
 			return "low level";
-		} else if(setPoint == Constants.scaleNormal){
+		} else if(setPoint >= (Constants.scaleNormal - 250) || setPoint <= (Constants.scaleNormal + 250)){
 			return "Scale Normal";
-		} else if(setPoint == Constants.scaleHigh) {
+		} else if(setPoint >= (Constants.scaleHigh - 250) || setPoint <= (Constants.scaleHigh + 250)) {
 			return "Scale High";
 		} else {
 			return "lifting";
@@ -101,7 +121,7 @@ public class lift {
 		RobotMap.lift1.set(ControlMode.PercentOutput, 0);	
 	}
 	
-	public static void liftSetPoint(double newSetPoint) {
-		setPoint=newSetPoint;		
+	public static void setSetpoint(double newSetPoint) {
+		setPoint = newSetPoint;		
 	}
 }

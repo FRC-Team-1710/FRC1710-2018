@@ -16,5 +16,5 @@ public class RobotMap {
 	public static Joystick driveStick, mechStick;
 	public static AHRS navx;
 	public static DoubleSolenoid shifter, intakeRight, intakeLeft, rampDeploy, rampExtendo, rampLifto;
-	public static DigitalInput liftReset;
+	public static DigitalInput liftBottom, liftTop;
 }

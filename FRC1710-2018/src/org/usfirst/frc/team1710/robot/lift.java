@@ -18,7 +18,8 @@ public class lift {
 		//RobotMap.lift1.configOpenloopRamp(arg0, arg1)
 		RobotMap.lift2.follow (RobotMap.lift1);
 		RobotMap.lift2.setInverted(true);
-		RobotMap.liftReset = new DigitalInput(0);
+		RobotMap.liftBottom = new DigitalInput(0);
+		RobotMap.liftTop = new DigitalInput(1);
 	}
 
 	public static double getLiftSetpoint () {
@@ -52,10 +53,10 @@ public class lift {
 		//if the stick is being moved...
 		if (ControllerMap.liftPower() > 0.2 || ControllerMap.liftPower() < -0.2){
 			//if the stick is being moved down and the lift isn't near the bottom
-			if(ControllerMap.liftPower() > 0 && getLiftEncPosition() > 500) {
+			if(ControllerMap.liftPower() > 0 && isAtBottom() == false) {
 				RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower() * 0.2);
 			//if the stick is moving up and the lift isn't near the top
-			} else if(ControllerMap.liftPower() < 0 && getLiftEncPosition() < 9000) {
+			} else if(ControllerMap.liftPower() < 0 && isAtTop() == false) {
 				RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower() * 0.2);	
 			//uh oh
 			} else {
@@ -64,13 +65,13 @@ public class lift {
 			setPoint = getLiftEncPosition();
 		} else {	
 			if(getMovementDirection() == "moving up") {
-				if(getLiftEncPosition() > 9000) {
+				if(isAtTop() == true) {
 					stopLift();
 				} else {
 					RobotMap.lift1.set(ControlMode.PercentOutput, outputUp);
 				}
 			} else {
-				if(getLiftEncPosition() < 100) {
+				if(isAtBottom() == true) {
 					stopLift();
 				} else {
 					RobotMap.lift1.set(ControlMode.PercentOutput, outputDown);
@@ -94,12 +95,20 @@ public class lift {
 		return getLiftSetpoint() - getLiftEncPosition();
 	}
 	public static boolean isAtBottom() {
-		return !RobotMap.liftReset.get();
+		return !RobotMap.liftBottom.get();
+	}
+	
+	public static boolean isAtTop() {
+		return !RobotMap.liftTop.get();
 	}
 	
 	public static double getLiftEncPosition() {
 		return Math.abs(RobotMap.lift1.getSelectedSensorPosition(0));
 	}
+	
+	
+		
+	
 	
 	public static String getLiftPosition() {
 		if(setPoint == Constants.intake) {

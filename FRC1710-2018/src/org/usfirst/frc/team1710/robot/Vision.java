@@ -44,7 +44,7 @@ public class Vision {
 		return txValue;
 	}
 	
-	public static boolean isCubeAvailable() {
+	public static boolean areCubesAvailable() {
 		if(getTvValue() >= 1) {
 			return true;
 		}else {
@@ -53,20 +53,20 @@ public class Vision {
 			
 	}
 	
-	public static boolean isCubeIntakable() {
+	public static boolean areCubesIntakable() {
 		return Math.abs(getTyValue()) < Constants.tyIntake && getTvValue() >=1;
 	}
 	
 	public static void cubeTrackRight() {
 		//if bot cannot find box turn right
 			 
-		if(Math.abs(getTyValue()) < Constants.tyIntake && getTvValue() >=1) {
+		if(areCubesIntakable() == true) {
 			//if bot cannot find box turn left
 			Intake.intake(-Constants.cubeIntakeSpeed, Constants.cubeIntakeSpeed);
 			Drive.stopDriving();
 			//arms closed
 		} else {
-			if(getTvValue()==0) {
+			if(areCubesAvailable() == false) {
 				Drive.leftDrive(-Constants.seekingSpeed);
 				Drive.rightDrive(-Constants.seekingSpeed);
 			//else go forward to track box
@@ -78,13 +78,13 @@ public class Vision {
 	}
 	public static void cubeTrackLeft() {
 	
-		if(Math.abs(getTyValue()) < Constants.tyIntake && getTvValue() >=1) {
+		if(areCubesIntakable() == true) {
 			//if bot cannot find box turn left
 			Intake.intake(-Constants.cubeIntakeSpeed, Constants.cubeIntakeSpeed);
 			Drive.stopDriving();
 			//arms closed
 		} else {
-			if(getTvValue()==0) {
+			if(areCubesAvailable() == false) {
 				Drive.leftDrive(Constants.seekingSpeed);
 				Drive.rightDrive(Constants.seekingSpeed);
 			//else go forward to track box

@@ -57,10 +57,10 @@ public class ControllerMap {
 		return RobotMap.mechStick.getRawAxis(1);
 	}
 	public static double intakeR() {
-		return RobotMap.mechStick.getRawAxis(1);
+		return RobotMap.driveStick.getRawAxis(2);
 	}
 	public static double intakeL() {
-		return RobotMap.mechStick.getRawAxis(2);
+		return RobotMap.driveStick.getRawAxis(3);
 	}
 }
 

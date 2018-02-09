@@ -20,8 +20,8 @@ public class Intake {
 	}
 	
 	public static void intake (double right, double left) {
-		RobotMap.intakeR.set(right);
-		RobotMap.intakeL.set(left);
+		RobotMap.intakeR.set(right - left);
+		RobotMap.intakeL.set(left - right);
 		// Right toggle
 		if (toggle && ControllerMap.rightIntakeToggle()) {
 			toggle = false;

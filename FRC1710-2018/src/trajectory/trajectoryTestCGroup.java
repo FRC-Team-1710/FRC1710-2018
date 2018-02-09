@@ -13,6 +13,6 @@ public class trajectoryTestCGroup extends CommandGroup {
 
     public trajectoryTestCGroup() {
     	addSequential(new FollowTrajectory(waypoints.safePoints, false, false, "simple.traj"));
-    	addSequential(new TrackCube(true));
+    	//addSequential(new TrackCube(true));
     }
 }

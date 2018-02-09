@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -22,14 +23,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import trajectory.trajectoryTestCGroup;
 
 public class Robot extends IterativeRobot {
-
-	static List<Object> thingsToPutOnDashboard = new ArrayList<Object>();
+	
+	List<Object> thingsToPutOnDashboard = new ArrayList<Object>();
+	boolean done;
+	DashboardReport report;
 	
 	@Override
 	public void robotInit() {
-		thingsToPutOnDashboard.add(RobotMap.R1);
-		thingsToPutOnDashboard.add(RobotMap.L1);
-		thingsToPutOnDashboard.add(RobotMap.lift1);
 		SubsystemManager.masterinitialization();
 		RobotMap.driveStick = new Joystick(0);
 		RobotMap.mechStick = new Joystick(1);
@@ -52,7 +52,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		lift.setSetpoint(Constants.intake);
-		RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);
+		//RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);
 		Vision.ledEntry.forceSetNumber(0);
 		Vision.ledEntry.forceSetNumber(1);
 	}
@@ -65,7 +65,7 @@ public class Robot extends IterativeRobot {
 			Drive.arcadeDrive(ControllerMap.getTurnPower(), ControllerMap.getForwardPower(), ControllerMap.shift());
 		}
 		lift.manipulateLift();
-		DashboardInput.updateDashboard(new DashboardReport(thingsToPutOnDashboard));
+		Intake.intake(ControllerMap.intakeR(), ControllerMap.intakeL());
 	}
 	
 	@Override

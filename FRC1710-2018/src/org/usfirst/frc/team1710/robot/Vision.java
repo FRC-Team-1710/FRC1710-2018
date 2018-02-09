@@ -20,9 +20,6 @@ public class Vision {
 	static NetworkTableEntry tyEntry = tableTwo.getEntry("ty");
 	static NetworkTableEntry tvEntry = tableTwo.getEntry("tv");
 	
-	public static double txValue = txEntry.getDouble(0);
-	public static double tyValue = tyEntry.getDouble(0);
-	public static double tvValue = tvEntry.getDouble(0);
 	
 	public static void initializeVision() {
 		table = NetworkTableInstance.getDefault();
@@ -32,42 +29,57 @@ public class Vision {
 		ledEntry.forceSetNumber(1);
 	}
 	
+	public static double getTvValue() {
+		double tvValue = tvValue = tvEntry.getDouble(0);
+		return tvValue;
+	}
+	
+	public static double getTyValue() {
+		double tyValue = tyEntry.getDouble(0);
+		return tyValue;
+	}
+	
+	public static double getTxValue() {
+		double txValue = txEntry.getDouble(0);
+		return txValue;
+	}
+	public static boolean isCubeIntakable() {
+		return Math.abs(getTyValue()) < Constants.tyIntake && getTvValue() >=1;
+	}
+	
 	public static void cubeTrackRight() {
 		//if bot cannot find box turn right
 			 
-		if(Math.abs(tyValue) < 3.5 && tvValue >=1) {
+		if(Math.abs(getTyValue()) < Constants.tyIntake && getTvValue() >=1) {
 			//if bot cannot find box turn left
-			Intake.intake(-1, 1);
+			Intake.intake(-Constants.cubeIntakeSpeed, Constants.cubeIntakeSpeed);
 			Drive.stopDriving();
 			//arms closed
 		} else {
-			if(tvValue==0) {
-				Drive.leftDrive(-.3);
-				Drive.rightDrive(-.3);
+			if(getTvValue()==0) {
+				Drive.leftDrive(-Constants.seekingSpeed);
+				Drive.rightDrive(-Constants.seekingSpeed);
 			//else go forward to track box
 			} else {
-				Drive.arcadeDrive(-Constants.kpAim * txValue, -tyValue * Constants.kpDistance , false );
+				Drive.arcadeDrive(-Constants.kpAim * getTxValue(), -getTyValue() * Constants.kpDistance , false );
 			}
 			Intake.intake(0, 0);
 		}
 	}
 	public static void cubeTrackLeft() {
-		tvValue = tvEntry.getDouble(0);
-		tyValue = tyEntry.getDouble(0);
-		txValue = txEntry.getDouble(0);
 	
-		if(Math.abs(tyValue) < 3.5 && tvValue >=1) {
+		if(Math.abs(getTyValue()) < Constants.tyIntake && getTvValue() >=1) {
 			//if bot cannot find box turn left
-			Intake.intake(-1, 1);
+			Intake.intake(-Constants.cubeIntakeSpeed, Constants.cubeIntakeSpeed);
 			Drive.stopDriving();
 			//arms closed
 		} else {
-			if(tvValue==0) {
-				Drive.leftDrive(.3);
-				Drive.rightDrive(.3);
+			if(getTvValue()==0) {
+				Drive.leftDrive(Constants.seekingSpeed);
+				Drive.rightDrive(Constants.seekingSpeed);
 			//else go forward to track box
 			} else {
-				Drive.arcadeDrive(-Constants.kpAim * txValue, -tyValue * Constants.kpDistance , false );
+				Drive.arcadeDrive(-Constants.kpAim * getTxValue(), -getTyValue() * Constants.kpDistance , false );
 			}
 			Intake.intake(0, 0);
 		}

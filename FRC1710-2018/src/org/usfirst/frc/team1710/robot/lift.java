@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
+import utility.RobotMath;
 
 
 public class lift {
@@ -102,17 +103,17 @@ public class lift {
 	
 	public static String getLiftPosition() {
 		if(setPoint == Constants.intake) {
-			return "intake";
-		} else if(setPoint >= (Constants.switchPosition - 250) && setPoint <= (Constants.switchPosition + 250)) {
-			return "switch";
-		} else if(setPoint >= (Constants.scaleLow - 250) && setPoint <= (Constants.scaleLow + 250)) {
-			return "low level";
-		} else if(setPoint >= (Constants.scaleNormal - 250) && setPoint <= (Constants.scaleNormal + 250)){
-			return "Scale Normal";
-		} else if(setPoint >= (Constants.scaleHigh - 250) && setPoint <= (Constants.scaleHigh + 250)) {
-			return "Scale High";
+			return Constants.intakeLevelName;
+		} else if(RobotMath.isInRange(setPoint, Constants.intake, 175)) {
+			return Constants.switchLevelName;
+		} else if(RobotMath.isInRange(setPoint, Constants.scaleLow, 175)) {
+			return Constants.lowLevelName;
+		} else if(RobotMath.isInRange(setPoint, Constants.scaleNormal, 175)){
+			return Constants.normalLevelName;
+		} else if(RobotMath.isInRange(setPoint, Constants.scaleHigh, 175)) {
+			return Constants.highLevelName;
 		} else {
-			return "lifting";
+			return Constants.liftingLevelName;
 		}
 
 	}

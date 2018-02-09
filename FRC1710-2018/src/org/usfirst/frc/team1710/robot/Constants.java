@@ -7,6 +7,12 @@ public class Constants {
 	public static double scaleLow= 4000;
 	public static double scaleNormal = 7000;
 	public static double scaleHigh = 9000;
+	public static String intakeLevelName = "intake";
+	public static String switchLevelName = "switch";
+	public static String lowLevelName = "low level";
+	public static String normalLevelName = "Scale Normal";
+	public static String highLevelName = "Scale High";
+	public static String liftingLevelName = "lifting";
 	//the constant for moving down is less bc when we go down we work with gravity and that prevents things from 
 	//getting too violent
 	public static double kPLiftUp = 0.0006;
@@ -22,6 +28,9 @@ public class Constants {
 	//constants for Vision
 	public static double kpAim = .035;
 	public static double kpDistance= .05;
+	public static double seekingSpeed = .3;
+	public static double cubeIntakeSpeed = 1;
+	public static double tyIntake = 3.5;
 	
 	//constants for talons srx 
 	public static int rightLeaderid=8;
@@ -62,4 +71,5 @@ public class Constants {
 	//rotate to angle
 	public static double rotateToAngleHiEnd = 5;
 	public static double rotateToAngleLoEnd = 5;
+	
 }

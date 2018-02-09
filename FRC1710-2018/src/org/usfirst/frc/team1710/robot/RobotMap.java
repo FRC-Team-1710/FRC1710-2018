@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
@@ -17,4 +18,5 @@ public class RobotMap {
 	public static AHRS navx;
 	public static DoubleSolenoid shifter, intakeRight, intakeLeft, rampDeploy, rampExtendo, rampLifto;
 	public static DigitalInput liftReset;
+	public static AnalogInput ultraSonicL, ultraSonicR;
 }

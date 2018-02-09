@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 public class Drive {
 	
 	static boolean navxReset = false;
+	static double setPoint;
 
 	public static void initializeDrive () {
 		RobotMap.R1 = new TalonSRX (Constants.rightLeaderid);
@@ -53,10 +54,24 @@ public class Drive {
 			//side is forward for some reason
 			straightDriveAuto(-forward);
 		} else {
+			if (RobotMap.driveStick.getPOV() == 0) {
+				setPoint = 0;
+				setRobotHeading (setPoint);
+			} else if (RobotMap.driveStick.getPOV() == 90) {
+				setPoint = 90;
+				setRobotHeading (setPoint);
+			} else if (RobotMap.driveStick.getPOV() == 180) {
+				setPoint = 180;
+				setRobotHeading (setPoint);
+			} else if (RobotMap.driveStick.getPOV() == 270) {
+				setPoint = 270;
+				setRobotHeading (setPoint);
+			} else {
+				RobotMap.R1.set(ControlMode.PercentOutput, side - forward);
+				RobotMap.L1.set(ControlMode.PercentOutput, side + forward);
+			}
 			//low gear
 			setShifters(false);
-			RobotMap.R1.set(ControlMode.PercentOutput, side - forward);
-			RobotMap.L1.set(ControlMode.PercentOutput, side + forward);
 			navxReset = false;
 		}
 	}
@@ -125,7 +140,6 @@ public class Drive {
 		RobotMap.R3.setNeutralMode(NeutralMode.Coast);
 		RobotMap.L3.setNeutralMode(NeutralMode.Coast);
 		RobotMap.L2.setNeutralMode(NeutralMode.Coast);
-		RobotMap.L1.setNeutralMode(NeutralMode.Coast);	
+		RobotMap.L1.setNeutralMode(NeutralMode.Coast);		
 	}
-
 }

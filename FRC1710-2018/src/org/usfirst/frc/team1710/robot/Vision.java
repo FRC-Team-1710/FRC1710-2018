@@ -43,8 +43,6 @@ public class Vision {
 		double txValue = txEntry.getDouble(0);
 		return txValue;
 	}
-	
-
 	public static boolean areCubesAvailable() {
 		if(getTvValue() >= 1) {
 			return true;
@@ -55,8 +53,6 @@ public class Vision {
 	}
 	
 	public static boolean areCubesIntakable() {
-
-
 		return Math.abs(getTyValue()) < Constants.tyIntake && getTvValue() >=1;
 	}
 	

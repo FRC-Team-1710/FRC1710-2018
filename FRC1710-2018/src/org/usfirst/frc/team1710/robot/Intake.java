@@ -19,35 +19,9 @@ public class Intake {
 		RobotMap.wrist = new TalonSRX (Constants.wristTalon);
 	}
 	
-	public static void intake (double right, double left) {
-		RobotMap.intakeR.set(right - left);
-		RobotMap.intakeL.set(left - right);
-		// Right toggle
-		if (toggle && ControllerMap.rightIntakeToggle()) {
-			toggle = false;
-			if (piston) {
-				piston = false;
-				RobotMap.intakeRight.set(DoubleSolenoid.Value.kForward);
-			} else {
-				piston = true;
-				RobotMap.intakeRight.set(DoubleSolenoid.Value.kReverse);
-			}
-		} else if (ControllerMap.rightIntakeToggle() == false) {
-			toggle = true;
-		}
-		// Left toggle
-		if (toggle2 && ControllerMap.leftIntakeToggle()) {
-			toggle2 = false;
-			if (piston2) {
-				piston2 = false;
-				RobotMap.intakeLeft.set(DoubleSolenoid.Value.kForward);
-			} else {
-				piston2 = true;
-				RobotMap.intakeLeft.set(DoubleSolenoid.Value.kReverse);
-			}
-		} else if (ControllerMap.leftIntakeToggle() == false) {
-			toggle2 = true;
-		}
+	public static void intake (double in, double out) {
+		RobotMap.intakeR.set(in-out);
+		RobotMap.intakeL.set(in-out);
 	}
 	public static int getWristEncPosition() {
 		return RobotMap.wrist.getSelectedSensorPosition(0);

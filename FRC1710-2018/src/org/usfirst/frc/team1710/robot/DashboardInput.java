@@ -19,7 +19,7 @@ public class DashboardInput {
 	
 	public static void updateDashboard(DashboardReport report) {
 		for (int i = 0; i < report.getEncoderValues().size(); i++) {
-			SmartDashboard.putNumber(Integer.toString(report.getSrxs().get(i).getDeviceID()),
+			SmartDashboard.putNumber("Motor " + Integer.toString(report.getSrxs().get(i).getDeviceID()) + " position: ",
 					report.getEncoderValues().get(i));
 		}
 	}

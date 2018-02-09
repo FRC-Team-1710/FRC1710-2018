@@ -16,7 +16,7 @@ public class SubsystemManager {
 		RobotMap.R1.setSelectedSensorPosition(0, 0, 0);
 		RobotMap.R2.setSelectedSensorPosition(0, 0, 0);
 		RobotMap.wrist.setSelectedSensorPosition(0, 0, 0);
-		RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);
+		//RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);
 		RobotMap.shifter.set(DoubleSolenoid.Value.kOff);
 	}
 	public static void encoderReset() {

@@ -47,15 +47,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		SmartDashboard.putString("lift position", lift.getLiftPosition());
-		SmartDashboard.putNumber("lift setpoint", lift.getLiftSetpoint());
-		SmartDashboard.putNumber("lift enc", lift.getLiftEncPosition());
 	}
 
 	@Override
 	public void teleopInit() {
 		lift.setSetpoint(Constants.intake);
-		//RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);
+		RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);
 		Vision.ledEntry.forceSetNumber(0);
 		Vision.ledEntry.forceSetNumber(1);
 	}
@@ -67,15 +64,8 @@ public class Robot extends IterativeRobot {
 		} else {
 			Drive.arcadeDrive(ControllerMap.getTurnPower(), ControllerMap.getForwardPower(), ControllerMap.shift());
 		}
-		//Intake.intake(ControllerMap.intakeR(), ControllerMap.intakeL());
-		//Intake.manipulateWrist();
-		//DashboardInput.updateDashboard(new DashboardReport(thingsToPutOnDashboard));
 		lift.manipulateLift();
-		SmartDashboard.putNumber("Lift enc", lift.getLiftEncPosition());
-		SmartDashboard.putString("Lift Position", lift.getLiftPosition());
-		SmartDashboard.putNumber("tx", Vision.txValue);
-		SmartDashboard.putNumber("Tv", Vision.tvValue);
-		SmartDashboard.putNumber("ticks", RobotMap.R1.getSelectedSensorPosition(0));
+		DashboardInput.updateDashboard(new DashboardReport(thingsToPutOnDashboard));
 	}
 	
 	@Override
@@ -86,13 +76,9 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 		lift.setSetpoint(Constants.intake);
 		Vision.ledEntry.forceSetNumber(1);
-		//Intake.setWristPosition(Constants.wristUp);
 	}
 	
 	@Override
 	public void disabledPeriodic() {
-		//reset code for the wrist and intake 
-		//Intake.manipulateWrist();
-		//lift.manipulateLift();
 	}
 }

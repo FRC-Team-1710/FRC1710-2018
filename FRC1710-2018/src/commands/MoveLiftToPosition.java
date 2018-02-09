@@ -26,12 +26,11 @@ public class MoveLiftToPosition extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	lift.manipulateLift();
-    	SmartDashboard.putBoolean("is finished?", lift.getLiftPosition() != "lifting" && lift.getLiftPosition() != initialLiftPosition);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return lift.getLiftPosition() != "lifting" && lift.getLiftPosition() != initialLiftPosition;
+        return lift.getLiftOutput() < .1 && lift.getLiftOutput() > -.1;
     }
 
     // Called once after isFinished returns true

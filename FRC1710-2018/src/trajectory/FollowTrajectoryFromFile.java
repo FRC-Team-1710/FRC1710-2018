@@ -1,13 +1,9 @@
 package trajectory;
 
-import java.io.File;
-
 import org.usfirst.frc.team1710.robot.Constants;
 import org.usfirst.frc.team1710.robot.Drive;
 import org.usfirst.frc.team1710.robot.RobotMap;
 import org.usfirst.frc.team1710.robot.SubsystemManager;
-
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 import jaci.pathfinder.Pathfinder;
@@ -19,21 +15,19 @@ import jaci.pathfinder.modifiers.TankModifier;
 /**
  *
  */
-public class FollowTrajectory extends Command {
-	Waypoint[] waypoints;
+public class FollowTrajectoryFromFile extends Command {
 	String _fileName;
 	boolean _isInHighGear, _isReversed;
 	
 	EncoderFollower left, right;
 	Trajectory trajectory;
 
-	//isReversed makes it so the robot follows the path, but the robot is facing the other way. 
-	//fileName must include extension (.traj)
-    public FollowTrajectory(Waypoint[] points, boolean isInHighGear, boolean isReversed, String fileName) {
-    	waypoints = points;
+	//isReversed makes it so the robot follows the path, but the robot is facing the other way.
+	//fileName must include extension
+    public FollowTrajectoryFromFile(String fileName, boolean isInHighGear, boolean isReversed) {
+    	_fileName = fileName;
     	_isInHighGear = isInHighGear;
     	_isReversed = isReversed;
-    	_fileName = fileName;
     }
 
     // Called just before this Command runs the first time
@@ -41,7 +35,6 @@ public class FollowTrajectory extends Command {
     	SubsystemManager.masterReset();
     	RobotMap.navx.reset();
     	
-		PathManager.writePathToFile(waypoints, _fileName);
     	trajectory = PathManager.readTrajFromFile(_fileName);
     	TankModifier modifier = new TankModifier(trajectory).modify(Constants.robotDriveBaseWidth);
     	
@@ -51,11 +44,9 @@ public class FollowTrajectory extends Command {
     	left.reset();
     	right.reset();
     	
-    	left.configureEncoder((int) Drive.getLeftPosition(), Constants.ticksPerRev, Constants.wheelDiameter);
-    	right.configureEncoder((int) Drive.getRightPosition(), Constants.ticksPerRev, Constants.wheelDiameter);
-    	
     	left.configurePIDVA(Constants.kpPath, Constants.kiPath, Constants.kdPath, 1/ Constants.maxV, Constants.accGain);
     	right.configurePIDVA(Constants.kpPath, Constants.kiPath, Constants.kdPath, 1/ Constants.maxV, Constants.accGain);
+    	
     	Drive.setShifters(_isInHighGear);
     }
 

@@ -30,7 +30,7 @@ public class Robot extends IterativeRobot {
 	
 	@Override
 	public void robotInit() {
-		SubsystemManager.masterinitialization();
+		//SubsystemManager.masterinitialization();
 		RobotMap.driveStick = new Joystick(0);
 		RobotMap.mechStick = new Joystick(1);
 	}
@@ -51,22 +51,24 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-		lift.setSetpoint(Constants.intake);
+		//lift.setSetpoint(Constants.intake);
 		//RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);
-		Vision.ledEntry.forceSetNumber(0);
-		Vision.ledEntry.forceSetNumber(1);
+		//Vision.ledEntry.forceSetNumber(0);
+		//Vision.ledEntry.forceSetNumber(1);
 	}
 	
 	@Override
 	public void teleopPeriodic() {
-		if(ControllerMap.visionActivated() == true) {
+		/*if(ControllerMap.visionActivated() == true) {
 			Vision.cubeTrackLeft();
 		} else {
 			Drive.arcadeDrive(ControllerMap.getTurnPower(), ControllerMap.getForwardPower(), ControllerMap.shift());
 		}
 		lift.manipulateLift();
-		Intake.intake(ControllerMap.intakeR(), ControllerMap.intakeL());
+		Intake.intake(ControllerMap.intakeR(), ControllerMap.intakeL());*/
+		System.out.println("Search here" + RobotMap.driveStick.getPOV());
 	}
+	
 	
 	@Override
 	public void testPeriodic() {

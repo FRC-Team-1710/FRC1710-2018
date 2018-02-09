@@ -44,7 +44,6 @@ public class Vision {
 		return txValue;
 	}
 	
-<<<<<<< HEAD
 	public static boolean areCubesAvailable() {
 		if(getTvValue() >= 1) {
 			return true;
@@ -55,9 +54,6 @@ public class Vision {
 	}
 	
 	public static boolean areCubesIntakable() {
-=======
-	public static boolean isCubeIntakable() {
->>>>>>> 2fce0454d4dce2b8693a90f719f8080edf724fdb
 		return Math.abs(getTyValue()) < Constants.tyIntake && getTvValue() >=1;
 	}
 	

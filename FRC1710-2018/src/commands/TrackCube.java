@@ -36,7 +36,7 @@ public class TrackCube extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	//ideally we will keep runnning until a cube is detected to be secure in the intake but for now we stop when ty is a certain value
-        return Vision.isCubeIntakable();
+        return Vision.areCubesIntakable();
     }
 
     // Called once after isFinished returns true

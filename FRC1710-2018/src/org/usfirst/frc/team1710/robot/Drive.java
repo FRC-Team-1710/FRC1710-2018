@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1710.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
@@ -11,7 +12,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 public class Drive {
 	
 	static boolean navxReset = false;
-	
+
 	public static void initializeDrive () {
 		RobotMap.R1 = new TalonSRX (Constants.rightLeaderid);
 		RobotMap.R2 = new VictorSPX (Constants.rightFollowerid);
@@ -30,6 +31,7 @@ public class Drive {
 		RobotMap.shifter = new DoubleSolenoid(Constants.shifterForward,Constants.shifterReverse);
 		
 		RobotMap.navx = new AHRS(SPI.Port.kMXP);
+		Drive.setCoastMode();
 	}
 	
 	public static void setShifters(boolean isShifted) {
@@ -108,6 +110,22 @@ public class Drive {
 	
 	public static double getRightPosition() {
 		return RobotMap.R1.getSelectedSensorPosition(0);
+	}
+	public static void setBrakeMode() {
+		RobotMap.R1.setNeutralMode(NeutralMode.Brake);
+		RobotMap.R2.setNeutralMode(NeutralMode.Brake);
+		RobotMap.R3.setNeutralMode(NeutralMode.Brake);
+		RobotMap.L3.setNeutralMode(NeutralMode.Brake);
+		RobotMap.L2.setNeutralMode(NeutralMode.Brake);
+		RobotMap.L1.setNeutralMode(NeutralMode.Brake);	
+	}
+	public static void setCoastMode() {
+		RobotMap.R1.setNeutralMode(NeutralMode.Coast);
+		RobotMap.R2.setNeutralMode(NeutralMode.Coast);
+		RobotMap.R3.setNeutralMode(NeutralMode.Coast);
+		RobotMap.L3.setNeutralMode(NeutralMode.Coast);
+		RobotMap.L2.setNeutralMode(NeutralMode.Coast);
+		RobotMap.L1.setNeutralMode(NeutralMode.Coast);	
 	}
 
 }

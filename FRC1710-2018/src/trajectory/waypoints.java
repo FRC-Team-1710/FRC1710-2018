@@ -35,7 +35,7 @@ public class waypoints {
 	};
 	
 	//split into to sets of waypoints for final part, play with speed
-	public static Waypoint[] leftStartRightSwitchPart1 = new Waypoint[] {
+	public static Waypoint[] leftStartRightSwitch = new Waypoint[] {
 			new Waypoint(0,0,0),
 			new Waypoint(3,-1.75,0),
 			new Waypoint(5,0,Pathfinder.d2r(55)),

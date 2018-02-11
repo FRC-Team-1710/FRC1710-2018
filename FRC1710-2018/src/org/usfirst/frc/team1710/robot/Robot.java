@@ -39,6 +39,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		Vision.ledEntry.forceSetNumber(0);
 		Vision.ledEntry.forceSetNumber(1);
+		lift.setSetpoint(Constants.intake);
 		CommandGroup autoMode = new trajectoryTestCGroup();
 		autoMode.start();
 	}
@@ -46,6 +47,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousPeriodic() {
+		lift.manipulateLift();
 		Scheduler.getInstance().run();
 	}
 

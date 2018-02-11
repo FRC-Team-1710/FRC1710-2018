@@ -1,41 +1,39 @@
 package commands;
+
 import org.usfirst.frc.team1710.robot.Constants;
-import org.usfirst.frc.team1710.robot.RobotMap;
 import org.usfirst.frc.team1710.robot.lift;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class MoveLiftToPosition extends Command {
-	
+/**
+ *
+ */
+public class ChangeLiftSetpoint extends Command {
+
 	double _setpoint;
 	String initialLiftPosition;
-
-    public MoveLiftToPosition(double setpoint) {
+	
+    public ChangeLiftSetpoint(double setpoint) {
     	_setpoint = setpoint;
-
     }
 
     // Called just before this Command runs the first time
-    protected void initialize() {    	
-    	lift.setSetpoint(_setpoint);
+    protected void initialize() {
     	initialLiftPosition = lift.getLiftPosition();
+    	lift.setSetpoint(_setpoint);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	lift.manipulateLift();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return lift.getLiftOutput() < .1 && lift.getLiftOutput() > -.1;
+        return lift.getLiftPosition() != initialLiftPosition && lift.getLiftPosition() != Constants.liftingLevelName;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	lift.stopLift();
     }
 
     // Called when another command which requires one or more of the same

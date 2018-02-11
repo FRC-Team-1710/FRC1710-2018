@@ -3,7 +3,7 @@ package org.usfirst.frc.team1710.robot;
 public class Constants {
 	//constants for the lift 0 to 9700
 	public static double intake = 100;
-	public static double switchPosition = 2000;
+	public static double switchPosition = 1500;
 	public static double scaleLow= 4000;
 	public static double scaleNormal = 7000;
 	public static double scaleHigh = 9000;
@@ -58,9 +58,9 @@ public class Constants {
 	public static double robotDriveBaseWidth = .6985;
 	public static double wheelDiameter = .1524;
 	public static int ticksPerRev = 3900;
-	public static double kpPath = 0.1;
+	public static double kpPath = 0.01;
 	public static double kiPath = 0;
-	public static double kdPath = 0.01;
+	public static double kdPath = 0;
 	
 	public static double dt = 0.02;
 	public static double maxV = 1.275;

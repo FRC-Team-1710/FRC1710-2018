@@ -25,7 +25,7 @@ public class Intake {
 	public static void intake (double in, double out) {
 		if (isCubeInIntake()== false) {
 			RobotMap.intakeR.set(in-out);
-			RobotMap.intakeL.set(in-out);
+			RobotMap.intakeL.set(out-in);
 		} else {
 			RobotMap.intakeR.set(0);
 			RobotMap.intakeL.set(0);
@@ -45,7 +45,8 @@ public class Intake {
 		return wristSetPoint;
 	}
 	public static void manipulateWrist() {
-		RobotMap.wrist.set(ControlMode.PercentOutput, getWristError() * Constants.kPWrist);
+		//RobotMap.wrist.set(ControlMode.PercentOutput, getWristError() * Constants.kPWrist);
+		RobotMap.wrist.set(ControlMode.PercentOutput, (RobotMap.mechStick.getRawAxis(3)+1)/2);
 	}
 	public static double getWristError() {
 		return getWristSetPoint() - getWristEncPosition();

@@ -32,7 +32,7 @@ public class Drive {
 		RobotMap.shifter = new DoubleSolenoid(Constants.shifterForward,Constants.shifterReverse);
 		
 		RobotMap.navx = new AHRS(SPI.Port.kMXP);
-		Drive.setCoastMode();
+		Drive.setBrakeMode();
 	}
 	
 	public static void setShifters(boolean isShifted) {

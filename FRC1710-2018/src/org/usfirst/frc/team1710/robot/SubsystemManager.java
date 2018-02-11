@@ -10,6 +10,7 @@ public class SubsystemManager {
 		ControllerMap.InitializeControllerMap();
 		lift.initializeLift();
 		Vision.initializeVision();
+		RobotMap.navx.reset();
 	}
 	public static void masterReset() {
 		RobotMap.navx.reset();

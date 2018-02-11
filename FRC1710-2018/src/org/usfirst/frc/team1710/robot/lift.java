@@ -54,10 +54,10 @@ public class lift {
 		if (ControllerMap.liftPower() > 0.2 || ControllerMap.liftPower() < -0.2){
 			//if the stick is being moved down and the lift isn't near the bottom
 			if(ControllerMap.liftPower() > 0 && isAtBottom() == false) {
-				RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower() * 0.2);
+				RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower() * 0.5);
 			//if the stick is moving up and the lift isn't near the top
 			} else if(ControllerMap.liftPower() < 0 && isAtTop() == false) {
-				RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower() * 0.2);	
+				RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower() * 0.5);	
 			//uh oh
 			} else {
 				stopLift();
@@ -79,7 +79,7 @@ public class lift {
 			}
 		}	
 		if(isAtBottom() == true) {
-			RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);	 
+			//RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);	 
 		}
 	}
 	
@@ -95,11 +95,13 @@ public class lift {
 		return getLiftSetpoint() - getLiftEncPosition();
 	}
 	public static boolean isAtBottom() {
-		return !RobotMap.liftBottom.get();
+		//return !RobotMap.liftBottom.get();
+		return RobotMap.lift1.getSelectedSensorPosition(0) < 100;
 	}
 	
 	public static boolean isAtTop() {
-		return !RobotMap.liftTop.get();
+		//return !RobotMap.liftTop.get();
+		return RobotMap.lift1.getSelectedSensorPosition(0) > 7500;
 	}
 	
 	public static double getLiftEncPosition() {

@@ -38,10 +38,14 @@ public class FollowTrajectory extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	System.out.println("starting path");
     	SubsystemManager.masterReset();
+    	Drive.setBrakeMode();
     	RobotMap.navx.reset();
     	
-		PathManager.writePathToFile(waypoints, _fileName);
+    	Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH, 0.02, Constants.maxV, Constants.maxAccel, 60);
+    	//trajectory = Pathfinder.generate(waypoints, config);
+	    PathManager.writePathToFile(waypoints, _fileName);
     	trajectory = PathManager.readTrajFromFile(_fileName);
     	TankModifier modifier = new TankModifier(trajectory).modify(Constants.robotDriveBaseWidth);
     	
@@ -68,7 +72,7 @@ public class FollowTrajectory extends Command {
     	double desiredHeading = Pathfinder.r2d(left.getHeading());
     	double angleDifference = Pathfinder.boundHalfDegrees(desiredHeading - gyroHeading);
     	//the exit heading is accurate, but a little bit violent sometimes... so if the robot is freaking out then 5.75 is why
-		double turn = 5.75 * (-1.0/80.0) * angleDifference;
+		double turn = 3 * (-1.0/80.0) * angleDifference;
 		if(_isReversed == true) {
 	    	Drive.leftDrive(turn + l);
 	    	Drive.rightDrive(turn - r);

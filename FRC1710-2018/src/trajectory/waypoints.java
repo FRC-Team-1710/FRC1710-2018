@@ -29,11 +29,6 @@ public class waypoints {
 			new Waypoint(4,0,Pathfinder.d2r(-90)),
 	};
 	
-	public static Waypoint[] leftStartLeftSwitch = new Waypoint[] {
-			new Waypoint(0,0,0),
-			new Waypoint(1.5,-.4,Pathfinder.d2r(-10)),
-	};
-	
 	//split into to sets of waypoints for final part, play with speed
 	public static Waypoint[] leftStartRightSwitch = new Waypoint[] {
 			new Waypoint(0,0,0),
@@ -42,10 +37,15 @@ public class waypoints {
 			new Waypoint(6,2,Pathfinder.d2r(100)),
 	};
 	
-	public static Waypoint[] safePoints = new Waypoint[] {
+	public static Waypoint[] leftStartLeftSwitch = new Waypoint[] {
 			new Waypoint(0,0,0),
-			new Waypoint(0.75,-1.5,0),
-			new Waypoint(3,0,0),
+			new Waypoint(2, -1,Pathfinder.d2r(-20)),
+			new Waypoint(3.5,.45,Pathfinder.d2r(120)),
+	};
+	
+	public static Waypoint[] leftSwitchToScale = new Waypoint[] {
+			new Waypoint(0,0,0),
+			new Waypoint(1,.5,0),
 	};
 	
 }

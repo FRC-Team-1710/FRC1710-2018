@@ -65,13 +65,24 @@ public class Intake {
 	public static void setWristPosition(double setPoint) {
 		wristSetPoint = setPoint;
 	}
-	public static int getUltraSonicL() {
-		return RobotMap.ultraSonicL.getValue();
+	public static double getUltraSonicL() {
+		//Ultra sonic L is going to be further up on the robot
+		return RobotMap.ultraSonicL.getVoltage();
 	}
-	public static int getUltraSonicR() {
-		return RobotMap.ultraSonicR.getValue();
+	public static double getUltraSonicR() {
+		//Ultra sonic R is going to be closer to the robot
+		return RobotMap.ultraSonicR.getVoltage();
 	}
 	public static boolean isCubeInIntake() {
-		return ((getUltraSonicL()< Constants.ultraSonicConstant)&& (getUltraSonicR()< Constants.ultraSonicConstant));
-	} 
+		if ((getUltraSonicL() > Constants.ultraSonic0 || getUltraSonicL() < Constants.ultraSonicInIntake) && (getUltraSonicR() > Constants.ultraSonic0 || getUltraSonicR() < Constants.ultraSonicInIntake)) {
+			return true;
+		} else if ((getUltraSonicL() > Constants.ultraSonicInIntake) && (getUltraSonicR() > Constants.ultraSonicInIntake)) {
+			return false;
+		} else if ((getUltraSonicL() > Constants.ultraSonicInIntake) || (getUltraSonicR() > Constants.ultraSonicInIntake)) {
+				return false;
+		} else {
+			return false;
+		}
+	}
 }
+	

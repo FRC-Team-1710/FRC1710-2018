@@ -72,6 +72,8 @@ public class Constants {
 	public static double rotateToAngleHiEnd = 5;
 	public static double rotateToAngleLoEnd = 5;
 	
-	public static int ultraSonicConstant= 4;
+	public static int ultraSonicConstant = 4;
+	public static double ultraSonic0 = 0;
+	public static double ultraSonicInIntake = .28;
 	
 }

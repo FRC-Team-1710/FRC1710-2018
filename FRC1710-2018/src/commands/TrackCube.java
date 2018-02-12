@@ -15,6 +15,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 public class TrackCube extends Command {
 
 	boolean _isSeekingLeft;
+	int count;
 	
     public TrackCube(boolean isSeekingLeft) {
     	_isSeekingLeft = isSeekingLeft;
@@ -26,6 +27,9 @@ public class TrackCube extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if(Vision.areCubesIntakable() == true) {
+    		count ++;
+    	}
     	if(_isSeekingLeft == true) {
     		Vision.cubeTrackLeft();
     	} else {
@@ -36,7 +40,7 @@ public class TrackCube extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	//ideally we will keep runnning until a cube is detected to be secure in the intake but for now we stop when ty is a certain value
-        return Vision.areCubesIntakable();
+        return count > 25;
     }
 
     // Called once after isFinished returns true

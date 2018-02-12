@@ -58,11 +58,12 @@ public class Vision {
 	
 	public static void cubeTrackRight() {
 		//if bot cannot find box turn right
-			 
+		SmartDashboard.putBoolean("is cube intakeable", areCubesIntakable());
+
 		if(areCubesIntakable() == true) {
 			//if bot cannot find box turn left
-			Intake.intake(-Constants.cubeIntakeSpeed, Constants.cubeIntakeSpeed);
-			Drive.stopDriving();
+			Intake.intake(0, Constants.cubeIntakeSpeed);
+			Drive.arcadeDrive(0, -.3, false);
 			//arms closed
 		} else {
 			if(areCubesAvailable() == false) {
@@ -76,11 +77,11 @@ public class Vision {
 		}
 	}
 	public static void cubeTrackLeft() {
-	
+		SmartDashboard.putBoolean("is cube intakeable", areCubesIntakable());
 		if(areCubesIntakable() == true) {
 			//if bot cannot find box turn left
-			Intake.intake(-Constants.cubeIntakeSpeed, Constants.cubeIntakeSpeed);
-			Drive.stopDriving();
+			Intake.intake(0, Constants.cubeIntakeSpeed);
+			Drive.arcadeDrive(0,-.3,false);
 			//arms closed
 		} else {
 			if(areCubesAvailable() == false) {

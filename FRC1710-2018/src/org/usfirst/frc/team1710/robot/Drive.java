@@ -90,10 +90,10 @@ public class Drive {
 		leftDrive(error*Constants.kpStraight - power);
 	}
 	
-	public static void straightDriveTele (double power, double heading) {
+	public static void straightDriveTele (double rPower, double lPower, double heading) {
 		double error = (RobotMap.navx.getAngle() - (heading * 180));
-		rightDrive(error *Constants.kpStraight + power);
-		leftDrive(error*Constants.kpStraight - power);
+		rightDrive(error *Constants.kpStraight + rPower);
+		leftDrive(error*Constants.kpStraight + lPower);
 	}
 	
 	public static void setRobotHeading(double heading) {

@@ -65,9 +65,10 @@ public class Robot extends IterativeRobot {
 			Vision.cubeTrackLeft();
 		} else {
 			Drive.arcadeDrive(ControllerMap.getTurnPower(), ControllerMap.getForwardPower(), ControllerMap.shift());
+			Intake.intake(ControllerMap.intakeR(), ControllerMap.intakeL());
 		}
 		lift.manipulateLift();
-		Intake.intake(ControllerMap.intakeR(), ControllerMap.intakeL());
+		
 		//Intake.manipulateWrist();
 		SmartDashboard.putNumber("right", Drive.getRightPosition());
 		SmartDashboard.putNumber("left", Drive.getLeftPosition());

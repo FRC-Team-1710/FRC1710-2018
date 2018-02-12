@@ -23,13 +23,13 @@ public class Intake {
 	}
 	
 	public static void intake (double in, double out) {
-		if (isCubeInIntake()== false) {
+		//if (isCubeInIntake()== false) {
 			RobotMap.intakeR.set(in-out);
 			RobotMap.intakeL.set(out-in);
-		} else {
-			RobotMap.intakeR.set(0);
-			RobotMap.intakeL.set(0);
-		}
+		//} else {
+			//RobotMap.intakeR.set(0);
+			//RobotMap.intakeL.set(0);
+		//}
 	}
 	public static int getWristEncPosition() {
 		return RobotMap.wrist.getSelectedSensorPosition(0);

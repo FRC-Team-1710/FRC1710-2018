@@ -73,6 +73,7 @@ public class FollowTrajectory extends Command {
     	double angleDifference = Pathfinder.boundHalfDegrees(desiredHeading - gyroHeading);
     	//the exit heading is accurate, but a little bit violent sometimes... so if the robot is freaking out then 5.75 is why
 		double turn = 3 * (-1.0/80.0) * angleDifference;
+		//Drive.straightDriveTele(r,  l, desiredHeading);
 		if(_isReversed == true) {
 	    	Drive.leftDrive(turn + l);
 	    	Drive.rightDrive(turn - r);

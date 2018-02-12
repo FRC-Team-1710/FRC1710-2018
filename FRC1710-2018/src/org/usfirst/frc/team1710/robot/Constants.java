@@ -26,11 +26,11 @@ public class Constants {
 	public static double kpTurn = 0.01;
 	
 	//constants for Vision
-	public static double kpAim = .035;
-	public static double kpDistance= .05;
+	public static double kpAim = .4;
+	public static double kpDistance= .6;
 	public static double seekingSpeed = .3;
 	public static double cubeIntakeSpeed = 1;
-	public static double tyIntake = 3.5;
+	public static double tyIntake = 5;
 	
 	//constants for talons srx 
 	public static int rightLeaderid=8;

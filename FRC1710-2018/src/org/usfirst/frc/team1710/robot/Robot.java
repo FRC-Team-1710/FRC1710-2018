@@ -33,6 +33,7 @@ public class Robot extends IterativeRobot {
 		//SubsystemManager.masterinitialization();
 		RobotMap.driveStick = new Joystick(0);
 		RobotMap.mechStick = new Joystick(1);
+		DashboardInput.initializeDashboard();
 	}
 
 	@Override

@@ -9,39 +9,111 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 public class AutoHandler {
 	
 	public static CommandGroup getAutoToRun() {
-		if(DashboardInput.isRobotGoingToScale() == true) {
+		if(DashboardInput.isRobot1Cubing() == true) {
+			
 			if(DashboardInput.isRobotStartingLeft() == true) {
-				//return command group to go to scale when starting on the left
-				return null;
+				
+				if(DashboardInput.isRobotGoingToSwitch() == true) {
+					return null;
+					//run auto 1 cube starting left going to switch	
+				}else if(DashboardInput.isRobotGoingToScale() == true) {
+					return null;
+					//run auto 1 cube starting left going to scale
+				}
 			}else if(DashboardInput.isRobotStartingMiddle() == true) {
-				//return command group to go to scale when starting middle
-				return null;
+				
+				if(DashboardInput.isRobotGoingToSwitch() == true) {
+					return null;
+					//run auto 1 cube starting middle going to switch
+				}else if(DashboardInput.isRobotGoingToScale() == true) {
+					return null;
+					//run auto 1 cube starting middle going scale
+				}
 			}else {
-				//return command group to go to scale starting right
-				return null;
+				if(DashboardInput.isRobotGoingToSwitch() == true) {
+					return null;
+					//run auto 1 cube starting right going switch
+				}else if(DashboardInput.isRobotGoingToScale() == true) {
+					return null;
+					//run auto 1 cube starting right going to scale
+				}
 			}
 		
-		}else if(DashboardInput.isRobotGoingToSwitch() == true) {
+		}else if(DashboardInput.isRobot2Cubing() == true) {
+			
 			if(DashboardInput.isRobotStartingLeft() == true) {
-				//return command group to go to switch when starting on the left
-				return null;
+				
+				if(DashboardInput.isRobotGoingToSwitch() == true) {
+					return null;
+					//run auto 2 cube starting left going to switch
+				}else if(DashboardInput.isRobotGoingToScale() == true) {
+					return null;
+					//run auto 2 cube starting left going to scale
+				}else if(DashboardInput.isRobotGoingToBoth() == true) {
+					return null;
+					//run auto 2 cube starting left going to both
+				}
 			}else if(DashboardInput.isRobotStartingMiddle() == true) {
-				//return command group to fo to switch when starting in the middle
-				return null;
+			
+				if(DashboardInput.isRobotGoingToSwitch() == true) {
+					return null;
+					//run auto 2 cube starting middle going to switch
+				}else if(DashboardInput.isRobotGoingToScale() == true) {
+					return null;
+					//run auto 2 cube starting middle going to scale
+				}else if(DashboardInput.isRobotGoingToBoth() == true) {
+					return null;
+					//run auto 2 cube starting middle going to both
+				}
 			}else {
-				//return command group to go to swtich when starting right
-				return null;
+				if(DashboardInput.isRobotGoingToSwitch() == true) {
+					return null;
+					//run auto 2 cube starting right going to switch
+				}else if(DashboardInput.isRobotGoingToScale() == true) {
+					return null;
+					//run auto 2 cube starting right going to scale
+				}else if(DashboardInput.isRobotGoingToBoth() == true) {
+					return null;
+					//run auto 2 cube starting right going to both
+				}
 			}
-		}else {
+		}else if(DashboardInput.isRobot3Cubing() == true) {
+			
 			if(DashboardInput.isRobotStartingLeft() == true) {
-				//return command group to go to both starting left
-				return null;
+			
+				if(DashboardInput.isRobotGoingToSwitch() == true) {
+					return null;
+					//run auto 3 cube starting left going to switch
+				}else if(DashboardInput.isRobotGoingToScale() == true) {
+					return null;
+					//run auto 3 cube starting left going to scale
+				}else if(DashboardInput.isRobotGoingToBoth() == true) {
+					return null;
+					//run auto 3 cube starting left going to both
+				}
 			}else if(DashboardInput.isRobotStartingMiddle() == true) {
-				//return command group to go to both starting middle
-				return null;
+				
+				if(DashboardInput.isRobotGoingToSwitch() == true) {
+					return null;
+					//run auto 3 cube starting middle going to switch
+				}else if(DashboardInput.isRobotGoingToScale() == true) {
+					return null;
+					//run auto 3 cube starting middle going to scale
+				}else if(DashboardInput.isRobotGoingToBoth() == true) {
+					return null;
+					//run auto 3 cube starting middle going to both
+				}
 			}else {
-				//return command group to go to both starting right
-				return null;
+				if(DashboardInput.isRobotGoingToSwitch() == true) {
+					return null;
+					//run auto 3 cube starting right going to switch
+				}else if(DashboardInput.isRobotGoingToScale() == true) {
+					return null;
+					//run auto 3 cube starting right going to scale
+				}else if(DashboardInput.isRobotGoingToBoth() == true) {
+					return null;
+					//run auto 3 cube starting right going to both
+				}
 			}
 		}
 	}

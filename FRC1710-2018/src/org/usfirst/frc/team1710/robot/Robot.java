@@ -66,7 +66,7 @@ public class Robot extends IterativeRobot {
 		}
 		lift.manipulateLift();
 		Intake.intake(ControllerMap.intakeR(), ControllerMap.intakeL());*/
-		System.out.println("Search here" + RobotMap.driveStick.getPOV());
+		SmartDashboard.putNumber("Ultra Sonic Left", Intake.getUltraSonicL());
 	}
 	
 	

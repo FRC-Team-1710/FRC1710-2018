@@ -39,13 +39,24 @@ public class waypoints {
 	
 	public static Waypoint[] leftStartLeftSwitch = new Waypoint[] {
 			new Waypoint(0,0,0),
-			new Waypoint(2, -.4,0),
-			new Waypoint(3,.8,Pathfinder.d2r(-90)),
+			new Waypoint(2, -.25,0),
+			//-45 is south east lmao
+			new Waypoint(2.9,1.25,Pathfinder.d2r(-45)),
 	};
 	
 	public static Waypoint[] backupAndGetInViewOfCubesLeft = new Waypoint[] {
 			new Waypoint(0,0,0),
-			new Waypoint(1,.5,0),
+			new Waypoint(1,1,0),
+	};
+	
+	public static Waypoint[] turnAround = new Waypoint[] {
+			new Waypoint(0,0,0),
+			new Waypoint(1,0,Pathfinder.d2r(120)),
+	};
+	
+	public static Waypoint[] turnAroundTwoAndScale = new Waypoint[] {
+			new Waypoint(0,0,0),
+			new Waypoint(1,-1,Pathfinder.d2r(120)),
 	};
 	
 }

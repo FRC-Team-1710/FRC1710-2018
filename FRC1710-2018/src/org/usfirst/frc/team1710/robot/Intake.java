@@ -6,7 +6,11 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Spark;
-
+/** 
+ * The class deals with the intake motors and the wrist.
+ * @author molly
+ *
+ */
 public class Intake {
 	static double wristSetPoint;
 

@@ -10,7 +10,9 @@ import utility.RobotMath;
 public class lift {
 
 	public static double setPoint;	
-	
+	/**
+	 * give talons their id numbers
+	 */
 	public static void initializeLift() {
 		RobotMap.lift1 = new TalonSRX (Constants.liftRightTalon);
 		RobotMap.lift2 = new TalonSRX (Constants.liftLeftTalon);
@@ -21,7 +23,10 @@ public class lift {
 		RobotMap.liftBottom = new DigitalInput(0);
 		RobotMap.liftTop = new DigitalInput(1);
 	}
-
+/**
+ * tells lift what set-points to move to based on the mech-driver input
+ * @return lifts location
+ */
 	public static double getLiftSetpoint () {
 		if(ControllerMap.bottomLift() == true) {
 			setPoint = Constants.intake;
@@ -36,7 +41,10 @@ public class lift {
 		}
 		return setPoint;
 	}
-	
+	/**
+	 * tells if we are moving up or down to account for gravity
+	 * @return output for lift motor based on direction
+	 */
 	public static double getLiftOutput() {
 		if(getMovementDirection() == "moving up") {
 			return (-1 * ((getLiftError()) *  Constants.kPLiftUp));
@@ -44,7 +52,11 @@ public class lift {
 			return (-1 * ((getLiftError()) *  Constants.kPLiftDown));
 		}
 	}
-	
+	/**
+	 * handles Manual control for the mech-driver 
+	 * checks the set-point and calculates how to move to the set-point 
+	 * Prevents the lift from slamming into the top or bottom
+	 */
 	public static void manipulateLift() {
 		
 		double outputUp = (-1 * ((getLiftError()) *  Constants.kPLiftUp));
@@ -82,7 +94,10 @@ public class lift {
 			//RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);	 
 		}
 	}
-	
+	/**
+	 * find the direction to travel
+	 * @return direction
+	 */
 	public static String getMovementDirection() {
 		if (setPoint > getLiftEncPosition()) {
 			return "moving up";
@@ -90,28 +105,41 @@ public class lift {
 			return "moving down";
 		}
 	}
-	
+	/**
+	 * tells lift how far it needs to travel
+	 * @return destination
+	 */
 	public static double getLiftError() {
 		return getLiftSetpoint() - getLiftEncPosition();
 	}
+	/**
+	 * tells if lift is at the bottom using hall effect sensors.
+	 * @return value of the hall effect sensors.
+	 */
 	public static boolean isAtBottom() {
 		//return !RobotMap.liftBottom.get();
 		return RobotMap.lift1.getSelectedSensorPosition(0) < 100;
 	}
-	
+	/**
+	 * tell if lifts at the top using hall effect sensors.
+	 * @return value of the hall effect sensors.
+	 */
 	public static boolean isAtTop() {
 		//return !RobotMap.liftTop.get();
 		return RobotMap.lift1.getSelectedSensorPosition(0) > 7500;
 	}
-	
+	/**
+	 * tells what position lift is at
+	 * @return value of the lift encoder
+	 */
 	public static double getLiftEncPosition() {
 		return Math.abs(RobotMap.lift1.getSelectedSensorPosition(0));
 	}
 	
-	
-		
-	
-	
+	/**
+	 * tells what position lift is at
+	 * @return the name of the position - can be used on the dash board
+	 */
 	public static String getLiftPosition() {
 		if(setPoint == Constants.intake) {
 			return Constants.intakeLevelName;
@@ -128,11 +156,16 @@ public class lift {
 		}
 
 	}
-	
+	/**
+	 * tells lift to stop
+	 */
 	public static void stopLift() {
 		RobotMap.lift1.set(ControlMode.PercentOutput, 0);	
 	}
-	
+	/**
+	 * manually changes the set-point
+	 * @param newSetPoint constant value that is the encode position the lift should move to
+	 */
 	public static void setSetpoint(double newSetPoint) {
 		setPoint = newSetPoint;		
 	}

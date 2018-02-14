@@ -29,6 +29,13 @@ public class FollowTrajectory extends Command {
 
 	//isReversed makes it so the robot follows the path, but the robot is facing the other way. 
 	//fileName must include extension (.traj)
+	/**
+	 * 
+	 * @param points the raw x,y,heading points of the path to be followed
+	 * @param isInHighGear a boolean differentiating whether or not the path should be followed in high or low gear
+	 * @param isReversed a boolean differentiating whether or not the path should be followed in reverse
+	 * @param fileName a string for the name of the file that will be saved to the rio after building the path
+	 */
     public FollowTrajectory(Waypoint[] points, boolean isInHighGear, boolean isReversed, String fileName) {
     	waypoints = points;
     	_isInHighGear = isInHighGear;
@@ -36,7 +43,6 @@ public class FollowTrajectory extends Command {
     	_fileName = fileName;
     }
 
-    // Called just before this Command runs the first time
     protected void initialize() {
     	System.out.println("starting path");
     	SubsystemManager.masterReset();

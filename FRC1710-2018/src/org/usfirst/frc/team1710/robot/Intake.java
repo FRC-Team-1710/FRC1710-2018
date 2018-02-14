@@ -6,12 +6,12 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Spark;
-
+/** 
+ * The class deals with the intake motors and the wrist.
+ * @author molly
+ *
+ */
 public class Intake {
-	static boolean toggle = true;
-	static boolean toggle2 = true;
-	static boolean piston = false;
-	static boolean piston2 = false;
 	static double wristSetPoint;
 
 	
@@ -38,6 +38,11 @@ public class Intake {
 	public static int getWristEncPosition() {
 		return RobotMap.wrist.getSelectedSensorPosition(0);
 	}
+	/**
+	 * the wrist is controlled by a motor, and it changes positions to up, launch, and down.
+	 * handles the changing of the wrist setpoint
+	 * @return sets the wrist to a specific position.
+	 */
 	public static double getWristSetPoint() {
 		if (ControllerMap.wristUp() == true) {
 			wristSetPoint = Constants.wristUp;
@@ -48,13 +53,24 @@ public class Intake {
 		}
 		return wristSetPoint;
 	}
+	/**
+	 * controls the wrist speed proportionally to the wrist error
+	 */
 	public static void manipulateWrist() {
 		//RobotMap.wrist.set(ControlMode.PercentOutput, getWristError() * Constants.kPWrist);
 		RobotMap.wrist.set(ControlMode.PercentOutput, (RobotMap.mechStick.getRawAxis(3)+1)/2);
 	}
+	/**
+	 * error is distance from the current encoder value to the goal encoder value
+	 * @return how far away the goal is from the current position.
+	 */
 	public static double getWristError() {
 		return getWristSetPoint() - getWristEncPosition();
 	}
+	/**
+	 * Gets the number from the encoder, and uses it within a range.
+	 * @return it will return what position the wrist is in.
+	 */
 	public static String getWristPosition() {
 		if (getWristEncPosition() > Constants.wristUp + 5 || getWristEncPosition() < Constants.wristUp - 5) {
 			return "Keeping cube in";
@@ -69,14 +85,29 @@ public class Intake {
 	public static void setWristPosition(double setPoint) {
 		wristSetPoint = setPoint;
 	}
+	/**
+	 * Gets the ultra sonic proximity in voltage.
+	 * @return returns the ultra sonic voltage
+	 */
 	public static double getUltraSonicL() {
 		//Ultra sonic L is going to be further up on the robot
 		return RobotMap.ultraSonicL.getVoltage();
 	}
+	/**
+	 * Gets the ultra sonic proximity in voltage.
+	 * @return returns the ultra sonic voltage
+	 */
 	public static double getUltraSonicR() {
 		//Ultra sonic R is going to be closer to the robot
 		return RobotMap.ultraSonicR.getVoltage();
 	}
+	/**
+	 * The method checks if the ultra sonic sensor is within a certain range.
+	 * If the cube is within an inch of the sensor, then it will read any where from 0 to .28.
+	 * If the cube is within 0 or .28, then it will read true. The cube is in the intake.
+	 * If the cube is greater than .28, or less than 0, it will return false. The cube is not in the intake.
+	 * @return if the cube is in the intake.
+	 */
 	public static boolean isCubeInIntake() {
 		if ((getUltraSonicL() > Constants.ultraSonic0 || getUltraSonicL() < Constants.ultraSonicInIntake) && (getUltraSonicR() > Constants.ultraSonic0 || getUltraSonicR() < Constants.ultraSonicInIntake)) {
 			return true;

@@ -73,8 +73,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("right", Drive.getRightPosition());
 		SmartDashboard.putNumber("left", Drive.getLeftPosition());
 
-		Intake.intake(ControllerMap.intakeR(), ControllerMap.intakeL());
-		Intake.intake(ControllerMap.intakeR(), ControllerMap.intakeL());
 		SmartDashboard.putNumber("Ultra Sonic Left", Intake.getUltraSonicL());
 	}
 	

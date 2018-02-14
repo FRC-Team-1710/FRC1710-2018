@@ -43,7 +43,13 @@ public class FollowTrajectory extends Command {
     	Drive.setBrakeMode();
     	RobotMap.navx.reset();
     	
-    	Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH, 0.02, Constants.maxV, Constants.maxAccel, 60);
+    	Trajectory.Config config;
+    	
+    	if(_isInHighGear == true) {
+        	config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH, 0.02, Constants.maxVHi, Constants.maxAccelHi, 60);
+    	} else {
+        	config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH, 0.02, Constants.maxV, Constants.maxAccel, 60);
+    	}
     	//trajectory = Pathfinder.generate(waypoints, config);
 	    PathManager.writePathToFile(waypoints, _fileName);
     	trajectory = PathManager.readTrajFromFile(_fileName);
@@ -58,8 +64,13 @@ public class FollowTrajectory extends Command {
     	left.configureEncoder((int) Drive.getLeftPosition(), Constants.ticksPerRev, Constants.wheelDiameter);
     	right.configureEncoder((int) Drive.getRightPosition(), Constants.ticksPerRev, Constants.wheelDiameter);
     	
-    	left.configurePIDVA(Constants.kpPath, Constants.kiPath, Constants.kdPath, 1/ Constants.maxV, Constants.accGain);
-    	right.configurePIDVA(Constants.kpPath, Constants.kiPath, Constants.kdPath, 1/ Constants.maxV, Constants.accGain);
+    	if(_isInHighGear == true) {
+        	left.configurePIDVA(Constants.kpPath, Constants.kiPath, Constants.kdPath, 1/ Constants.maxVHi, Constants.accGain);
+        	right.configurePIDVA(Constants.kpPath, Constants.kiPath, Constants.kdPath, 1/ Constants.maxVHi, Constants.accGain);
+    	} else {
+        	left.configurePIDVA(Constants.kpPath, Constants.kiPath, Constants.kdPath, 1/ Constants.maxV, Constants.accGain);
+        	right.configurePIDVA(Constants.kpPath, Constants.kiPath, Constants.kdPath, 1/ Constants.maxV, Constants.accGain);
+    	}
     	Drive.setShifters(_isInHighGear);
     }
 

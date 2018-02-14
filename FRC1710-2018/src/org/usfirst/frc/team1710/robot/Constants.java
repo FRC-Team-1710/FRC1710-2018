@@ -68,6 +68,9 @@ public class Constants {
 	public static double accGain = 0.01;
 	public static double maxJerk = 60;
 	
+	public static double maxVHi = 12;
+	public static double maxAccelHi = 12;
+	
 	//rotate to angle
 	public static double rotateToAngleHiEnd = 5;
 	public static double rotateToAngleLoEnd = 5;

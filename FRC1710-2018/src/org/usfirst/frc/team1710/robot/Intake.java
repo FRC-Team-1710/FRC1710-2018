@@ -14,6 +14,10 @@ public class Intake {
 	static boolean piston2 = false;
 	static double wristSetPoint;
 
+	
+	/**
+	 * 
+	 */
 	public static void initializeIntake () {
 		RobotMap.intakeR = new Spark (Constants.intakeRSpark);
 		RobotMap.intakeL = new Spark (Constants.intakeLSpark);

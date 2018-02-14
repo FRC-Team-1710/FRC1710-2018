@@ -7,36 +7,60 @@ public class ControllerMap {
 		RobotMap.driveStick = new Joystick(0);
 		RobotMap.mechStick = new Joystick (1);
 	}
-	
-	//YALL BETTER ORGANIZE
-	
-	//one, two, three, four are lift position buttons
-	static boolean one = RobotMap.mechStick.getRawButton(1);
-	static boolean two = RobotMap.mechStick.getRawButton(2);
-	static boolean three = RobotMap.mechStick.getRawButton(3);
-	static boolean four = RobotMap.mechStick.getRawButton(4);
-	static boolean leftIntakePistonToggle = RobotMap.mechStick.getRawButton(5);
-	static boolean rightIntakePistonToggle = RobotMap.mechStick.getRawButton(6);
-	static boolean wristUp = RobotMap.mechStick.getRawButton(8);
-	static boolean wristLaunch = RobotMap.mechStick.getRawButton(9);
-	static boolean wristDown = RobotMap.mechStick.getRawButton(10);
+	//buttons 
+	public static boolean bottomLift() {
+		return RobotMap.mechStick.getRawButton(7);
+	}
+	public static boolean liftAtSwitchHeight() {
+		return RobotMap.mechStick.getRawButton(8);
+	}
+	public static boolean liftAtScaleLow() {
+		return RobotMap.mechStick.getRawButton(9);
+	}
+	public static boolean liftAtScaleNormal() {
+		return RobotMap.mechStick.getRawButton(10);
+	}
+	public static boolean liftAtScaleHigh() {
+		return RobotMap.mechStick.getRawButton(11);
+	}
+	public static boolean leftIntakeToggle() {
+		return RobotMap.mechStick.getRawButton(5);
+	}
+	public static boolean rightIntakeToggle() {
+		return RobotMap.mechStick.getRawButton(6);
+	}
+	public static boolean wristUp() {
+		return RobotMap.mechStick.getRawButton(2);
+	}
+	public static boolean wristLaunch() {
+		return RobotMap.mechStick.getRawButton(3);
+	}
+	public static boolean wristDown() {
+		return RobotMap.mechStick.getRawButton(4);
+	}
 
-	//Mechstick Axis
+	public static boolean shift() {
+		return RobotMap.driveStick.getRawButton(5);
+	}
+	public static boolean visionActivated() {
+		return  RobotMap.driveStick.getRawButton(1) || RobotMap.mechStick.getRawButton(1);
+	}
 	
-	static double liftPower = RobotMap.mechStick.getRawAxis(1);
-	static double intakeR = RobotMap.mechStick.getRawAxis(1);
-	static double intakeL = RobotMap.mechStick.getRawAxis(5);
-	
-	//Drivestick PLEASE ORGANIZE
-	static boolean rampDeploy = RobotMap.mechStick.getRawButton(3);
-	static boolean rampLift = RobotMap.mechStick.getRawButton(4);
-	
-	static boolean shift = RobotMap.driveStick.getRawButton(5);
-	static boolean visionActivated = RobotMap.driveStick.getRawButton(1) || RobotMap.mechStick.getRawButton(1);
-
-	//Drivestick Axis
-	
-	static double turnPower = -RobotMap.driveStick.getRawAxis(4);
-	static double forwardPower = RobotMap.driveStick.getRawAxis(1);
+	//Axis
+	public static double getTurnPower() {
+		return -RobotMap.driveStick.getRawAxis(4);
+	}
+	public static double getForwardPower() {
+		return RobotMap.driveStick.getRawAxis(1);
+	}
+	public static double liftPower() {
+		return RobotMap.mechStick.getRawAxis(1);
+	}
+	public static double intakeR() {
+		return RobotMap.driveStick.getRawAxis(2);
+	}
+	public static double intakeL() {
+		return RobotMap.driveStick.getRawAxis(3);
+	}
 }
 

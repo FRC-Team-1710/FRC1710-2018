@@ -1,15 +1,19 @@
 package org.usfirst.frc.team1710.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
-
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class Drive {
 	
+	static boolean navxReset = false;
+	static double setPoint;
+
 	public static void initializeDrive () {
 		RobotMap.R1 = new TalonSRX (Constants.rightLeaderid);
 		RobotMap.R2 = new VictorSPX (Constants.rightFollowerid);
@@ -19,26 +23,57 @@ public class Drive {
 		RobotMap.L3 = new VictorSPX (Constants.leftFollowerid2);
 		
 		RobotMap.R2.follow (RobotMap.R1);
+		RobotMap.R2.setInverted(true);
 		RobotMap.R3.follow (RobotMap.R1);
 		RobotMap.L2.follow (RobotMap.L1);
 		RobotMap.L3.follow (RobotMap.L1);
+		RobotMap.L3.setInverted(true);
 		
-		RobotMap.shifter = new DoubleSolenoid(0,1);
+		RobotMap.shifter = new DoubleSolenoid(Constants.shifterForward,Constants.shifterReverse);
 		
 		RobotMap.navx = new AHRS(SPI.Port.kMXP);
+		Drive.setBrakeMode();
 	}
 	
-	public static void arcadeDrive (double forward, double side, boolean shift) {
-		if (shift == true) {
-			//high gear
-			RobotMap.shifter.set(Value.kReverse); 
-		} else {
-			//low gear
+	public static void setShifters(boolean isShifted) {
+		if(isShifted == true) {
+			RobotMap.shifter.set(Value.kReverse);
+		}else {
 			RobotMap.shifter.set(Value.kForward);
 		}
-		
-		RobotMap.R1.set(ControlMode.PercentOutput, forward - side);
-		RobotMap.L1.set(ControlMode.PercentOutput, forward + side);
+	}
+	
+	public static void arcadeDrive (double side, double forward, boolean shift) {
+		if (shift == true) {
+			if(navxReset == false) {
+				RobotMap.navx.reset();
+				navxReset = true;
+			}
+			//high gear
+			setShifters(true);
+			//side is forward for some reason
+			straightDriveAuto(-forward);
+		} else {
+			if (RobotMap.driveStick.getPOV() == 0) {
+				setPoint = 0;
+				setRobotHeading (setPoint);
+			} else if (RobotMap.driveStick.getPOV() == 90) {
+				setPoint = 90;
+				setRobotHeading (setPoint);
+			} else if (RobotMap.driveStick.getPOV() == 180) {
+				setPoint = 180;
+				setRobotHeading (setPoint);
+			} else if (RobotMap.driveStick.getPOV() == 270) {
+				setPoint = 270;
+				setRobotHeading (setPoint);
+			} else {
+				RobotMap.R1.set(ControlMode.PercentOutput, side - forward);
+				RobotMap.L1.set(ControlMode.PercentOutput, side + forward);
+			}
+			//low gear
+			setShifters(false);
+			navxReset = false;
+		}
 	}
 	
 	public static void leftDrive(double power) {
@@ -55,10 +90,16 @@ public class Drive {
 		leftDrive(error*Constants.kpStraight - power);
 	}
 	
-	public static void straightDriveTele (double power, double heading) {
+	public static void straightDriveTele (double rPower, double lPower, double heading) {
 		double error = (RobotMap.navx.getAngle() - (heading * 180));
-		rightDrive(error *Constants.kpStraight + power);
-		leftDrive(error*Constants.kpStraight - power);
+		rightDrive(error *Constants.kpStraight + rPower);
+		leftDrive(error*Constants.kpStraight + lPower);
+	}
+	
+	public static void setRobotHeading(double heading) {
+		double error = (RobotMap.navx.getAngle() - heading);
+		rightDrive(error*Constants.kpTurn);
+		leftDrive(error*Constants.kpTurn);
 	}
 	
 	public static double getLeftVelocity() {
@@ -69,6 +110,15 @@ public class Drive {
 		return RobotMap.R1.getSelectedSensorVelocity(0);
 	}
 	
+	public static void stopDriving() {
+		RobotMap.R1.set(ControlMode.PercentOutput, 0);
+		RobotMap.L1.set(ControlMode.PercentOutput, 0);
+	}
+	
+	public static double getNavxAngle() {
+		return RobotMap.navx.getAngle();
+	}
+	
 	public static double getLeftPosition() {
 		return RobotMap.L1.getSelectedSensorPosition(0);
 	}
@@ -76,5 +126,20 @@ public class Drive {
 	public static double getRightPosition() {
 		return RobotMap.R1.getSelectedSensorPosition(0);
 	}
-
+	public static void setBrakeMode() {
+		RobotMap.R1.setNeutralMode(NeutralMode.Brake);
+		RobotMap.R2.setNeutralMode(NeutralMode.Brake);
+		RobotMap.R3.setNeutralMode(NeutralMode.Brake);
+		RobotMap.L3.setNeutralMode(NeutralMode.Brake);
+		RobotMap.L2.setNeutralMode(NeutralMode.Brake);
+		RobotMap.L1.setNeutralMode(NeutralMode.Brake);	
+	}
+	public static void setCoastMode() {
+		RobotMap.R1.setNeutralMode(NeutralMode.Coast);
+		RobotMap.R2.setNeutralMode(NeutralMode.Coast);
+		RobotMap.R3.setNeutralMode(NeutralMode.Coast);
+		RobotMap.L3.setNeutralMode(NeutralMode.Coast);
+		RobotMap.L2.setNeutralMode(NeutralMode.Coast);
+		RobotMap.L1.setNeutralMode(NeutralMode.Coast);		
+	}
 }

@@ -31,7 +31,8 @@ public class Intake {
 		return RobotMap.wrist.getSelectedSensorPosition(0);
 	}
 	/**
-	 * if a button is pressed, then
+	 * the wrist is controlled by a motor, and it changes positions to up, launch, and down.
+	 * handles the changing of the wrist setpoint
 	 * @return sets the wrist to a specific position.
 	 */
 	public static double getWristSetPoint() {
@@ -44,16 +45,22 @@ public class Intake {
 		}
 		return wristSetPoint;
 	}
+	/**
+	 * controls the wrist speed proportionally to the wrist error
+	 */
 	public static void manipulateWrist() {
 		//RobotMap.wrist.set(ControlMode.PercentOutput, getWristError() * Constants.kPWrist);
 		RobotMap.wrist.set(ControlMode.PercentOutput, (RobotMap.mechStick.getRawAxis(3)+1)/2);
 	}
+	/**
+	 * error is distance from the current encoder value to the goal encoder value
+	 * @return how far away the goal is from the current position.
+	 */
 	public static double getWristError() {
 		return getWristSetPoint() - getWristEncPosition();
 	}
 	/**
-	 * Gets the number from the encoder. A range is given.
-	 * If the encoder numbers fall within the given range. . .
+	 * Gets the number from the encoder, and uses it within a range.
 	 * @return it will return what position the wrist is in.
 	 */
 	public static String getWristPosition() {
@@ -67,15 +74,11 @@ public class Intake {
 			return "changing position. Or broken";
 		}
 	}
-	/**
-	 * the parameter is equal to the static double "wristSetPoint"
-	 * @param setPoint
-	 */
 	public static void setWristPosition(double setPoint) {
 		wristSetPoint = setPoint;
 	}
 	/**
-	 * This is getting the UltraSonic proximity in voltage.
+	 * Gets the ultra sonic proximity in voltage.
 	 * @return returns the ultra sonic voltage
 	 */
 	public static double getUltraSonicL() {
@@ -83,7 +86,7 @@ public class Intake {
 		return RobotMap.ultraSonicL.getVoltage();
 	}
 	/**
-	 * This is getting the UltraSonic proximity in voltage.
+	 * Gets the ultra sonic proximity in voltage.
 	 * @return returns the ultra sonic voltage
 	 */
 	public static double getUltraSonicR() {

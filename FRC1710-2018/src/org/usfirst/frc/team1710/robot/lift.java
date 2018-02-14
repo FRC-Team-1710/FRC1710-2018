@@ -9,7 +9,9 @@ import edu.wpi.first.wpilibj.DigitalInput;
 public class lift {
 
 	public static double setPoint;	
-	
+	/**
+	 * Set Motors to Talons
+	 */
 	public static void initializeLift() {
 		RobotMap.lift1 = new TalonSRX (Constants.lift1Talon);
 		RobotMap.lift2 = new TalonSRX (Constants.lift2Talon);
@@ -17,6 +19,10 @@ public class lift {
 		RobotMap.liftReset = new DigitalInput(0);
 	}
 
+	/**
+	 * Moves Lift to a set position
+	 * @return lift location
+	 */
 	public static double getLiftSetPoint () {
 		
 		if( ControllerMap.one == true) {
@@ -31,7 +37,9 @@ public class lift {
 		return setPoint;
 	}
 		//when a button is pressed, the lift will go to that position.
-
+/**
+ * tells left were to move to
+ */
 	public static void manipulateLift() {
 		if (ControllerMap.liftPower > 0.2 || ControllerMap.liftPower < -0.2){
 			RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower);	
@@ -43,17 +51,31 @@ public class lift {
 			RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);	 
 		}
 	}
+	/**
+	 * Tells if lifts Position has changed
+	 * @return tells how much lift has changed
+	 */
 	public static double getLiftError() {
 		return getLiftSetPoint() - getLiftEncPosition();
 	}
+	/**
+	 * Tells if lift is at the bottom
+	 * @return if lift is at bottom
+	 */
 	public static boolean isAtBottom() {
 		return !RobotMap.liftReset.get();
 	}
-	
+	/**
+	 * tells lift position
+	 * @return lift's position
+	 */
 	public static double getLiftEncPosition() {
 		return RobotMap.lift1.getSelectedSensorPosition(0);
 	}
-	
+	/**
+	 * tells lift were to move to
+	 * @return lift's end position
+	 */
 	public static String getLiftPosition() {
 		if(setPoint == Constants.intake) {
 			return "intake";

@@ -36,14 +36,14 @@ public class DriveToPosition extends Command {
     	if((Math.abs(Drive.getLeftPosition())/_encGoal) < _slowPercent) {
     		Drive.straightDriveAuto(_speed);
     	}else {
-    		Drive.straightDriveAuto(_speed - (Math.abs(Drive.getLeftPosition())/_encGoal));
+    		Drive.straightDriveAuto((_speed + .3) - (Math.abs(Drive.getLeftPosition())/_encGoal));
     	}
     	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Math.abs(Drive.getLeftPosition()) >= _encGoal;
+        return Math.abs(Drive.getLeftPosition()) >= _encGoal - 1000;
     }
 
     // Called once after isFinished returns true

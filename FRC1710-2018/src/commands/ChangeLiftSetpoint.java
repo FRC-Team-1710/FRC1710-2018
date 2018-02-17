@@ -11,7 +11,8 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ChangeLiftSetpoint extends Command {
 
 	double _setpoint;
-	String initialLiftPosition;
+	String goalLiftPosition;
+	int count;
 	
     public ChangeLiftSetpoint(double setpoint) {
     	_setpoint = setpoint;
@@ -19,17 +20,25 @@ public class ChangeLiftSetpoint extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	initialLiftPosition = lift.getLiftPosition();
+    	if(_setpoint == Constants.intake) {
+    		goalLiftPosition = Constants.intakeLevelName;
+    	} else if(_setpoint == Constants.switchPosition) {
+    		goalLiftPosition = Constants.switchLevelName;
+    	} else if(_setpoint == Constants.scaleHigh) {
+    		goalLiftPosition = Constants.highLevelName;
+    	}
     	lift.setSetpoint(_setpoint);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	count++;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return lift.getLiftPosition() != initialLiftPosition && lift.getLiftPosition() != Constants.liftingLevelName;
+    	
+        return lift.getLiftPosition().equals(goalLiftPosition) || count > 200;
     }
 
     // Called once after isFinished returns true

@@ -10,7 +10,11 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import commandGroups.BuildPath;
 import commandGroups.LeftStartLeftScale;
 import commandGroups.LeftStartLeftSwitch;
+import commandGroups.MiddleToLeftSwitch;
+import commandGroups.MiddleToRightSwitch;
 import commandGroups.RightStartRightScale;
+import commandGroups.RightStartRightSwitch;
+import commandGroups.Testing;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -40,10 +44,10 @@ public class Robot extends IterativeRobot {
 	
 	static NetworkTableInstance table = NetworkTableInstance.getDefault();
 	static NetworkTable autoChoices = table.getTable("SmartDashboard");
-	static NetworkTableEntry destinationOne = autoChoices.getEntry("Destination_Both");
-	static NetworkTableEntry destinationTwo = autoChoices.getEntry("Destination_Switch");
-	static NetworkTableEntry destinationThree = autoChoices.getEntry("Destination_Scale");
-	static NetworkTableEntry positionOne = autoChoices.getEntry("starting_position_Left");
+	static NetworkTableEntry destinationOne = autoChoices.getEntry("RightScale");
+	static NetworkTableEntry destinationTwo = autoChoices.getEntry("LeftScale");
+	static NetworkTableEntry destinationThree = autoChoices.getEntry("MiddleLeft");
+	static NetworkTableEntry positionOne = autoChoices.getEntry("MiddleRight");
 	static NetworkTableEntry positionTwo = autoChoices.getEntry("starting_position_Middle");
 	static NetworkTableEntry positionThree = autoChoices.getEntry("starting_position_Right");
 		
@@ -63,13 +67,18 @@ public class Robot extends IterativeRobot {
 		RobotMap.L1.setSelectedSensorPosition(0, 0, 0);
 		Vision.ledEntry.forceSetNumber(0);
 		Vision.ledEntry.forceSetNumber(1);
+		RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);
+		lift.setSetpoint(Constants.intake);
+		CommandGroup autoMode = new RightStartRightScale();
 		
-		CommandGroup autoMode;
-		
-		if(SmartDashboard.getBoolean("RightScale", false) == true) {
+		if(destinationOne.getBoolean(false) == true) {
 			autoMode = new RightStartRightScale();
-		} else if (SmartDashboard.getBoolean("LeftScale", false) == true){
+		} else if (destinationTwo.getBoolean(false) == true){
 			autoMode = new LeftStartLeftScale();
+		} else if(destinationThree.getBoolean(false) == true) {
+			autoMode = new MiddleToLeftSwitch();
+		} else if (positionOne.getBoolean(false) == true) {
+			autoMode = new MiddleToRightSwitch();
 		}
 		
 		autoMode.start();
@@ -79,9 +88,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		lift.manipulateLift();
-		Intake.manipulateWrist();
-		lift.setSetpoint(Constants.intake);
-		Intake.setWristPosition(Constants.wristDown);
+		//Intake.manipulateWrist();
+		//Intake.setWristPosition(Constants.wristDown);
 		SmartDashboard.putNumber("lift enc", lift.getLiftEncPosition());
 		RobotMap.wrist.setSelectedSensorPosition(0, 0, 0);
 		Scheduler.getInstance().run();
@@ -90,7 +98,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		lift.setSetpoint(Constants.intake);
-		Intake.setWristPosition(Constants.wristDown);
 		RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);
 		RobotMap.wrist.setSelectedSensorPosition(0, 0, 0);
 		Vision.ledEntry.forceSetNumber(0);

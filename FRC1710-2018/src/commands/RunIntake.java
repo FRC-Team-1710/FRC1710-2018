@@ -13,8 +13,7 @@ public class RunIntake extends Command {
 	int count = 0;
 	
     public RunIntake(boolean didCubeStartInIntake) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    	_didCubeStartInIntake = didCubeStartInIntake;
     }
 
     // Called just before this Command runs the first time

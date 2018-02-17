@@ -14,12 +14,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class RightStartRightScale extends CommandGroup {
 
     public RightStartRightScale() {
-    	addSequential(new DriveToPosition(60000, 1, true));
-    	addSequential(new TurnToAngle(-60));
+    	addSequential(new DriveToPosition(60000, .75, true));
     	addSequential(new ChangeLiftSetpoint(Constants.scaleHigh));
+    	addSequential(new TurnToAngle(-60));
     	addSequential(new RunIntake(true));
     	addSequential(new ChangeLiftSetpoint(Constants.intake));
-    	addSequential(new TurnToAngle(180));
+    	addSequential(new TurnToAngle(-80));
     	addSequential(new RightScaleToRightSwitch());
     }
 }

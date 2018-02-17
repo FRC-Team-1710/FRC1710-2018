@@ -20,6 +20,8 @@ public class DashboardInput {
 	public static void setUpDashboard() {
 		SmartDashboard.putBoolean("LeftScale", false);
 		SmartDashboard.putBoolean("RightScale", false);
+		SmartDashboard.putBoolean("MiddleLeft", false);
+		SmartDashboard.putBoolean("MiddleRight", false);
 	}
 	
 	public static void updateDashboard(DashboardReport report) {

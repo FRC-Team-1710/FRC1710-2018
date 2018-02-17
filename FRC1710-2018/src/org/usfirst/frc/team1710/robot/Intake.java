@@ -57,11 +57,11 @@ public class Intake {
 	 * controls the wrist speed proportionally to the wrist error
 	 */
 	public static void manipulateWrist() {
+				
 		if(ControllerMap.getMechTrigger() == true) {
-			RobotMap.wrist.set(ControlMode.PercentOutput, -ControllerMap.liftPower()*.4);
-			setWristPosition(getWristEncPosition());
+			RobotMap.wrist.set(ControlMode.PercentOutput, -RobotMap.mechStick.getRawAxis(0)*.4);
 		} else {
-			RobotMap.wrist.set(ControlMode.PercentOutput, getWristError() * Constants.kPWrist);
+			RobotMap.wrist.set(ControlMode.PercentOutput,0);
 		}
 	}
 	/**

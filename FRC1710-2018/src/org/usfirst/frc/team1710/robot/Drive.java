@@ -52,7 +52,8 @@ public class Drive {
 			//high gear
 			setShifters(true);
 			//side is forward for some reason
-			straightDriveAuto(-forward);
+			RobotMap.R1.set(ControlMode.PercentOutput, side - forward);
+			RobotMap.L1.set(ControlMode.PercentOutput, side + forward);
 		} else {
 			if (RobotMap.driveStick.getPOV() == 0) {
 				setPoint = 0;

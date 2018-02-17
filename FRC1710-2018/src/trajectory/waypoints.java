@@ -77,7 +77,7 @@ public class waypoints {
 	
 	public static Waypoint[] rightScaleToRightSwitch = new Waypoint[] {
 			new Waypoint(0,0,0),
-			new Waypoint(1, -.5 ,0),
+			new Waypoint(1.5, -1 ,0),
 	};
 	
 	public static Waypoint[] oneCubeRightSwitchLeftStart= new Waypoint[] {

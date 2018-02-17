@@ -1,12 +1,15 @@
 package org.usfirst.frc.team1710.robot;
 
 public class Constants {
+	
+	
+	public static double psiPerVolts = 44.494;
 	//constants for the lift 0 to 9700
-	public static double intake = 100;
+	public static double intake = 50;
 	public static double switchPosition = 2500;
-	public static double scaleLow= 4000;
-	public static double scaleNormal = 7000;
-	public static double scaleHigh = 9000;
+	public static double scaleLow= 4500;
+	public static double scaleNormal = 6500;
+	public static double scaleHigh = 7000;
 	public static String intakeLevelName = "intake";
 	public static String switchLevelName = "switch";
 	public static String lowLevelName = "low level";
@@ -15,8 +18,8 @@ public class Constants {
 	public static String liftingLevelName = "lifting";
 	//the constant for moving down is less bc when we go down we work with gravity and that prevents things from 
 	//getting too violent
-	public static double kPLiftUp = 0.0003;
-	public static double kPLiftDown = 0.0003;
+	public static double kPLiftUp = 0.002;
+	public static double kPLiftDown = 0.0015;
 	
 	public static int shifterReverse = 0;
 	public static int shifterForward = 1;
@@ -26,11 +29,11 @@ public class Constants {
 	public static double kpTurn = 0.01;
 	
 	//constants for Vision
-	public static double kpAim = .4;
+	public static double kpAim = .5;
 	public static double kpDistance= .6;
 	public static double seekingSpeed = .3;
 	public static double cubeIntakeSpeed = 1;
-	public static double tyIntake = 5;
+	public static double tyIntake = 3;
 	
 	//constants for talons srx 
 	public static int rightLeaderid=8;
@@ -50,9 +53,9 @@ public class Constants {
 	
 	//constants for wrist
 	public static int wristUp = 0;
-	public static int wristLaunch = 1;
-	public static int wristDown = 2;
-	public static double kPWrist = .01;
+	public static int wristLaunch = 800;
+	public static int wristDown = 1200;
+	public static double kPWrist = .0008;
 	
 	//pathfinder (dimensions in meters)
 	public static double robotDriveBaseWidth = .6985;
@@ -68,12 +71,12 @@ public class Constants {
 	public static double accGain = 0.01;
 	public static double maxJerk = 60;
 	
-	public static double maxVHi = 12;
-	public static double maxAccelHi = 12;
+	public static double maxVHi = 3;
+	public static double maxAccelHi = 3;
 	
 	//rotate to angle
-	public static double rotateToAngleHiEnd = 5;
-	public static double rotateToAngleLoEnd = 5;
+	public static double rotateToAngleHiEnd = 7;
+	public static double rotateToAngleLoEnd = 7;
 	
 	public static int ultraSonicConstant = 4;
 	public static double ultraSonic0 = 0;

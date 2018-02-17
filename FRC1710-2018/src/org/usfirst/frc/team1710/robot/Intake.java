@@ -22,7 +22,7 @@ public class Intake {
 		RobotMap.intakeR = new Spark (Constants.intakeRSpark);
 		RobotMap.intakeL = new Spark (Constants.intakeLSpark);
 		RobotMap.wrist = new TalonSRX (Constants.wristTalon);
-		RobotMap.ultraSonicL = new AnalogInput (0);
+		RobotMap.ultraSonicL = new AnalogInput (2);
 		RobotMap.ultraSonicR = new AnalogInput (1);
 	}
 	
@@ -36,7 +36,7 @@ public class Intake {
 		//}
 	}
 	public static int getWristEncPosition() {
-		return RobotMap.wrist.getSelectedSensorPosition(0);
+		return Math.abs(RobotMap.wrist.getSelectedSensorPosition(0));
 	}
 	/**
 	 * the wrist is controlled by a motor, and it changes positions to up, launch, and down.
@@ -57,8 +57,12 @@ public class Intake {
 	 * controls the wrist speed proportionally to the wrist error
 	 */
 	public static void manipulateWrist() {
-		//RobotMap.wrist.set(ControlMode.PercentOutput, getWristError() * Constants.kPWrist);
-		RobotMap.wrist.set(ControlMode.PercentOutput, (RobotMap.mechStick.getRawAxis(3)+1)/2);
+		if(ControllerMap.getMechTrigger() == true) {
+			RobotMap.wrist.set(ControlMode.PercentOutput, -ControllerMap.liftPower()*.4);
+			setWristPosition(getWristEncPosition());
+		} else {
+			RobotMap.wrist.set(ControlMode.PercentOutput, getWristError() * Constants.kPWrist);
+		}
 	}
 	/**
 	 * error is distance from the current encoder value to the goal encoder value
@@ -100,6 +104,7 @@ public class Intake {
 	public static double getUltraSonicR() {
 		//Ultra sonic R is going to be closer to the robot
 		return RobotMap.ultraSonicR.getVoltage();
+		
 	}
 	/**
 	 * The method checks if the ultra sonic sensor is within a certain range.

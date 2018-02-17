@@ -7,13 +7,20 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+import commandGroups.BuildPath;
+import commandGroups.LeftStartLeftScale;
+import commandGroups.LeftStartLeftSwitch;
+import commandGroups.RightStartRightScale;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -21,26 +28,50 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import trajectory.trajectoryTestCGroup;
+import utility.RobotMath;
+
 
 public class Robot extends IterativeRobot {
-	
+	PowerDistributionPanel pdp = new PowerDistributionPanel();
 	List<Object> thingsToPutOnDashboard = new ArrayList<Object>();
 	boolean done;
+	double pressure;
 	DashboardReport report;
 	
+	static NetworkTableInstance table = NetworkTableInstance.getDefault();
+	static NetworkTable autoChoices = table.getTable("SmartDashboard");
+	static NetworkTableEntry destinationOne = autoChoices.getEntry("Destination_Both");
+	static NetworkTableEntry destinationTwo = autoChoices.getEntry("Destination_Switch");
+	static NetworkTableEntry destinationThree = autoChoices.getEntry("Destination_Scale");
+	static NetworkTableEntry positionOne = autoChoices.getEntry("starting_position_Left");
+	static NetworkTableEntry positionTwo = autoChoices.getEntry("starting_position_Middle");
+	static NetworkTableEntry positionThree = autoChoices.getEntry("starting_position_Right");
+		
 	@Override
 	public void robotInit() {
+		RobotMap.pressureSensor = new AnalogInput(0);
 		SubsystemManager.masterinitialization();
 		RobotMap.driveStick = new Joystick(0);
 		RobotMap.mechStick = new Joystick(1);
+		RobotMap.compressor = new Compressor(0);
+		
+		DashboardInput.setUpDashboard();
 	}
 
-	@Override
+	@Override 
 	public void autonomousInit() {
+		RobotMap.L1.setSelectedSensorPosition(0, 0, 0);
 		Vision.ledEntry.forceSetNumber(0);
 		Vision.ledEntry.forceSetNumber(1);
-		lift.setSetpoint(Constants.intake);
-		CommandGroup autoMode = new trajectoryTestCGroup();
+		
+		CommandGroup autoMode;
+		
+		if(SmartDashboard.getBoolean("RightScale", false) == true) {
+			autoMode = new RightStartRightScale();
+		} else if (SmartDashboard.getBoolean("LeftScale", false) == true){
+			autoMode = new LeftStartLeftScale();
+		}
+		
 		autoMode.start();
 	}
 
@@ -48,32 +79,41 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		lift.manipulateLift();
+		Intake.manipulateWrist();
+		lift.setSetpoint(Constants.intake);
+		Intake.setWristPosition(Constants.wristDown);
+		SmartDashboard.putNumber("lift enc", lift.getLiftEncPosition());
+		RobotMap.wrist.setSelectedSensorPosition(0, 0, 0);
 		Scheduler.getInstance().run();
 	}
 
 	@Override
 	public void teleopInit() {
 		lift.setSetpoint(Constants.intake);
+		Intake.setWristPosition(Constants.wristDown);
 		RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);
+		RobotMap.wrist.setSelectedSensorPosition(0, 0, 0);
 		Vision.ledEntry.forceSetNumber(0);
 		Vision.ledEntry.forceSetNumber(1);
 	}
 	
 	@Override
 	public void teleopPeriodic() {
+		double leftIntakeCurrent = pdp.getCurrent(4);
+		double rightIntakeCurrent = pdp.getCurrent(9);
+		
 		if(ControllerMap.visionActivated() == true) {
 			Vision.cubeTrackLeft();
 		} else {
 			Drive.arcadeDrive(ControllerMap.getTurnPower(), ControllerMap.getForwardPower(), ControllerMap.shift());
-			Intake.intake(ControllerMap.intakeR(), ControllerMap.intakeL());
+			Intake.intake(ControllerMap.intakeR()*2, ControllerMap.intakeL()*2);
 		}
 		lift.manipulateLift();
-		
-		//Intake.manipulateWrist();
-		SmartDashboard.putNumber("right", Drive.getRightPosition());
-		SmartDashboard.putNumber("left", Drive.getLeftPosition());
-
-		SmartDashboard.putNumber("Ultra Sonic Left", Intake.getUltraSonicL());
+		Intake.manipulateWrist();
+		SmartDashboard.putNumber("lift enc", lift.getLiftEncPosition());
+		SmartDashboard.putNumber("left", leftIntakeCurrent);
+		SmartDashboard.putNumber("right", rightIntakeCurrent);
+		SmartDashboard.putNumber("wrist enc", Intake.getWristEncPosition());
 	}
 	
 	
@@ -85,9 +125,11 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 		lift.setSetpoint(Constants.intake);
 		Vision.ledEntry.forceSetNumber(1);
+		RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);
 	}
 	
 	@Override
 	public void disabledPeriodic() {
+		
 	}
 }

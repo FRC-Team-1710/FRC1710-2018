@@ -25,8 +25,9 @@ public class waypoints {
 	
 	public static Waypoint[] testPoints = new Waypoint[] {
 			new Waypoint(0,0,0),
-			new Waypoint(1,-2,0),
-			new Waypoint(4,0,Pathfinder.d2r(-90)),
+			new Waypoint(3,-1.75,0),
+			new Waypoint(5,0,Pathfinder.d2r(55)),
+			new Waypoint(6,2,Pathfinder.d2r(100)),
 	};
 	
 	//split into to sets of waypoints for final part, play with speed
@@ -39,7 +40,7 @@ public class waypoints {
 	
 	public static Waypoint[] leftStartLeftSwitch = new Waypoint[] {
 			new Waypoint(0,0,0),
-			new Waypoint(2, -.25,0),
+			new Waypoint(2.5, -.25,0),
 			//-45 is south east lmao
 			new Waypoint(2.9,1.25,Pathfinder.d2r(-45)),
 	};
@@ -56,7 +57,44 @@ public class waypoints {
 	
 	public static Waypoint[] turnAroundTwoAndScale = new Waypoint[] {
 			new Waypoint(0,0,0),
-			new Waypoint(1,-1,Pathfinder.d2r(120)),
+			new Waypoint(1,-1,Pathfinder.d2r(-135)),
+	};
+	
+	public static Waypoint[] oneCubeLeftSwitchLeftStart = new Waypoint[] {
+			new Waypoint(0,0,0),
+			new Waypoint(2,1,0),
+	};
+	
+	public static Waypoint[] oneCubeRightSwitchRightStart = new Waypoint[] {
+			new Waypoint(0,0,0),
+			new Waypoint(2,-1,0),
+	};
+	
+	public static Waypoint[] leftScaleToLeftSwitch = new Waypoint[] {
+			new Waypoint(0,0,0),
+			new Waypoint(1, -.5 ,0),
+	};
+	
+	public static Waypoint[] rightScaleToRightSwitch = new Waypoint[] {
+			new Waypoint(0,0,0),
+			new Waypoint(1, -.5 ,0),
+	};
+	
+	public static Waypoint[] oneCubeRightSwitchLeftStart= new Waypoint[] {
+			new Waypoint(0,0,0),
+			new Waypoint(2,-.15,0),
+			new Waypoint(4,.3,Pathfinder.d2r(-90)),
+			//new Waypoint(0,5,0),
+	};
+	
+	public static Waypoint[] middleToRightSwitch = new Waypoint[] {
+			new Waypoint(0,0,0),
+			new Waypoint(1.5, 2.5 ,0),
+	};
+	
+	public static Waypoint[] middleToLeftSwitch = new Waypoint[] {
+			new Waypoint(0,0,0),
+			new Waypoint(1.5, 2.5 ,0),
 	};
 	
 }

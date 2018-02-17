@@ -17,6 +17,11 @@ public class DashboardInput {
 	static NetworkTableEntry positionTwo = autoChoices.getEntry("starting_position_Middle");
 	static NetworkTableEntry positionThree = autoChoices.getEntry("starting_position_Right");
 	
+	public static void setUpDashboard() {
+		SmartDashboard.putBoolean("LeftScale", false);
+		SmartDashboard.putBoolean("RightScale", false);
+	}
+	
 	public static void updateDashboard(DashboardReport report) {
 		for (int i = 0; i < report.getEncoderValues().size(); i++) {
 			SmartDashboard.putNumber("Motor " + Integer.toString(report.getSrxs().get(i).getDeviceID()) + " position: ",

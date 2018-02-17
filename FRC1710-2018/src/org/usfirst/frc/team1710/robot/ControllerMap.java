@@ -23,6 +23,9 @@ public class ControllerMap {
 	public static boolean liftAtScaleHigh() {
 		return RobotMap.mechStick.getRawButton(11);
 	}
+	public static boolean getMechTrigger() {
+		return RobotMap.mechStick.getRawButton(1);
+	}
 	public static boolean leftIntakeToggle() {
 		return RobotMap.mechStick.getRawButton(5);
 	}
@@ -30,10 +33,10 @@ public class ControllerMap {
 		return RobotMap.mechStick.getRawButton(6);
 	}
 	public static boolean wristUp() {
-		return RobotMap.mechStick.getRawButton(2);
+		return RobotMap.mechStick.getRawButton(3);
 	}
 	public static boolean wristLaunch() {
-		return RobotMap.mechStick.getRawButton(3);
+		return RobotMap.mechStick.getRawButton(5);
 	}
 	public static boolean wristDown() {
 		return RobotMap.mechStick.getRawButton(4);
@@ -43,7 +46,7 @@ public class ControllerMap {
 		return RobotMap.driveStick.getRawButton(5);
 	}
 	public static boolean visionActivated() {
-		return  RobotMap.driveStick.getRawButton(1) || RobotMap.mechStick.getRawButton(1);
+		return  RobotMap.driveStick.getRawButton(1);
 	}
 	
 	//Axis
@@ -54,6 +57,9 @@ public class ControllerMap {
 		return RobotMap.driveStick.getRawAxis(1);
 	}
 	public static double liftPower() {
+		return RobotMap.mechStick.getRawAxis(1);
+	}
+	public static double wristPower() {
 		return RobotMap.mechStick.getRawAxis(1);
 	}
 	public static double intakeR() {

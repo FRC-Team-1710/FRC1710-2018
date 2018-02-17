@@ -9,10 +9,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class RunIntake extends Command {
 
-	boolean didCubeStartInIntake;
+	boolean _didCubeStartInIntake;
 	int count = 0;
 	
-    public RunIntake() {
+    public RunIntake(boolean didCubeStartInIntake) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -22,17 +22,17 @@ public class RunIntake extends Command {
     	
     	//didCubeStartInIntake = Intake.isCubeInIntake();
     	//set to true for auto testing
-    	didCubeStartInIntake = true;
+    	System.out.println("running intake");
     	count = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	count++;
-    	if(didCubeStartInIntake == true) {
-    		Intake.intake(1, 0);
-    	}else {
+    	if(_didCubeStartInIntake == true) {
     		Intake.intake(0, 1);
+    	}else {
+    		Intake.intake(1, 0);
     	}
     	
     }

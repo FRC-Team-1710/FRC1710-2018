@@ -9,7 +9,7 @@ import utility.RobotMath;
 
 public class lift {
 
-	public static double setPoint;	
+	public static double setPoint, outputUp, outputDown;	
 	/**
 	 * give talons their id numbers
 	 */
@@ -58,12 +58,16 @@ public class lift {
 	 * Prevents the lift from slamming into the top or bottom
 	 */
 	public static void manipulateLift() {
-		
-		double outputUp = (-1 * ((getLiftError()) *  Constants.kPLiftUp));
-		double outputDown = (-1 * ((getLiftError()) *  Constants.kPLiftDown));
+		if(Math.abs(-1 * ((getLiftError()) *  Constants.kPLiftUp)) > .5 || Math.abs(-1 * ((getLiftError()) *  Constants.kPLiftDown)) > .5) {
+			outputUp = -0.5;
+			outputDown = 0.5;
+		} else {
+			outputUp = (-1 * ((getLiftError()) *  Constants.kPLiftUp));
+			outputDown = (-1 * ((getLiftError()) *  Constants.kPLiftDown));
+		}
 		
 		//if the stick is being moved...
-		if (ControllerMap.liftPower() > 0.2 || ControllerMap.liftPower() < -0.2){
+		if ((ControllerMap.liftPower() > 0.2 || ControllerMap.liftPower() < -0.2) && ControllerMap.getMechTrigger() == false){
 			//if the stick is being moved down and the lift isn't near the bottom
 			if(ControllerMap.liftPower() > 0 && isAtBottom() == false) {
 				RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower() * 0.5);
@@ -141,15 +145,15 @@ public class lift {
 	 * @return the name of the position - can be used on the dash board
 	 */
 	public static String getLiftPosition() {
-		if(setPoint == Constants.intake) {
+		if(RobotMath.isInRange(getLiftEncPosition(), Constants.intake, 175)) {
 			return Constants.intakeLevelName;
-		} else if(RobotMath.isInRange(setPoint, Constants.intake, 175)) {
+		} else if(RobotMath.isInRange(getLiftEncPosition(), Constants.switchPosition, 175)) {
 			return Constants.switchLevelName;
-		} else if(RobotMath.isInRange(setPoint, Constants.scaleLow, 175)) {
+		} else if(RobotMath.isInRange(getLiftEncPosition(), Constants.scaleLow, 175)) {
 			return Constants.lowLevelName;
-		} else if(RobotMath.isInRange(setPoint, Constants.scaleNormal, 175)){
+		} else if(RobotMath.isInRange(getLiftEncPosition(), Constants.scaleNormal, 175)){
 			return Constants.normalLevelName;
-		} else if(RobotMath.isInRange(setPoint, Constants.scaleHigh, 175)) {
+		} else if(RobotMath.isInRange(getLiftEncPosition(), Constants.scaleHigh, 175)) {
 			return Constants.highLevelName;
 		} else {
 			return Constants.liftingLevelName;

@@ -26,11 +26,12 @@ public class TurnToAngle extends Command {
     }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return RobotMap.navx.getAngle() < _angle + Constants.rotateToAngleHiEnd || RobotMap.navx.getAngle() > _angle - Constants.rotateToAngleLoEnd;
+        return RobotMap.navx.getAngle() < _angle + Constants.rotateToAngleHiEnd && RobotMap.navx.getAngle() > _angle - Constants.rotateToAngleLoEnd;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	System.out.println("done" + RobotMap.navx.getAngle()) ;
     	Drive.stopDriving();
     }
 

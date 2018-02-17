@@ -92,8 +92,8 @@ public class Vision {
 
 		if(areCubesIntakable() == true) {
 			//if bot cannot find box turn left
-			Intake.intake(0, Constants.cubeIntakeSpeed);
-			Drive.arcadeDrive(0, -.3, false);
+			Intake.intake(Constants.cubeIntakeSpeed,0);
+			Drive.arcadeDrive(0, -.2, false);
 			//arms closed
 		} else {
 			if(areCubesAvailable() == false) {
@@ -114,8 +114,8 @@ public class Vision {
 		SmartDashboard.putBoolean("is cube intakeable", areCubesIntakable());
 		if(areCubesIntakable() == true) {
 			//if bot cannot find box turn left
-			Intake.intake(0, Constants.cubeIntakeSpeed);
-			Drive.arcadeDrive(0,-.3,false);
+			Intake.intake(Constants.cubeIntakeSpeed, 0);
+			Drive.arcadeDrive(0,-.2,false);
 			//arms closed
 		} else {
 			if(areCubesAvailable() == false) {

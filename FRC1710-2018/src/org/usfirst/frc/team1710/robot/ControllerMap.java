@@ -45,6 +45,9 @@ public class ControllerMap {
 	public static boolean visionActivated() {
 		return  RobotMap.driveStick.getRawButton(1) || RobotMap.mechStick.getRawButton(1);
 	}
+	public static boolean ultraSonicIntake() {
+		return RobotMap.driveStick.getRawButton(3);
+	}
 	
 	//Axis
 	public static double getTurnPower() {

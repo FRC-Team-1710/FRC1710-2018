@@ -65,22 +65,68 @@ public class Intake {
 		wristSetPoint = setPoint;
 	}
 	public static double getUltraSonicL() {
-		//Ultra sonic L is going to be further up on the robot
+		//Ultra sonic L is going to be further out on the robot
 		return RobotMap.ultraSonicL.getVoltage();
 	}
 	public static double getUltraSonicR() {
 		//Ultra sonic R is going to be closer to the robot
 		return RobotMap.ultraSonicR.getVoltage();
 	}
+	/**
+	 * checks the sensors, left and right.
+	 * @return if the cube is in the intake
+	 */
 	public static boolean isCubeInIntake() {
 		if ((getUltraSonicL() > Constants.ultraSonic0 || getUltraSonicL() < Constants.ultraSonicInIntake) && (getUltraSonicR() > Constants.ultraSonic0 || getUltraSonicR() < Constants.ultraSonicInIntake)) {
+			//when returns, means cube is secure
 			return true;
-		} else if ((getUltraSonicL() > Constants.ultraSonicInIntake) && (getUltraSonicR() > Constants.ultraSonicInIntake)) {
-			return false;
-		} else if ((getUltraSonicL() > Constants.ultraSonicInIntake) || (getUltraSonicR() > Constants.ultraSonicInIntake)) {
-				return false;
 		} else {
+			/* this accounts for if one is in range, and one is out.
+			 * or if both are out of range
+			 */
 			return false;
+		}
+	}
+	/*if ultrasonic sensor is not within intake range AND if a button has been pressed
+	 * 		run intake motors
+	 * else
+	 * 		do nothing
+	 */
+	
+	/*gives an easier way for speed, instead of changing every variable.
+	 * "intakeSpeed" gives the speed of the intake. How fast the motors are running it grab a cube.
+	 * "outtakeSpeed" gives the speed of the outtake. How fast the motors are running to spit out a cube.
+	 */
+	
+	static double intakeSpeed = .5;
+	static double outtakeSpeed = .5;
+	static boolean ultraSonicToggle = true;
+	public static void ultraSonicIntakeToggle() {
+		if (ultraSonicToggle && ControllerMap.ultraSonicIntake()) {
+			ultraSonicToggle = false; //Prevents the button from being pushed again
+			if (isCubeInIntake() == true) {
+				//checks if the cube is in the intake. If it is, then when button is pressed, it will outtake.
+				RobotMap.intakeL.set(outtakeSpeed);
+				RobotMap.intakeR.set(outtakeSpeed);
+				//spit out cube
+			} else {
+				//if the cube intake is not intake, do not run the outtake
+				RobotMap.intakeL.set(0);
+				RobotMap.intakeR.set(0);
+			}
+		} else if (ControllerMap.ultraSonicIntake() == false) {
+			ultraSonicToggle = true; //Since button has been released,the toggle can work again.
+		}
+		if (ultraSonicToggle && ControllerMap.ultraSonicIntake()) {
+			ultraSonicToggle = false;
+			if (isCubeInIntake() == false);
+			RobotMap.intakeL.set(intakeSpeed);
+			RobotMap.intakeR.set(intakeSpeed);
+			//intakes cube if cube is out of range
+		} else {
+			// if cube is in intake range, do not run the intake. Cube is secure.
+			RobotMap.intakeL.set(0);
+			RobotMap.intakeR.set(0);
 		}
 	}
 }

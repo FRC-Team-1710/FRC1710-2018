@@ -4,12 +4,11 @@ public class Constants {
 	
 	
 	public static double psiPerVolts = 44.494;
-	//constants for the lift 0 to 9700
 	public static double intake = 400;
 	public static double switchPosition = 2500;
 	public static double scaleLow= 4500;
 	public static double scaleNormal = 6500;
-	public static double scaleHigh = 7800;
+	public static double scaleHigh = 7600;
 	public static String intakeLevelName = "intake";
 	public static String switchLevelName = "switch";
 	public static String lowLevelName = "low level";
@@ -18,8 +17,8 @@ public class Constants {
 	public static String liftingLevelName = "lifting";
 	//the constant for moving down is less bc when we go down we work with gravity and that prevents things from 
 	//getting too violent
-	public static double kPLiftUp = 0.0008;
-	public static double kPLiftDown = 0.0000001;
+	public static double kPLiftUp = 0.0005;
+	public static double kPLiftDown = 0.00009;
 	
 	public static int shifterReverse = 0;
 	public static int shifterForward = 1;

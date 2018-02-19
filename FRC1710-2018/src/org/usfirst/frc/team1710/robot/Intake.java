@@ -24,6 +24,11 @@ public class Intake {
 		RobotMap.wrist = new TalonSRX (Constants.wristTalon);
 		RobotMap.ultraSonicL = new AnalogInput (2);
 		RobotMap.ultraSonicR = new AnalogInput (1);
+		
+		RobotMap.wrist.configContinuousCurrentLimit(10, 0);
+		RobotMap.wrist.configPeakCurrentLimit(15, 0);
+		RobotMap.wrist.configPeakCurrentDuration(100, 0);
+		RobotMap.wrist.enableCurrentLimit(true);
 	}
 	
 	public static void intake (double in, double out) {

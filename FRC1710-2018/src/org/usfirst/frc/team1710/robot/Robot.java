@@ -106,9 +106,6 @@ public class Robot extends IterativeRobot {
 	
 	@Override
 	public void teleopPeriodic() {
-		double leftIntakeCurrent = pdp.getCurrent(4);
-		double rightIntakeCurrent = pdp.getCurrent(9);
-		
 		if(ControllerMap.visionActivated() == true) {
 			Vision.cubeTrackLeft();
 		} else {
@@ -118,8 +115,6 @@ public class Robot extends IterativeRobot {
 		lift.manipulateLift();
 		Intake.manipulateWrist();
 		SmartDashboard.putNumber("lift enc", lift.getLiftEncPosition());
-		SmartDashboard.putNumber("left", leftIntakeCurrent);
-		SmartDashboard.putNumber("right", rightIntakeCurrent);
 		SmartDashboard.putNumber("wrist enc", Intake.getWristEncPosition());
 	}
 	

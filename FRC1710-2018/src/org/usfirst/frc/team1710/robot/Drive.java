@@ -23,11 +23,15 @@ public class Drive {
 		RobotMap.L3 = new VictorSPX (Constants.leftFollowerid2);
 		
 		RobotMap.R2.follow (RobotMap.R1);
-		RobotMap.R2.setInverted(true);
 		RobotMap.R3.follow (RobotMap.R1);
 		RobotMap.L2.follow (RobotMap.L1);
 		RobotMap.L3.follow (RobotMap.L1);
-		RobotMap.L3.setInverted(true);
+		//these need to be inverted with robot 1 as of now... hopefully matt will fix that
+		RobotMap.R2.setInverted(false);
+		RobotMap.L3.setInverted(false);
+		
+		RobotMap.L1.configOpenloopRamp(.15, 0);
+		RobotMap.R1.configOpenloopRamp(.15, 0);
 		
 		RobotMap.shifter = new DoubleSolenoid(Constants.shifterForward,Constants.shifterReverse);
 		

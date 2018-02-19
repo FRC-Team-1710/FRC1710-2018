@@ -102,6 +102,7 @@ public class Robot extends IterativeRobot {
 		RobotMap.wrist.setSelectedSensorPosition(0, 0, 0);
 		Vision.ledEntry.forceSetNumber(0);
 		Vision.ledEntry.forceSetNumber(1);
+		RobotMap.compressor.setClosedLoopControl(false);
 	}
 	
 	@Override

@@ -1,8 +1,5 @@
-/trajectory/
-/org/
 /commandGroups/
 /commands/
-<<<<<<< HEAD
+/org/
 /trajectory/
-=======
->>>>>>> drive
+/utility/

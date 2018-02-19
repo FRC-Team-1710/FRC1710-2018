@@ -79,6 +79,13 @@ public class Drive {
 			setShifters(false);
 			navxReset = false;
 		}
+		if (lift.getLiftEncPosition() > Constants.scaleLow) {
+			RobotMap.R1.set(ControlMode.PercentOutput, side * .5, forward * .5);
+			RobotMap.L1.set(ControlMode.PercentOutput, side * .5, forward * .5);
+		} else {
+			RobotMap.R1.set(ControlMode.PercentOutput, side - forward);
+			RobotMap.L1.set(ControlMode.PercentOutput, side + forward);
+		}
 	}
 	
 	public static void leftDrive(double power) {

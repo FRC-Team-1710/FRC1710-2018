@@ -145,6 +145,7 @@ public class Intake {
 	static double intakeSpeed = .5;
 	static double outtakeSpeed = .5;
 	static boolean ultraSonicToggle = true;
+
 	public static void ultraSonicIntakeToggle() {
 		if (ultraSonicToggle && ControllerMap.ultraSonicIntake()) {
 			ultraSonicToggle = false; //Prevents the button from being pushed again

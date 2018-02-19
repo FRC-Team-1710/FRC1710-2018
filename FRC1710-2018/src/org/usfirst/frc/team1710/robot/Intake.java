@@ -28,7 +28,7 @@ public class Intake {
 		RobotMap.wrist.configContinuousCurrentLimit(10, 0);
 		RobotMap.wrist.configPeakCurrentLimit(15, 0);
 		RobotMap.wrist.configPeakCurrentDuration(100, 0);
-		RobotMap.wrist.enableCurrentLimit(true);
+		RobotMap.wrist.enableCurrentLimit(false);
 	}
 	
 	public static void intake (double in, double out) {

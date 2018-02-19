@@ -18,15 +18,15 @@ public class lift {
 		RobotMap.lift1 = new TalonSRX (Constants.liftRightTalon);
 		RobotMap.lift2 = new TalonSRX (Constants.liftLeftTalon);
 		//commented out for testing which motor
-		RobotMap.lift2.follow (RobotMap.lift1);
-		RobotMap.lift2.setInverted(true);
+		//RobotMap.lift2.follow (RobotMap.lift1);
+		//RobotMap.lift2.setInverted(true);
 		RobotMap.liftBottom = new DigitalInput(0);
 		RobotMap.liftTop = new DigitalInput(1);
 		
-		RobotMap.lift1.configContinuousCurrentLimit(25, 0);
+		/*RobotMap.lift1.configContinuousCurrentLimit(25, 0);
 		RobotMap.lift1.configPeakCurrentLimit(30, 0);
-		RobotMap.lift1.configPeakCurrentDuration(100, 0);
-		RobotMap.lift1.enableCurrentLimit(true);
+		RobotMap.lift1.configPeakCurrentDuration(100, 0);*/
+		RobotMap.lift1.enableCurrentLimit(false);
 	}
 /**
  * tells lift what set-points to move to based on the mech-driver input
@@ -71,10 +71,10 @@ public class lift {
 		if ((ControllerMap.liftPower() > 0.2 || ControllerMap.liftPower() < -0.2) && ControllerMap.getMechTrigger() == false){
 			//if the stick is being moved down and the lift isn't near the bottom
 			if(ControllerMap.liftPower() > 0 && isAtBottom() == false) {
-				RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower() * .4);
+				RobotMap.lift2.set(ControlMode.PercentOutput, ControllerMap.liftPower() * .4);
 			//if the stick is moving up and the lift isn't near the top
 			} else if(ControllerMap.liftPower() < 0 && isAtTop() == false) {
-				RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower() * .4);	
+				RobotMap.lift2.set(ControlMode.PercentOutput, ControllerMap.liftPower() * .4);	
 			//uh oh
 			} else {
 				stopLift();
@@ -85,13 +85,13 @@ public class lift {
 				if(isAtTop() == true) {
 					stopLift();
 				} else {
-					RobotMap.lift1.set(ControlMode.PercentOutput, outputUp);
+					RobotMap.lift2.set(ControlMode.PercentOutput, outputUp);
 				}
 			} else {
 				if(isAtBottom() == true) {
 					stopLift();
 				} else {
-					RobotMap.lift1.set(ControlMode.PercentOutput, outputDown);
+					RobotMap.lift2.set(ControlMode.PercentOutput, outputDown);
 				}
 			}
 		}	

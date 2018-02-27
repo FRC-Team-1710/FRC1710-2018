@@ -71,13 +71,21 @@ public class Drive {
 			} else if (RobotMap.driveStick.getPOV() == 270) {
 				setPoint = 270;
 				setRobotHeading (setPoint);
+<<<<<<< HEAD
 			}
 			if (lift.getLiftEncPosition() >= Constants.scaleLow) {
 				RobotMap.R1.set(ControlMode.PercentOutput, (side * .5) - (forward * .5));
 				RobotMap.L1.set(ControlMode.PercentOutput, (side * .5) + (forward * .5));
+=======
+>>>>>>> e5bc98eeafb80b8d51d7a8ad26b2e9499e04763e
 			} else {
-				RobotMap.R1.set(ControlMode.PercentOutput, side - forward);
-				RobotMap.L1.set(ControlMode.PercentOutput, side + forward);
+				if (lift.getLiftEncPosition() >= Constants.scaleLow) {
+					RobotMap.R1.set(ControlMode.PercentOutput, side * .5, forward * .5);
+					RobotMap.L1.set(ControlMode.PercentOutput, side * .5, forward * .5);
+				} else {
+					RobotMap.R1.set(ControlMode.PercentOutput, side - forward);
+					RobotMap.L1.set(ControlMode.PercentOutput, side + forward);
+				}
 			}
 			//low gear
 			setShifters(false);

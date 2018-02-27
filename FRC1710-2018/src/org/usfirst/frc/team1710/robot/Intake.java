@@ -147,33 +147,27 @@ public class Intake {
 	static double outtakeSpeed = .5;
 	static boolean ultraSonicToggle = true;
 
-	public static void ultraSonicIntakeToggle() {
-		if (ultraSonicToggle && ControllerMap.ultraSonicIntake()) {
-			ultraSonicToggle = false; //Prevents the button from being pushed again
-			if (isCubeInIntake() == true) {
+	public static void ultraSonicIntake() {
+			if (isCubeInIntake() == true && ControllerMap.ultraSonicIntake() == true) {
 				//checks if the cube is in the intake. If it is, then when button is pressed, it will outtake.
 				RobotMap.intakeL.set(outtakeSpeed);
 				RobotMap.intakeR.set(outtakeSpeed);
 				//spit out cube
-			} else {
-				//if the cube intake is not intake, do not run the outtake
+			} else if (isCubeInIntake() == true && ControllerMap.ultraSonicIntake() == false) {
+				//if the intake button is false, dont do anything
 				RobotMap.intakeL.set(0);
 				RobotMap.intakeR.set(0);
-			}
-		} else if (ControllerMap.ultraSonicIntake() == false) {
-			ultraSonicToggle = true; //Since button has been released,the toggle can work again.
-		}
-		if (ultraSonicToggle && ControllerMap.ultraSonicIntake()) {
-			ultraSonicToggle = false;
-			if (isCubeInIntake() == false);
-			RobotMap.intakeL.set(intakeSpeed);
-			RobotMap.intakeR.set(intakeSpeed);
-			//intakes cube if cube is out of range
-		} else {
-			// if cube is in intake range, do not run the intake. Cube is secure.
-			RobotMap.intakeL.set(0);
-			RobotMap.intakeR.set(0);
-		}
+			} else if (isCubeInIntake() == false && ControllerMap.ultraSonicIntake() == false) {
+				//don't do anything since the button is not being pressed.
+				RobotMap.intakeL.set(0);
+				RobotMap.intakeR.set(0);
+			} else if (isCubeInIntake() == false && ControllerMap.ultraSonicIntake() == true) {
+				//checks if the cube is in the intake. If it is, then when button is pressed, it will outtake.
+				RobotMap.intakeL.set(intakeSpeed);
+				RobotMap.intakeR.set(intakeSpeed);
+	}
 	}
 }
+	
+	
 	

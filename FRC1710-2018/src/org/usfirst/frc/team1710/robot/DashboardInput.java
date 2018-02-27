@@ -8,20 +8,8 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DashboardInput {
-	static NetworkTableInstance table = NetworkTableInstance.getDefault();
-	static NetworkTable autoChoices = table.getTable("SmartDashboard");
-	static NetworkTableEntry destinationOne = autoChoices.getEntry("Destination_Both");
-	static NetworkTableEntry destinationTwo = autoChoices.getEntry("Destination_Switch");
-	static NetworkTableEntry destinationThree = autoChoices.getEntry("Destination_Scale");
-	static NetworkTableEntry positionOne = autoChoices.getEntry("starting_position_Left");
-	static NetworkTableEntry positionTwo = autoChoices.getEntry("starting_position_Middle");
-	static NetworkTableEntry positionThree = autoChoices.getEntry("starting_position_Right");
 	
 	public static void setUpDashboard() {
-		SmartDashboard.putBoolean("LeftScale", false);
-		SmartDashboard.putBoolean("RightScale", false);
-		SmartDashboard.putBoolean("MiddleLeft", false);
-		SmartDashboard.putBoolean("MiddleRight", false);
 	}
 	
 	public static void updateDashboard(DashboardReport report) {
@@ -32,27 +20,28 @@ public class DashboardInput {
 	}
 	
 	public static boolean isRobotStartingLeft() {
-		return destinationOne.getBoolean(false);
+		return (int) Robot.startPosition.getSelected() == 2;
 	}
 	
 	public static boolean isRobotStartingMiddle() {
-		return destinationTwo.getBoolean(false);
+		return (int) Robot.startPosition.getSelected()==1;
 	}
 
 	public static boolean isRobotStartingRight() {
-		return destinationThree.getBoolean(false);
+		return (int) Robot.startPosition.getSelected()== 3;
 	}
 
 	public static boolean isRobotGoingToSwitch() {
-		return positionOne.getBoolean(false);
+		return true;
 	}
 
 	public static boolean isRobotGoingToScale() {
-		return positionTwo.getBoolean(false);
+		return true;
+		
 	}
 
 	public static boolean isRobotGoingToBoth() {
-		return positionThree.getBoolean(false);
+		return true;
 	}
 	
 }

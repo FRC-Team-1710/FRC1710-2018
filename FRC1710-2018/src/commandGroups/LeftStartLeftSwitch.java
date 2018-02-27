@@ -15,7 +15,7 @@ import trajectory.waypoints;
 public class LeftStartLeftSwitch extends CommandGroup {
 
     public LeftStartLeftSwitch() {
-    	addParallel(new ChangeLiftSetpoint(Constants.switchPosition));
+    	//addParallel(new ChangeLiftSetpoint(Constants.switchPosition));
     	addSequential(new FollowTrajectoryFromFile("one_Cube_Left_Switch.traj", false, false));
     	
     	addSequential(new RunIntake(false));

@@ -56,9 +56,9 @@ public class FollowTrajectory extends Command {
     	} else {
         	config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH, 0.02, Constants.maxV, Constants.maxAccel, 60);
     	}
-    	//trajectory = Pathfinder.generate(waypoints, config);
-	    PathManager.writePathToFile(waypoints, _fileName);
-    	trajectory = PathManager.readTrajFromFile(_fileName);
+    	trajectory = Pathfinder.generate(waypoints, config);
+	    //PathManager.writePathToFile(waypoints, _fileName);
+    	//trajectory = PathManager.readTrajFromFile(_fileName);
     	TankModifier modifier = new TankModifier(trajectory).modify(Constants.robotDriveBaseWidth);
     	
     	left = new EncoderFollower(modifier.getLeftTrajectory());

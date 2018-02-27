@@ -63,6 +63,8 @@ public class Intake {
 	 */
 	public static void manipulateWrist() {
 				
+		//RobotMap.wrist.set(ControlMode.PercentOutput, getWristError() * Constants.kPWrist);
+
 		if(ControllerMap.getMechTrigger() == true) {
 			RobotMap.wrist.set(ControlMode.PercentOutput, -RobotMap.mechStick.getRawAxis(0)*.4);
 		} else {
@@ -116,7 +118,6 @@ public class Intake {
 	 * If the cube is within an inch of the sensor, then it will read any where from 0 to .28.
 	 * If the cube is within 0 or .28, then it will read true. The cube is in the intake.
 	 * If the cube is greater than .28, or less than 0, it will return false. The cube is not in the intake.
-	 * @return if the cube is in the intake.
 	 * checks the sensors, left and right.
 	 * @return if the cube is in the intake
 	 */

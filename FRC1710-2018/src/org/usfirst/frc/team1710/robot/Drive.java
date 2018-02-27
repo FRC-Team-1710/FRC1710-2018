@@ -27,8 +27,8 @@ public class Drive {
 		RobotMap.L2.follow (RobotMap.L1);
 		RobotMap.L3.follow (RobotMap.L1);
 		//these need to be inverted with robot 1 as of now... hopefully matt will fix that
-		RobotMap.R2.setInverted(false);
-		RobotMap.L3.setInverted(false);
+		RobotMap.R2.setInverted(true);
+		RobotMap.L3.setInverted(true);
 		
 		RobotMap.L1.configOpenloopRamp(.15, 0);
 		RobotMap.R1.configOpenloopRamp(.15, 0);
@@ -73,8 +73,8 @@ public class Drive {
 				setRobotHeading (setPoint);
 			}
 			if (lift.getLiftEncPosition() >= Constants.scaleLow) {
-				RobotMap.R1.set(ControlMode.PercentOutput, side * .5, forward * .5);
-				RobotMap.L1.set(ControlMode.PercentOutput, side * .5, forward * .5);
+				RobotMap.R1.set(ControlMode.PercentOutput, (side * .5) - (forward * .5));
+				RobotMap.L1.set(ControlMode.PercentOutput, (side * .5) + (forward * .5));
 			} else {
 				RobotMap.R1.set(ControlMode.PercentOutput, side - forward);
 				RobotMap.L1.set(ControlMode.PercentOutput, side + forward);
@@ -100,10 +100,10 @@ public class Drive {
 		leftDrive(error*Constants.kpStraight - power);
 	}
 	
-	public static void straightDriveTele (double rPower, double lPower, double heading) {
-		double error = (RobotMap.navx.getAngle() - (heading * 180));
-		rightDrive(error *Constants.kpStraight + rPower);
-		leftDrive(error*Constants.kpStraight + lPower);
+	public static void straightDriveTele (double power, double heading) {
+		double error = (RobotMap.navx.getAngle() - heading);
+		rightDrive(error *Constants.kpStraight + power);
+		leftDrive(error*Constants.kpStraight - power);
 	}
 	
 	public static void setRobotHeading(double heading) {
@@ -123,6 +123,8 @@ public class Drive {
 	public static void stopDriving() {
 		RobotMap.R1.set(ControlMode.PercentOutput, 0);
 		RobotMap.L1.set(ControlMode.PercentOutput, 0);
+    	RobotMap.L1.setSelectedSensorPosition(0, 0, 0);
+    	RobotMap.R1.setSelectedSensorPosition(0, 0, 0);
 	}
 	
 	public static double getNavxAngle() {

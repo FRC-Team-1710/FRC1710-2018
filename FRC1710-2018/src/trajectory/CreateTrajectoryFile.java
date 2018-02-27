@@ -1,11 +1,14 @@
 package trajectory;
 
+import java.io.File;
+
 import org.usfirst.frc.team1710.robot.Constants;
 import org.usfirst.frc.team1710.robot.Drive;
 import org.usfirst.frc.team1710.robot.RobotMap;
 import org.usfirst.frc.team1710.robot.SubsystemManager;
 
 import edu.wpi.first.wpilibj.command.Command;
+import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.Waypoint;
 import jaci.pathfinder.followers.EncoderFollower;
@@ -45,9 +48,9 @@ public class CreateTrajectoryFile extends Command {
     	} else {
         	config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH, 0.02, Constants.maxV, Constants.maxAccel, 60);
     	}
-    	//trajectory = Pathfinder.generate(waypoints, config);
-	    PathManager.writePathToFile(_waypoints, _fileName);
-    	trajectory = PathManager.readTrajFromFile(_fileName);
+    	    	
+    	PathManager.writePathToFile(_waypoints, _fileName);
+    	/*trajectory = PathManager.readTrajFromFile(_fileName);
     	TankModifier modifier = new TankModifier(trajectory).modify(Constants.robotDriveBaseWidth);
     	
     	left = new EncoderFollower(modifier.getLeftTrajectory());
@@ -65,8 +68,8 @@ public class CreateTrajectoryFile extends Command {
     	} else {
         	left.configurePIDVA(Constants.kpPath, Constants.kiPath, Constants.kdPath, 1/ Constants.maxV, Constants.accGain);
         	right.configurePIDVA(Constants.kpPath, Constants.kiPath, Constants.kdPath, 1/ Constants.maxV, Constants.accGain);
-    	}
-    	Drive.setShifters(_isInHighGear);
+    	}*/
+    	//Drive.setShifters(_isInHighGear);
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -39,7 +39,7 @@ public class RunIntake extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	//testing
-    	return count > 35;
+    	return count > 55;
      //return didCubeStartInIntake != Intake.isCubeInIntake();
     		 
     }

@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -86,9 +87,12 @@ public class Robot extends IterativeRobot {
     	RobotMap.L1.setSelectedSensorPosition(0, 0, 0);
     	RobotMap.R1.setSelectedSensorPosition(0, 0, 0);
     	RobotMap.wrist.setSelectedSensorPosition(0, 0, 0);
+		char switchPos = DriverStation.getInstance().getGameSpecificMessage().charAt(0);
+		char scalePos = DriverStation.getInstance().getGameSpecificMessage().charAt(1);
+		CommandGroup autoMode = AutoHandler.getAutoToRun(switchPos, scalePos, (int) cubeAmount.getSelected(),
+				(int) destination.getSelected(), (int) startPosition.getSelected());
 		lift.setSetpoint(Constants.intake);
 		Intake.setWristPosition(Constants.wristDown);
-		CommandGroup autoMode = (CommandGroup) new RightStartLeftSwitch();
 		
 		autoMode.start();
 	}

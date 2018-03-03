@@ -26,7 +26,7 @@ public class Constants {
 	public static int shifterForward = 1;
 	
 	//constants for drive
-	public static double kpStraight = .015;
+	public static double kpStraight = .0115;
 	public static double kpTurn = 0.014;
 	
 	//constants for Vision

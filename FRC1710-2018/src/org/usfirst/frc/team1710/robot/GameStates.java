@@ -11,6 +11,7 @@ public class GameStates {
 	 * @return true is the switch is on the left
 	 */
 	public static boolean isSwitchLeft() {
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		if(gameData.charAt(0) == 'L'){
 			return true;
 		} else {
@@ -23,6 +24,7 @@ public class GameStates {
 	 * @return
 	 */
 	public static boolean isScaleLeft() {
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		if(gameData.charAt(1) == 'L') { 
 			return true;
 		}else {

@@ -13,6 +13,7 @@ import commandGroups.LeftStartLeftSwitch;
 import commandGroups.LeftStartRightSwitch;
 import commandGroups.MiddleToLeftSwitch;
 import commandGroups.MiddleToRightSwitch;
+import commandGroups.RightStartLeftSwitch;
 import commandGroups.RightStartRightScale;
 import commandGroups.RightStartRightSwitch;
 import commandGroups.Testing;
@@ -87,7 +88,7 @@ public class Robot extends IterativeRobot {
     	RobotMap.wrist.setSelectedSensorPosition(0, 0, 0);
 		lift.setSetpoint(Constants.intake);
 		Intake.setWristPosition(Constants.wristDown);
-		CommandGroup autoMode = (CommandGroup) new LeftStartLeftScale();
+		CommandGroup autoMode = (CommandGroup) new RightStartLeftSwitch();
 		
 		autoMode.start();
 	}

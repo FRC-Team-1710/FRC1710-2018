@@ -45,7 +45,7 @@ public class DriveToPosition extends Command {
     protected void initialize() {
     	Drive.setShifters(_isInHighGear);
     	_startingPosition = Math.abs(Drive.getLeftPosition());
-    	System.out.println("Goal " + Math.addExact((int) _startingPosition, _encGoal));
+    	//actual goal enc value
     	_totalTicks = Math.addExact((int) _startingPosition, _encGoal);
     }
 
@@ -60,18 +60,25 @@ public class DriveToPosition extends Command {
     	/*if robot is turning in place to change heading this counts up the ticks "eaten" by the turn then adds them
     	back to our goal*/
     	if(!RobotMath.isInRange(Math.abs(Drive.getNavxAngle()), _heading, 10)) {
-    		//add ticks here to _lostTicks
+    		//gets initial encoder value when robot starts to turn towards goal heading
     		if(_ticksGrabbed == false) {
     			_initTicksAtBadHeading = _currentTicks;
     			_ticksGrabbed = true;
     		}
-    		_lostTicks = _currentTicks - _initTicksAtBadHeading;
+    		//if _lostTicks is 0 then this would be the first time we are off heading, otherwise we need to add the new delta to the current value of _lostTicks
+    		if (_lostTicks == 0) {
+    			//delta enc position during turn
+        		_lostTicks = _currentTicks - _initTicksAtBadHeading;
+    		} else {
+    			// ahhh uhh someone check me on this
+    			_lostTicks = _lostTicks + (_currentTicks - _initTicksAtBadHeading);
+    		}
     	} else {
 			_ticksGrabbed = false;
     	}
     	
     	SmartDashboard.putNumber("velocity", _percentComplete);
-    	SmartDashboard.putNumber("Inches", Drive.getLeftPosition()/185);
+    	SmartDashboard.putNumber("Inches", Drive.getLeftPosition()/217);
     	SmartDashboard.putNumber("Angle", Drive.getNavxAngle());
     	
     	if(_endBehavior == true) {
@@ -89,6 +96,7 @@ public class DriveToPosition extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	//haven't tested this yet... if it works correctly lost ticks wont matter bc we could just turn at the end of a movement
     	Drive.setRobotHeading(_exitAngle);
     	Drive.stopDriving();
     }

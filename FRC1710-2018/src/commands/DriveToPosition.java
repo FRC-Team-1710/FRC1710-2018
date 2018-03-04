@@ -16,7 +16,7 @@ public class DriveToPosition extends Command {
 	int _encGoal;
 	double _slowPercent;
 	double _speedFactor;
-	boolean _isInHighGear, _endBehavior, _ticksGrabbed;
+	boolean _isInHighGear, _endBehavior, _ticksGrabbed, _direction;
 	double _heading;
 	double _startingPosition;
 	double _totalTicks, _currentTicks, _percentComplete, _error, _output, _deltaPos, _lostTicks, _initTicksAtBadHeading;
@@ -25,28 +25,33 @@ public class DriveToPosition extends Command {
     public DriveToPosition(int encGoal, double speed, boolean isInHighGear, double heading, boolean endBehavior, double exitAngle) {
     	_speed = speed;
     	//217 encoder ticks per inch (4096 (in a rev)/18.15 (wheel C))
-    	_encGoal = encGoal * 217;
+    	_encGoal = encGoal * 215;
     	_isInHighGear=isInHighGear;
     	_heading = heading;
     	_endBehavior = endBehavior;
     	_exitAngle = exitAngle;
     }
 
-    public DriveToPosition(int encGoal, double speed, boolean isInHighGear, double heading, boolean endBehavior) {
+    public DriveToPosition(int encGoal, double speed, boolean isInHighGear, double heading, boolean endBehavior, boolean direction) {
     	_speed = speed;
     	//217 encoder ticks per inch (4096 (in a rev)/18.15 (wheel C))
-    	_encGoal = encGoal * 217;
+    	_encGoal = encGoal * 215;
     	_isInHighGear=isInHighGear;
     	_heading = heading;
     	_endBehavior = endBehavior;
     	_exitAngle = heading;
+    	_direction = direction;
     }
 
     protected void initialize() {
     	Drive.setShifters(_isInHighGear);
     	_startingPosition = Math.abs(Drive.getLeftPosition());
     	//actual goal enc value
-    	_totalTicks = Math.addExact((int) _startingPosition, _encGoal);
+    	if(_direction == true) {
+    		_totalTicks = _startingPosition - _encGoal;
+    	} else {
+        	_totalTicks = Math.addExact((int) _startingPosition, _encGoal);
+    	}
     }
 
 
@@ -55,34 +60,23 @@ public class DriveToPosition extends Command {
     	_percentComplete = _currentTicks/_totalTicks;
     	_error = _startingPosition - _currentTicks;
     	_deltaPos = _currentTicks - _startingPosition;
-    	_output = (1-Math.pow((_deltaPos/_totalTicks), 2) + .1);
-    	
-    	/*if robot is turning in place to change heading this counts up the ticks "eaten" by the turn then adds them
-    	back to our goal*/
-    	if(!RobotMath.isInRange(Math.abs(Drive.getNavxAngle()), _heading, 10)) {
-    		//gets initial encoder value when robot starts to turn towards goal heading
-    		if(_ticksGrabbed == false) {
-    			_initTicksAtBadHeading = _currentTicks;
-    			_ticksGrabbed = true;
-    		}
-    		//if _lostTicks is 0 then this would be the first time we are off heading, otherwise we need to add the new delta to the current value of _lostTicks
-    		if (_lostTicks == 0) {
-    			//delta enc position during turn
-        		_lostTicks = _currentTicks - _initTicksAtBadHeading;
-    		} else {
-    			// ahhh uhh someone check me on this
-    			_lostTicks = _lostTicks + (_currentTicks - _initTicksAtBadHeading);
-    		}
+    	if(_direction == true) {
+        	_output = -1 * (1-Math.pow((_deltaPos/_totalTicks), 2) + .1);
     	} else {
-			_ticksGrabbed = false;
+        	_output = (1-Math.pow((_deltaPos/_totalTicks), 2) + .1);
     	}
     	
     	SmartDashboard.putNumber("velocity", _percentComplete);
     	SmartDashboard.putNumber("Inches", Drive.getLeftPosition()/217);
     	SmartDashboard.putNumber("Angle", Drive.getNavxAngle());
-    	
+    	SmartDashboard.putNumber("lost ticks", _lostTicks);
+    	SmartDashboard.putNumber("init ticks", _initTicksAtBadHeading);
     	if(_endBehavior == true) {
-	    	Drive.straightDriveTele(_speed, _heading);
+    		if(_direction == true) {
+    	    	Drive.straightDriveTele(-1 * _speed, _heading);
+    		} else {
+    	    	Drive.straightDriveTele(_speed, _heading);
+    		}
     	} else {
     	   Drive.straightDriveTele(_output, _heading);
     	}
@@ -91,7 +85,11 @@ public class DriveToPosition extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Math.abs(Drive.getLeftPosition()) >= _encGoal + _startingPosition + _lostTicks ;
+    	if(_direction == true) {
+            return Math.abs(Drive.getLeftPosition()) <= _totalTicks;
+    	} else {
+            return Math.abs(Drive.getLeftPosition()) >= _totalTicks;
+    	}
     }
 
     // Called once after isFinished returns true

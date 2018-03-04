@@ -19,17 +19,6 @@ public class DashboardInput {
 		}
 	}
 	
-	public static boolean isRobotStartingLeft() {
-		return (int) Robot.startPosition.getSelected() == 2;
-	}
-	
-	public static boolean isRobotStartingMiddle() {
-		return (int) Robot.startPosition.getSelected()==1;
-	}
-
-	public static boolean isRobotStartingRight() {
-		return (int) Robot.startPosition.getSelected()== 3;
-	}
 
 	public static boolean isRobotGoingToSwitch() {
 		return true;

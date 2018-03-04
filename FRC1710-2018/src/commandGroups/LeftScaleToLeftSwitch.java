@@ -15,7 +15,7 @@ public class LeftScaleToLeftSwitch extends CommandGroup {
 
     public LeftScaleToLeftSwitch() {
     	//addSequential(new FollowTrajectoryFromFile("left_scale_to_left_switch.traj", false, false));
-    	addSequential(new DriveToPosition(12000, .75, false,-20,false));
+    	addSequential(new DriveToPosition(12000, .75, false,-20,false,false));
     	addSequential(new RunIntake(false));
     	addSequential(new ChangeLiftSetpoint(Constants.switchPosition));
     	addSequential(new RunIntake(true));

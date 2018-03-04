@@ -1,5 +1,6 @@
 package commands;
 
+import org.usfirst.frc.team1710.robot.Drive;
 import org.usfirst.frc.team1710.robot.Intake;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -28,10 +29,15 @@ public class RunIntake extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	count++;
-    	if(_didCubeStartInIntake == true) {
-    		Intake.intake(0, 1);
-    	}else {
-    		Intake.intake(1, 0);
+    	if(count > 30) {
+        	if(_didCubeStartInIntake == true) {
+        		Intake.intake(0, 1);
+        	}else {
+        		Intake.intake(1, 0);
+        		Drive.arcadeDrive(0, -.2, false);
+        	}
+    	} else {
+    		Intake.intake(0, 0);
     	}
     	
     }
@@ -39,13 +45,14 @@ public class RunIntake extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	//testing
-    	return count > 55;
+    	return count > 100;
      //return didCubeStartInIntake != Intake.isCubeInIntake();
     		 
     }
     // Called once after isFinished returns true
     protected void end() {
 		Intake.intake(0, 0);
+		Drive.stopDriving();
     }
 
     // Called when another command which requires one or more of the same

@@ -47,7 +47,8 @@ public class Robot extends IterativeRobot {
 	
 	int wristTimeout;
 		
-	public static SendableChooser startPosition, destination, cubeAmount;
+	//public static SendableChooser startPosition, destination, cubeAmount;
+	public static int cubeAmount, startingPosition, destination;
 	
 	@Override
 	public void robotInit() {
@@ -58,24 +59,29 @@ public class Robot extends IterativeRobot {
 		RobotMap.compressor = new Compressor(0);
 		
 		DashboardInput.setUpDashboard();
-		startPosition = new SendableChooser();
+		/*startPosition = new SendableChooser();
 		destination= new SendableChooser();
 		cubeAmount = new SendableChooser();
 		
-		startPosition.addDefault("Middle", 1);
+		startPosition.addObject("Middle", 1);
 		startPosition.addObject("Left", 2);
 		startPosition.addObject("Right",3);
 		startPosition.setName("start position");
-		destination.addDefault("switch", 1);
+		destination.addObject("switch", 1);
 		destination.addObject("Scale", 2);
 		destination.addObject("Both", 3);
-		cubeAmount.addDefault("0", 0);
+		cubeAmount.addObject("0", 0);
 		cubeAmount.addObject("1", 1);
 		cubeAmount.addObject("2", 2);
 		cubeAmount.addObject("3", 3);
 		SmartDashboard.putData("Start Position", startPosition);
 		SmartDashboard.putData("destination", destination);
-		SmartDashboard.putData("cubeAmount", cubeAmount);
+		SmartDashboard.putData("cubeAmount", cubeAmount);*/
+		
+		SmartDashboard.putNumber("cube amount", 2);
+		SmartDashboard.putNumber("Starting position", 3);
+		SmartDashboard.putNumber("destination", 3);
+
 	}
 
 	@Override 
@@ -89,8 +95,14 @@ public class Robot extends IterativeRobot {
     	RobotMap.wrist.setSelectedSensorPosition(0, 0, 0);
 		char switchPos = DriverStation.getInstance().getGameSpecificMessage().charAt(0);
 		char scalePos = DriverStation.getInstance().getGameSpecificMessage().charAt(1);
-		CommandGroup autoMode = AutoHandler.getAutoToRun(switchPos, scalePos, (int) cubeAmount.getSelected(),
-				(int) destination.getSelected(), (int) startPosition.getSelected());
+		
+		startingPosition = (int) SmartDashboard.getNumber("Starting position", 0);
+		destination = (int) SmartDashboard.getNumber("destination", 0);
+		cubeAmount = (int) SmartDashboard.getNumber("cube amount", 0);
+		
+		System.out.println(startingPosition);
+		CommandGroup autoMode = AutoHandler.getAutoToRun(switchPos, scalePos, cubeAmount,
+				destination,startingPosition);
 		lift.setSetpoint(Constants.intake);
 		Intake.setWristPosition(Constants.wristDown);
 		

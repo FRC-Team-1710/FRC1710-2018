@@ -10,29 +10,40 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ChangeLiftSetpoint extends Command {
 
-	double _setpoint;
+	double _setpoint, _timeout;
 	String goalLiftPosition;
-	int count;
+	int count, timeoutCount;
 	
+    public ChangeLiftSetpoint(double setpoint, double timeout) {
+    	_setpoint = setpoint;
+    	_timeout = timeout;
+    	
+    }
     public ChangeLiftSetpoint(double setpoint) {
     	_setpoint = setpoint;
+    	_timeout = 0;
     }
-
+    
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(_setpoint == Constants.intake) {
-    		goalLiftPosition = Constants.intakeLevelName;
-    	} else if(_setpoint == Constants.switchPosition) {
-    		goalLiftPosition = Constants.switchLevelName;
-    	} else if(_setpoint == Constants.scaleHigh) {
-    		goalLiftPosition = Constants.highLevelName;
-    	}
-    	lift.setSetpoint(_setpoint);
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	count++;
+    	
+    	timeoutCount++;
+    	if (timeoutCount>(_timeout/20)) {
+    		count++;
+    		if(_setpoint == Constants.intake) {
+    			goalLiftPosition = Constants.intakeLevelName;
+    		} else if(_setpoint == Constants.switchPosition) {
+    			goalLiftPosition = Constants.switchLevelName;
+    		} else if(_setpoint == Constants.scaleHigh) {
+    			goalLiftPosition = Constants.highLevelName;
+    		}
+    		lift.setSetpoint(_setpoint);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -18,7 +18,6 @@ public class TurnToAngle extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	RobotMap.navx.reset();
     	count =0;
     }
 
@@ -36,8 +35,6 @@ public class TurnToAngle extends Command {
     protected void end() {
     	System.out.println("done" + RobotMap.navx.getAngle()) ;
     	Drive.stopDriving();
-    	RobotMap.navx.reset();
-    	RobotMap.navx.zeroYaw();
     }
 
     // Called when another command which requires one or more of the same

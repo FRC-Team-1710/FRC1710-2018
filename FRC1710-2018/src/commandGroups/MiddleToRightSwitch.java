@@ -16,8 +16,8 @@ public class MiddleToRightSwitch extends CommandGroup {
 
     public MiddleToRightSwitch() {
     	addParallel(new ChangeLiftSetpoint(Constants.switchPosition));
-    	addSequential(new DriveToPosition(35,1,false,40,true));
-    	addParallel(new DriveToPosition(10,1,false,10,false));
+    	addSequential(new DriveToPosition(35,1,false,40,true,false));
+    	addParallel(new DriveToPosition(10,1,false,10,false,false));
     	addSequential(new PitchIntake(false));
     	addSequential(new RunIntake(true));
     }

@@ -57,17 +57,17 @@ public class DriveToPosition extends Command {
 
 
     protected void execute() { 
-    	_currentTicks = Math.abs(Drive.getRightPosition());
+    	_currentTicks = (Math.abs(Drive.getRightPosition()) + Math.abs(Drive.getLeftPosition()))/2;
     	_percentComplete = _currentTicks/_totalTicks;
     	_error = _startingPosition - _currentTicks;
     	_deltaPos = _currentTicks - _startingPosition;
     	if(_direction == true) {
-        	_output = -1 * (1-Math.pow((_deltaPos/_totalTicks), 2) + .1);
+        	_output = -1 * (_speed-Math.pow((_deltaPos/_totalTicks) * _speed, 2) + .1);
     	} else {
-        	_output = (1-Math.pow((_deltaPos/_totalTicks), 2) + .1);
+        	_output = (_speed-Math.pow((_deltaPos/_totalTicks) * _speed, 2) + .1);
     	}
     	
-    	SmartDashboard.putNumber("velocity", _percentComplete);
+    	SmartDashboard.putNumber("percent complete", _percentComplete);
     	SmartDashboard.putNumber("Inches", Drive.getRightPosition()/215);
     	SmartDashboard.putNumber("Starting Position", _startingPosition);
     	SmartDashboard.putNumber("Goal Inches", _totalTicks/215);
@@ -88,16 +88,14 @@ public class DriveToPosition extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	if(_direction == true) {
-            return Math.abs(Drive.getLeftPosition()) <= _totalTicks;
+            return _currentTicks <= _totalTicks;
     	} else {
-            return Math.abs(Drive.getLeftPosition()) >= _totalTicks;
+            return _currentTicks >= _totalTicks;
     	}
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	//haven't tested this yet... if it works correctly lost ticks wont matter bc we could just turn at the end of a movement
-    	Drive.setRobotHeading(_exitAngle);
     	Drive.stopDriving();
     }
 

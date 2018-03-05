@@ -3,11 +3,13 @@ package org.usfirst.frc.team1710.robot;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import commandGroups.LeftStartLeftScaleLeftSwitch;
+import commandGroups.LeftStartLeftScaleRightSwitch;
 import commandGroups.LeftStartLeftSwitch;
 import commandGroups.LeftStartRightSwitch;
 import commandGroups.MiddleToLeftSwitch;
 import commandGroups.MiddleToRightSwitch;
 import commandGroups.RightStartLeftSwitch;
+import commandGroups.RightStartRightScaleLeftSwitch;
 import commandGroups.RightStartRightScaleRightSwitch;
 import commandGroups.RightStartRightSwitch;
 import edu.wpi.first.networktables.NetworkTable;
@@ -77,6 +79,8 @@ public class AutoHandler {
     				if(switchPos == 'L' && scalePos == 'L') {
     					//223
     					return (CommandGroup) new LeftStartLeftScaleLeftSwitch();
+    				} else if(switchPos == 'R' && scalePos == 'L'){
+    					return (CommandGroup) new LeftStartLeftScaleRightSwitch();
     				} else {
     					return null;
     				}
@@ -85,6 +89,8 @@ public class AutoHandler {
     				if(switchPos == 'R' && scalePos == 'R') {
     					//223
     					return (CommandGroup) new RightStartRightScaleRightSwitch();
+    				} else if(switchPos == 'L' && scalePos == 'R'){
+    					return (CommandGroup) new RightStartRightScaleLeftSwitch();
     				} else {
     					return null;
     				}

@@ -4,7 +4,7 @@ public class Constants {
 	
 	
 	public static double psiPerVolts = 44.494;
-	public static double intake = 50;
+	public static double intake = 200;
 	public static double switchPosition = 3200;
 	public static double scaleLow= 4500;
 	public static double scaleNormal = 6500;
@@ -26,8 +26,8 @@ public class Constants {
 	public static int shifterForward = 1;
 	
 	//constants for drive
-	public static double kpStraight = 0.0065;
-	public static double kpTurn = 0.0065;
+	public static double kpStraight = 0.007;
+	public static double kpTurn = 0.007;
 	
 	//constants for Vision
 	public static double kpAim = .5;

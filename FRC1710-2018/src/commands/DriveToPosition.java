@@ -45,18 +45,19 @@ public class DriveToPosition extends Command {
 
     protected void initialize() {
     	Drive.setShifters(_isInHighGear);
-    	_startingPosition = Math.abs(Drive.getLeftPosition());
+    	_startingPosition = Math.abs(Drive.getRightPosition());
     	//actual goal enc value
     	if(_direction == true) {
     		_totalTicks = _startingPosition - _encGoal;
     	} else {
-        	_totalTicks = Math.addExact((int) _startingPosition, _encGoal);
+        	_totalTicks = _startingPosition + _encGoal;
     	}
+    	System.out.println("goal" + _totalTicks/215);
     }
 
 
     protected void execute() { 
-    	_currentTicks = Math.abs(Drive.getLeftPosition());
+    	_currentTicks = Math.abs(Drive.getRightPosition());
     	_percentComplete = _currentTicks/_totalTicks;
     	_error = _startingPosition - _currentTicks;
     	_deltaPos = _currentTicks - _startingPosition;
@@ -67,10 +68,11 @@ public class DriveToPosition extends Command {
     	}
     	
     	SmartDashboard.putNumber("velocity", _percentComplete);
-    	SmartDashboard.putNumber("Inches", Drive.getLeftPosition()/217);
+    	SmartDashboard.putNumber("Inches", Drive.getRightPosition()/215);
+    	SmartDashboard.putNumber("Starting Position", _startingPosition);
+    	SmartDashboard.putNumber("Goal Inches", _totalTicks/215);
     	SmartDashboard.putNumber("Angle", Drive.getNavxAngle());
-    	SmartDashboard.putNumber("lost ticks", _lostTicks);
-    	SmartDashboard.putNumber("init ticks", _initTicksAtBadHeading);
+
     	if(_endBehavior == true) {
     		if(_direction == true) {
     	    	Drive.straightDriveTele(-1 * _speed, _heading);

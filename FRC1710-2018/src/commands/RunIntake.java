@@ -29,15 +29,15 @@ public class RunIntake extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	count++;
-    	if(count > 30) {
-        	if(_didCubeStartInIntake == true) {
-        		Intake.intake(0, 1);
-        	}else {
-        		Intake.intake(1, 0);
-        		Drive.arcadeDrive(0, -.2, false);
+    	if(_didCubeStartInIntake == true) {
+        	if(count > 35) {
+        		Intake.intake(0, .7);
+        	} else {
+        		Intake.intake(0, 0);
         	}
-    	} else {
-    		Intake.intake(0, 0);
+    	}else {
+    		Intake.intake(1, 0);
+    		Drive.arcadeDrive(0, -.2, false);
     	}
     	
     }
@@ -45,7 +45,7 @@ public class RunIntake extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	//testing
-    	return count > 100;
+    	return count > 75;
      //return didCubeStartInIntake != Intake.isCubeInIntake();
     		 
     }

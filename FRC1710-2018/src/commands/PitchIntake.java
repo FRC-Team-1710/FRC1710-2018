@@ -24,9 +24,9 @@ public class PitchIntake extends Command {
     protected void execute() {
     	count ++;
     	if(_isGoingUp == true) {
-    		RobotMap.wrist.set(ControlMode.PercentOutput, -.4);
+    		RobotMap.wrist.set(ControlMode.PercentOutput, -.5);
     	}else {
-    		RobotMap.wrist.set(ControlMode.PercentOutput, .4);
+    		RobotMap.wrist.set(ControlMode.PercentOutput, .5);
     	}
     }
 

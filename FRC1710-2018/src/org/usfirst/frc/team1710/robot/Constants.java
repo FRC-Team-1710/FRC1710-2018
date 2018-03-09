@@ -27,7 +27,7 @@ public class Constants {
 	
 	//constants for drive
 	public static double kpStraight = 0.006;
-	public static double kpTurn = 0.007;
+	public static double kpTurn = 0.0125;
 	
 	//constants for Vision
 	public static double kpAim = .5;

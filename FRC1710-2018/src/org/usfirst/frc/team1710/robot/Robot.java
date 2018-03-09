@@ -78,9 +78,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("destination", destination);
 		SmartDashboard.putData("cubeAmount", cubeAmount);*/
 		
-		SmartDashboard.putNumber("cube amount", 1);
-		SmartDashboard.putNumber("Starting position", 2);
-		SmartDashboard.putNumber("destination", 1);
+		SmartDashboard.putNumber("cube amount", 2);
+		SmartDashboard.putNumber("Starting position", 3);
+		SmartDashboard.putNumber("destination", 3);
 		AutoHandler.initAutoMap();
 	}
 

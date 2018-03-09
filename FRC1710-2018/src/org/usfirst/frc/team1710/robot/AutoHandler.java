@@ -7,11 +7,14 @@ import java.util.HashMap;
 
 import commandGroups.LeftStartLeftScale;
 import commandGroups.LeftStartLeftScaleLeftSwitch;
+import commandGroups.LeftStartLeftScaleLeftSwitchDriveBy;
 import commandGroups.LeftStartLeftScaleRightSwitch;
 import commandGroups.LeftStartLeftSwitch;
+import commandGroups.LeftStartRightScaleRightSwitch;
 import commandGroups.LeftStartRightSwitch;
 import commandGroups.MiddleToLeftSwitch;
 import commandGroups.MiddleToRightSwitch;
+import commandGroups.RightStartLeftScaleLeftSwitch;
 import commandGroups.RightStartLeftSwitch;
 import commandGroups.RightStartRightScale;
 import commandGroups.RightStartRightScaleLeftSwitch;
@@ -137,6 +140,12 @@ public class AutoHandler {
 		autoMap.put("131RR", new RightStartRightSwitch());
 		// two cubes, starts left, going to switch and scale, switch and scale on left 
 		autoMap.put("223LL", new LeftStartLeftScaleLeftSwitch());
+		autoMap.put("223RL", new LeftStartLeftScaleRightSwitch());
+		autoMap.put("223RR", new LeftStartRightScaleRightSwitch());
+		
+		autoMap.put("233RR", new RightStartRightScaleRightSwitch());
+		autoMap.put("233LR", new RightStartRightScaleLeftSwitch());
+		autoMap.put("233LL", new RightStartLeftScaleLeftSwitch());
 		
 		autoMap.put("122LL", new LeftStartLeftScale());
 		autoMap.put("122RL", new LeftStartLeftScale());
@@ -145,7 +154,7 @@ public class AutoHandler {
 		autoMap.put("122RR", new RightStartRightScale());
 		
 		///autoMap.put("223RR", new LeftStartRightScaleRightSwitch());
-		autoMap.put("000RR", new Testing());
+		autoMap.put("000RR", new LeftStartLeftScaleLeftSwitchDriveBy());
 	}
 	
 	public static CommandGroup getAuto(char switchPos, char scalePos, int cubeAmount, int destination, int startPosition) {
@@ -156,7 +165,13 @@ public class AutoHandler {
 		key.append(switchPos);
 		key.append(scalePos);
 		System.out.println("key " + key);
-		return autoMap.get(key.toString());
+		if(key.equals("233RL")) {
+			return autoMap.get("131RL");
+		} else if(key.equals("223LR")) {
+			return autoMap.get("121RL");
+		} else {
+			return autoMap.get(key.toString());
+		}
 	}
 	
 }

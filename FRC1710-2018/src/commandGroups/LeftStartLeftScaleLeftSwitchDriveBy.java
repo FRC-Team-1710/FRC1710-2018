@@ -22,13 +22,13 @@ public class LeftStartLeftScaleLeftSwitchDriveBy extends CommandGroup {
     	//spins back around to go intake a cube
     	addParallel(new ChangeLiftSetpoint(Constants.intake, 750));
     	addParallel(new RunIntake(true));
-    	addSequential(new DriveToPosition(80, .75, false, 180,true,true));
-    	addSequential(new DriveToPosition(25, .75, false, 215,true,true));
-    	addSequential(new DriveToPosition(40, .75, false, 145,false,true));
+    	addSequential(new DriveToPosition(-80, .75, false, 180,true,true));
+    	addSequential(new DriveToPosition(-25, .75, false, 215,true,true));
+    	addSequential(new DriveToPosition(-40, .75, false, 145,false,true));
     	addSequential(new DriveToPosition(25, .75, false, 145,false,false));
     	addSequential(new RunIntake(false));
     	//cube in. back up and turn around to place on the scale
-    	addSequential(new DriveToPosition(60, .75, false, 110,false,true));
+    	addSequential(new DriveToPosition(-60, .75, false, 110,false,true));
     	addParallel(new ChangeLiftSetpoint(Constants.scaleHigh, 750));
     	addSequential(new DriveToPosition(60, .75, false, 0,false,false));
     	addSequential(new RunIntake(true));

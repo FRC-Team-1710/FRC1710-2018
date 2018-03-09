@@ -15,10 +15,11 @@ import trajectory.FollowTrajectoryFromFile;
 public class MiddleToLeftSwitch extends CommandGroup {
 
     public MiddleToLeftSwitch() {
+    	addParallel(new PitchIntake(false));
+    	addSequential(new DriveToPosition(20,.6,true,-80,false,false));
     	addParallel(new ChangeLiftSetpoint(Constants.switchPosition));
-    	addSequential(new DriveToPosition(35,1,false,-40,true,false));
-    	addParallel(new DriveToPosition(10,1,false,-10,false,false));
-    	addSequential(new PitchIntake(false));
+    	addSequential(new DriveToPosition(85,.6,true,-10,false,false));
+    	//addSequential(new PitchIntake(false));
     	addSequential(new RunIntake(true));
     }
 }

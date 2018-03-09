@@ -18,8 +18,8 @@ public class LeftStartLeftSwitch extends CommandGroup {
 
     public LeftStartLeftSwitch() {
     	addParallel(new ChangeLiftSetpoint(Constants.switchPosition));
-    	addSequential(new DriveToPosition(35,1,false,10,true,false));
-    	addParallel(new DriveToPosition(10,1,false,40,false,false));
+    	addSequential(new DriveToPosition(70,.6,true,0,true,false));
+    	addParallel(new DriveToPosition(40,.6,true,60,false,false));
     	addSequential(new PitchIntake(false));
     	addSequential(new RunIntake(true));
     }

@@ -14,12 +14,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class LeftStartLeftScale extends CommandGroup {
 
     public LeftStartLeftScale() {
-    	/*addSequential(new DriveToPosition(55000, .5, true,0));
-    	addSequential(new ChangeLiftSetpoint(Constants.scaleHigh));
-    	addSequential(new TurnToAngle(60));
+    	addSequential(new DriveToPosition(200,.75,true,0,true,false));
+    	addParallel(new ChangeLiftSetpoint(Constants.scaleHigh));
+    	addSequential(new DriveToPosition(35,.5,true,-42, true,false));
     	addSequential(new RunIntake(true));
-    	addSequential(new TurnToAngle(100));
-    	addSequential(new ChangeLiftSetpoint(Constants.intake));
-    	addSequential(new LeftScaleToLeftSwitch());*/
     }
 }

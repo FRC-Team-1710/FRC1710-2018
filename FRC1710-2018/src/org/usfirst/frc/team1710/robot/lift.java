@@ -72,7 +72,7 @@ public class lift {
 		if ((ControllerMap.liftPower() > 0.2 || ControllerMap.liftPower() < -0.2) && ControllerMap.getMechTrigger() == false){
 			//if the stick is being moved down and the lift isn't near the bottom
 			if(ControllerMap.liftPower() > 0 && isAtBottom() == false) {
-				RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower() * .1);
+				RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower() * .3);
 				System.out.println("moving down");
 			//if the stick is moving up and the lift isn't near the top
 			} else if(ControllerMap.liftPower() < 0 && isAtTop() == false) {

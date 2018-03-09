@@ -14,13 +14,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class LeftStartRightSwitch extends CommandGroup {
     public LeftStartRightSwitch() {
-    	//addSequential(new FollowTrajectory(waypoints.oneCubeRightSwitchLeftStart, false, false, "one_Cube_right_switch_left_start.traj"));
     	addParallel(new PitchIntake(false));
-    	addSequential(new DriveToPosition(160,.6,true,0,true,false));
-    	addSequential(new DriveToPosition(260,.6,true,80,true,false));
-    	addSequential(new ChangeLiftSetpoint(Constants.switchPosition));
-    	addSequential(new TurnToAngle(210));
-    	addSequential(new DriveToPosition (25,.5,false,210,false,false));
+    	addSequential(new DriveToPosition(145,.75,true,0,false,false));
+    	addSequential(new DriveToPosition(275,.75,true,90,false,false));
+    	addParallel(new ChangeLiftSetpoint(Constants.switchPosition));
+    	addSequential(new TurnToAngle(180));
+    	addSequential(new DriveToPosition (60,.8,false,220,true,false));
     	addSequential(new RunIntake(true));
     }
 }

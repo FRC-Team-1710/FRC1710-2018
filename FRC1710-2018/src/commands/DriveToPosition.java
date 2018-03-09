@@ -16,16 +16,16 @@ public class DriveToPosition extends Command {
 	int _encGoal;
 	double _slowPercent;
 	double _speedFactor;
-	boolean _isInHighGear, _endBehavior, _ticksGrabbed, _direction;
+	boolean _isInHighGear, _endBehavior, _direction;
 	double _heading;
 	double _startingPosition;
-	double _totalTicks, _currentTicks, _percentComplete, _error, _output, _deltaPos, _lostTicks, _initTicksAtBadHeading;
+	double _totalTicks, _currentTicks, _percentComplete, _error, _output, _deltaPos, _goalDist;
 	double  _exitAngle = 0;
 
     public DriveToPosition(int encGoal, double speed, boolean isInHighGear, double heading, boolean endBehavior, double exitAngle) {
     	_speed = speed;
     	//217 encoder ticks per inch (4096 (in a rev)/18.15 (wheel C))
-    	_encGoal = encGoal * 215;
+    	_encGoal = encGoal * 217;
     	_isInHighGear=isInHighGear;
     	_heading = heading;
     	_endBehavior = endBehavior;
@@ -35,7 +35,7 @@ public class DriveToPosition extends Command {
     public DriveToPosition(int encGoal, double speed, boolean isInHighGear, double heading, boolean endBehavior, boolean direction) {
     	_speed = speed;
     	//217 encoder ticks per inch (4096 (in a rev)/18.15 (wheel C))
-    	_encGoal = encGoal * 215;
+    	_encGoal = encGoal * 217;
     	_isInHighGear=isInHighGear;
     	_heading = heading;
     	_endBehavior = endBehavior;
@@ -44,34 +44,42 @@ public class DriveToPosition extends Command {
     }
 
     protected void initialize() {
+    	RobotMap.R1.setSensorPhase(false);
+    	RobotMap.L1.setSensorPhase(true);
     	Drive.setShifters(_isInHighGear);
-    	_startingPosition = Math.abs(Drive.getRightPosition());
+
+    	_startingPosition = (Drive.getRightPosition() + Drive.getLeftPosition())/2;
+    	System.out.println("Start " + _startingPosition);
     	//actual goal enc value
-    	if(_direction == true) {
-    		_totalTicks = _startingPosition - _encGoal;
-    	} else {
-        	_totalTicks = _startingPosition + _encGoal;
-    	}
-    	System.out.println("goal" + _totalTicks/215);
+    	
+        _totalTicks = _encGoal + _startingPosition;	
+    	
+    	_goalDist = Math.abs(_encGoal);
+
+    	System.out.println("goal " + _totalTicks);
+    	System.out.println("TargetPos " + _encGoal);
     }
 
 
     protected void execute() { 
-    	_currentTicks = (Math.abs(Drive.getRightPosition()) + Math.abs(Drive.getLeftPosition()))/2;
-    	_percentComplete = _currentTicks/_totalTicks;
-    	_error = _startingPosition - _currentTicks;
+    	_currentTicks = (Drive.getRightPosition() + Drive.getLeftPosition())/2;
     	_deltaPos = _currentTicks - _startingPosition;
-    	if(_direction == true) {
-        	_output = -1 * (_speed-Math.pow((_deltaPos/_totalTicks) * _speed, 2) + .1);
+    	if(_encGoal < 0) {
+        	_output =  ( (Math.pow(_deltaPos/_goalDist, 2) - 1) * _speed) - .2;
     	} else {
-        	_output = (_speed-Math.pow((_deltaPos/_totalTicks) * _speed, 2) + .1);
+        	_output =  ( (1 - Math.pow(_deltaPos/_goalDist, 2)) * _speed) + .2;
     	}
+
+    	//System.out.println("Current Output: " + _output);
+    	//System.out.println("Current Ticks: " + _currentTicks);
     	
     	SmartDashboard.putNumber("percent complete", _percentComplete);
     	SmartDashboard.putNumber("Inches", Drive.getRightPosition()/215);
     	SmartDashboard.putNumber("Starting Position", _startingPosition);
     	SmartDashboard.putNumber("Goal Inches", _totalTicks/215);
     	SmartDashboard.putNumber("Angle", Drive.getNavxAngle());
+    	SmartDashboard.putNumber("Right", Drive.getRightPosition());
+    	SmartDashboard.putNumber("Left", Drive.getLeftPosition());
 
     	if(_endBehavior == true) {
     		if(_direction == true) {
@@ -87,15 +95,13 @@ public class DriveToPosition extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if(_direction == true) {
-            return _currentTicks <= _totalTicks;
-    	} else {
-            return _currentTicks >= _totalTicks;
-    	}
+    	return RobotMath.isInRange(_currentTicks, _totalTicks, 250);
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	Drive.setRobotHeading(_exitAngle);
+    	System.out.println("done");
     	Drive.stopDriving();
     }
 

@@ -49,7 +49,7 @@ public class ChangeLiftSetpoint extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	
-        return lift.getLiftPosition().equals(goalLiftPosition) || count > 200;
+        return lift.getLiftPosition().equals(goalLiftPosition) || count > 40;
     }
 
     // Called once after isFinished returns true

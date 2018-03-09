@@ -78,14 +78,15 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("destination", destination);
 		SmartDashboard.putData("cubeAmount", cubeAmount);*/
 		
-		SmartDashboard.putNumber("cube amount", 2);
-		SmartDashboard.putNumber("Starting position", 3);
-		SmartDashboard.putNumber("destination", 3);
-
+		SmartDashboard.putNumber("cube amount", 1);
+		SmartDashboard.putNumber("Starting position", 2);
+		SmartDashboard.putNumber("destination", 1);
+		AutoHandler.initAutoMap();
 	}
 
 	@Override 
 	public void autonomousInit() {
+		AutoHandler.initAutoMap();
 		RobotMap.navx.reset();
 		Vision.ledEntry.forceSetNumber(0);
 		Vision.ledEntry.forceSetNumber(1);
@@ -100,12 +101,11 @@ public class Robot extends IterativeRobot {
 		destination = (int) SmartDashboard.getNumber("destination", 0);
 		cubeAmount = (int) SmartDashboard.getNumber("cube amount", 0);
 		
-		System.out.println(startingPosition);
-		CommandGroup autoMode = AutoHandler.getAutoToRun(switchPos, scalePos, cubeAmount,
+		CommandGroup autoMode = AutoHandler.getAuto(switchPos, scalePos, cubeAmount,
 				destination,startingPosition);
 		lift.setSetpoint(Constants.intake);
 		Intake.setWristPosition(Constants.wristDown);
-		
+		System.out.println("auto " + autoMode);
 		autoMode.start();
 	}
 
@@ -125,6 +125,10 @@ public class Robot extends IterativeRobot {
 		lift.setSetpoint(Constants.intake);
 		RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);
 		RobotMap.wrist.setSelectedSensorPosition(0, 0, 0);
+		RobotMap.R1.setSelectedSensorPosition(0, 0, 0);
+		RobotMap.L1.setSelectedSensorPosition(0, 0, 0);
+    	RobotMap.R1.setSensorPhase(false);
+    	RobotMap.L1.setSensorPhase(true);
 		Intake.setWristPosition(Constants.wristDown);
 		Vision.ledEntry.forceSetNumber(0);
 		Vision.ledEntry.forceSetNumber(1);
@@ -138,7 +142,7 @@ public class Robot extends IterativeRobot {
 			Vision.cubeTrackLeft();
 		} else {
 			Drive.arcadeDrive(ControllerMap.getTurnPower(), ControllerMap.getForwardPower(), ControllerMap.shift());
-			Intake.intake(ControllerMap.intakeR()*2, ControllerMap.intakeL()*2);
+			Intake.intake(ControllerMap.intakeR()*2, ControllerMap.intakeL()*.95);
 		}
 		
 		if(RobotMap.mechStick.getRawButton(2) == true) {

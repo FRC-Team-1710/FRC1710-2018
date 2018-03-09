@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 import java.util.HashMap;
 
+import commandGroups.LeftStartLeftScale;
 import commandGroups.LeftStartLeftScaleLeftSwitch;
 import commandGroups.LeftStartLeftScaleRightSwitch;
 import commandGroups.LeftStartLeftSwitch;
@@ -12,9 +13,11 @@ import commandGroups.LeftStartRightSwitch;
 import commandGroups.MiddleToLeftSwitch;
 import commandGroups.MiddleToRightSwitch;
 import commandGroups.RightStartLeftSwitch;
+import commandGroups.RightStartRightScale;
 import commandGroups.RightStartRightScaleLeftSwitch;
 import commandGroups.RightStartRightScaleRightSwitch;
 import commandGroups.RightStartRightSwitch;
+import commandGroups.Testing;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 
@@ -116,7 +119,7 @@ public class AutoHandler {
 	public static void initAutoMap() {
 		// one cube, starts middle, going to switch, switch and scale on left (scale doesn't matter)
 		autoMap.put("111LL", new MiddleToLeftSwitch());
-		autoMap.put("111LR", new MiddleToRightSwitch());
+		autoMap.put("111LR", new MiddleToLeftSwitch());
 		// one cube, starts middle, going to switch, switch and scale on right (scale doesn't matter)
 		autoMap.put("111RR", new MiddleToRightSwitch());
 		autoMap.put("111RL", new MiddleToRightSwitch());
@@ -134,7 +137,15 @@ public class AutoHandler {
 		autoMap.put("131RR", new RightStartRightSwitch());
 		// two cubes, starts left, going to switch and scale, switch and scale on left 
 		autoMap.put("223LL", new LeftStartLeftScaleLeftSwitch());
-		autoMap.put("223LR", new LeftStartLeftScaleLeftSwitch());
+		
+		autoMap.put("122LL", new LeftStartLeftScale());
+		autoMap.put("122RL", new LeftStartLeftScale());
+
+		autoMap.put("122LR", new RightStartRightScale());
+		autoMap.put("122RR", new RightStartRightScale());
+		
+		///autoMap.put("223RR", new LeftStartRightScaleRightSwitch());
+		autoMap.put("000RR", new Testing());
 	}
 	
 	public static CommandGroup getAuto(char switchPos, char scalePos, int cubeAmount, int destination, int startPosition) {
@@ -144,7 +155,8 @@ public class AutoHandler {
 		key.append(destination);
 		key.append(switchPos);
 		key.append(scalePos);
-		return autoMap.get(key);
+		System.out.println("key " + key);
+		return autoMap.get(key.toString());
 	}
 	
 }

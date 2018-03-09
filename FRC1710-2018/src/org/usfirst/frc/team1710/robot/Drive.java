@@ -72,9 +72,9 @@ public class Drive {
 				setPoint = 270;
 				setRobotHeading (setPoint);
 			} else {
-				if (lift.getLiftEncPosition() >= Constants.scaleLow) {
-					RobotMap.R1.set(ControlMode.PercentOutput, side * .5, forward * .5);
-					RobotMap.L1.set(ControlMode.PercentOutput, side * .5, forward * .5);
+				if (lift.getLiftEncPosition() >= Constants.scaleNormal) {
+					RobotMap.R1.set(ControlMode.PercentOutput, side * .5 - forward * .5);
+					RobotMap.L1.set(ControlMode.PercentOutput, side * .5 + forward * .5);
 				} else {
 					RobotMap.R1.set(ControlMode.PercentOutput, side - forward);
 					RobotMap.L1.set(ControlMode.PercentOutput, side + forward);

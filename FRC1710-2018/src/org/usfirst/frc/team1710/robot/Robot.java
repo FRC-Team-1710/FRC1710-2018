@@ -80,7 +80,7 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putNumber("cube amount", 2);
 		SmartDashboard.putNumber("Starting position", 3);
-		SmartDashboard.putNumber("destination", 3);
+		SmartDashboard.putNumber("destination",3);
 		AutoHandler.initAutoMap();
 	}
 
@@ -149,6 +149,14 @@ public class Robot extends IterativeRobot {
 			RobotMap.compressor.setClosedLoopControl(true);
 		} else {
 			RobotMap.compressor.setClosedLoopControl(false);
+		}
+		
+		if(RobotMap.mechStick.getRawButton(3) == true) {
+			RobotMap.climber.set(Math.abs(RobotMap.mechStick.getRawAxis(0)));
+		} else if(RobotMap.mechStick.getRawButton(4) == true){
+			RobotMap.climber.set(RobotMap.mechStick.getRawAxis(0));
+		} else {
+			RobotMap.climber.set(0);
 		}
 		
 		lift.manipulateLift();

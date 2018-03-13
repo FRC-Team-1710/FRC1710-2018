@@ -65,9 +65,9 @@ public class DriveToPosition extends Command {
     	_currentTicks = (Drive.getRightPosition() + Drive.getLeftPosition())/2;
     	_deltaPos = _currentTicks - _startingPosition;
     	if(_encGoal < 0) {
-        	_output =  ( (Math.pow(_deltaPos/_goalDist, 2) - 1) * _speed) - .2;
+        	_output =  ( (Math.pow(_deltaPos/_goalDist, 2) - 1) * _speed) - .3;
     	} else {
-        	_output =  ( (1 - Math.pow(_deltaPos/_goalDist, 2)) * _speed) + .2;
+        	_output =  ( (1 - Math.pow(_deltaPos/_goalDist, 2)) * _speed) + .3;
     	}
 
     	//System.out.println("Current Output: " + _output);
@@ -95,7 +95,7 @@ public class DriveToPosition extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return RobotMath.isInRange(_currentTicks, _totalTicks, 250);
+    	return RobotMath.isInRange(_currentTicks, _totalTicks, 400);
     }
 
     // Called once after isFinished returns true

@@ -15,11 +15,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class LeftStartRightSwitch extends CommandGroup {
     public LeftStartRightSwitch() {
     	addParallel(new PitchIntake(false));
-    	addSequential(new DriveToPosition(155,.75,true,0,false,false));
-    	addSequential(new DriveToPosition(265,.75,true,85,false,false));
+    	addSequential(new DriveToPosition(170,.75,true,0,false,false));
+    	addSequential(new DriveToPosition(240,.75,true,83,false,false));
     	addParallel(new ChangeLiftSetpoint(Constants.switchPosition));
-    	addSequential(new TurnToAngle(190));
-    	addSequential(new DriveToPosition (60,.8,false,240,true,false));
+    	addSequential(new TurnToAngle(170));
+    	addSequential(new DriveToPosition (50,.8,false,220,true,false));
     	addSequential(new RunIntake(true));
     }
 }

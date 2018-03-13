@@ -16,10 +16,9 @@ public class MiddleToLeftSwitch extends CommandGroup {
 
     public MiddleToLeftSwitch() {
     	addParallel(new PitchIntake(false));
-    	addSequential(new DriveToPosition(20,.6,true,-80,false,false));
+    	addSequential(new DriveToPosition(40,.6,false,-75,false,false));
     	addParallel(new ChangeLiftSetpoint(Constants.switchPosition));
-    	addSequential(new DriveToPosition(85,.6,true,-10,false,false));
-    	//addSequential(new PitchIntake(false));
+    	addSequential(new DriveToPosition(90,.8,false,0,true,false));
     	addSequential(new RunIntake(true));
     }
 }

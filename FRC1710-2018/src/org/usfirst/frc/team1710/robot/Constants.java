@@ -4,11 +4,12 @@ public class Constants {
 	
 	
 	public static double psiPerVolts = 44.494;
-	public static double intake = 50;
-	public static double switchPosition = 3200;
+	public static double intake = 100;
+	public static double aboveBump = 1000;
+	public static double switchPosition = 3500;
 	public static double scaleLow= 4500;
 	public static double scaleNormal = 6500;
-	public static double scaleHigh = 8500;
+	public static double scaleHigh = 8350;
 	public static String intakeLevelName = "intake";
 	public static String switchLevelName = "switch";
 	public static String lowLevelName = "low level";
@@ -17,17 +18,17 @@ public class Constants {
 	public static String liftingLevelName = "lifting";
 	//the constant for moving down is less bc when we go down we work with gravity and that prevents things from 
 	//getting too violent
-	//kpUp - comp: .0004
+	//kpUp - comp: .0004`
 	//kpDown - comp : .00008
-	public static double kPLiftUp = 0.00025;
-	public static double kPLiftDown = 0.0001;
+	public static double kPLiftUp = 0.00039;
+	public static double kPLiftDown = 0.000215;
 	
 	public static int shifterReverse = 0;
 	public static int shifterForward = 1;
 	
 	//constants for drive
-	public static double kpStraight = 0.006;
-	public static double kpTurn = 0.0125;
+	public static double kpStraight = 0.013;
+	public static double kpTurn = 0.009;
 	
 	//constants for Vision
 	public static double kpAim = .5;

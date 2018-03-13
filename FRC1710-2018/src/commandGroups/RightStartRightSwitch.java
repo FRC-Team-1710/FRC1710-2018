@@ -17,10 +17,10 @@ import trajectory.waypoints;
 public class RightStartRightSwitch extends CommandGroup {
 
     public RightStartRightSwitch() {
+    	addParallel(new PitchIntake(false));
     	addParallel(new ChangeLiftSetpoint(Constants.switchPosition));
-    	addSequential(new DriveToPosition(70,.6,true,0,true,false));
-    	addParallel(new DriveToPosition(60,.6,true,-75,false,false));
-    	addSequential(new PitchIntake(false));
+    	addSequential(new DriveToPosition(80,.6,true,0,false,false));
+    	addParallel(new DriveToPosition(30,.6,true,-60,false,false));
     	addSequential(new RunIntake(true));
     }
 }

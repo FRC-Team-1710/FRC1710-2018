@@ -20,7 +20,7 @@ public class lift {
 		//commented out for testing which motor
 		RobotMap.lift2.follow (RobotMap.lift1);
 		RobotMap.lift2.setInverted(true);
-		RobotMap.lift1.setInverted(true);
+		RobotMap.lift1.setInverted(false);
 		RobotMap.liftBottom = new DigitalInput(0);
 		RobotMap.liftTop = new DigitalInput(1);
 		
@@ -72,7 +72,7 @@ public class lift {
 		if ((ControllerMap.liftPower() > 0.2 || ControllerMap.liftPower() < -0.2) && ControllerMap.getMechTrigger() == false){
 			//if the stick is being moved down and the lift isn't near the bottom
 			if(ControllerMap.liftPower() > 0 && isAtBottom() == false) {
-				RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower() * .3);
+				RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower() * .4);
 				System.out.println("moving down");
 			//if the stick is moving up and the lift isn't near the top
 			} else if(ControllerMap.liftPower() < 0 && isAtTop() == false) {

@@ -12,6 +12,8 @@ public class RunIntake extends Command {
 
 	boolean _didCubeStartInIntake;
 	int count = 0;
+	int timeoutOut = 40;
+	int timeoutIn = 65;
 	
     public RunIntake(boolean didCubeStartInIntake) {
     	_didCubeStartInIntake = didCubeStartInIntake;
@@ -30,14 +32,14 @@ public class RunIntake extends Command {
     protected void execute() {
     	count++;
     	if(_didCubeStartInIntake == true) {
-        	if(count > 35) {
+        	if(count > 10) {
         		Intake.intake(0, .7);
         	} else {
         		Intake.intake(0, 0);
         	}
     	}else {
     		Intake.intake(1, 0);
-    		Drive.arcadeDrive(0, -.2, false);
+    		Drive.arcadeDrive(0, -.25, false);
     	}
     	
     }
@@ -45,7 +47,11 @@ public class RunIntake extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	//testing
-    	return count > 75;
+    	if(_didCubeStartInIntake == true) {
+        	return count > timeoutOut;
+    	} else {
+        	return count > timeoutIn;
+    	}
      //return didCubeStartInIntake != Intake.isCubeInIntake();
     		 
     }

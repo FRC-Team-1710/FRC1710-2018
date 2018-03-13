@@ -24,15 +24,15 @@ public class PitchIntake extends Command {
     protected void execute() {
     	count ++;
     	if(_isGoingUp == true) {
-    		RobotMap.wrist.set(ControlMode.PercentOutput, -.5);
+    		RobotMap.wrist.set(ControlMode.PercentOutput, -.55);
     	}else {
-    		RobotMap.wrist.set(ControlMode.PercentOutput, .5);
+    		RobotMap.wrist.set(ControlMode.PercentOutput, .55);
     	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return count > 50;
+        return count > 75;
     }
 
     // Called once after isFinished returns true

@@ -16,9 +16,9 @@ public class LeftStartLeftScaleRightSwitch extends CommandGroup {
 
     public LeftStartLeftScaleRightSwitch() {
     	addParallel(new PitchIntake(false));
-    	addSequential(new DriveToPosition(210,.75,true,5,false,false));
-    	addParallel(new ChangeLiftSetpoint(Constants.scaleHigh, 200));
-    	addSequential(new DriveToPosition(30,.5,true,45, true,false));
+    	addSequential(new DriveToPosition(220, .75, true,-2,false,false));
+    	addParallel(new ChangeLiftSetpoint(Constants.scaleHigh));
+    	addSequential(new DriveToPosition(30,.5,true,30, true,false));
     	addSequential(new RunIntake(true));
     	addParallel(new ChangeLiftSetpoint(Constants.intake, 500));
     	addSequential(new TurnToAngle(45));

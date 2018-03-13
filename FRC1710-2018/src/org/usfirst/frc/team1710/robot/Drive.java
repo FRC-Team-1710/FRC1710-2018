@@ -6,8 +6,10 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drive {
 	
@@ -22,16 +24,15 @@ public class Drive {
 		RobotMap.L2 = new VictorSPX (Constants.leftFollowerid);
 		RobotMap.L3 = new VictorSPX (Constants.leftFollowerid2);
 		
+		RobotMap.climber = new Talon(2);
+		
 		RobotMap.R2.follow (RobotMap.R1);
 		RobotMap.R3.follow (RobotMap.R1);
 		RobotMap.L2.follow (RobotMap.L1);
 		RobotMap.L3.follow (RobotMap.L1);
 		//these need to be inverted with robot 1 as of now... hopefully matt will fix that
-		RobotMap.R2.setInverted(true);
-		RobotMap.L3.setInverted(true);
-		
-		RobotMap.L1.configOpenloopRamp(.15, 0);
-		RobotMap.R1.configOpenloopRamp(.15, 0);
+		RobotMap.R2.setInverted(false);
+		RobotMap.L3.setInverted(false);
 		
 		RobotMap.shifter = new DoubleSolenoid(Constants.shifterForward,Constants.shifterReverse);
 		
@@ -72,13 +73,8 @@ public class Drive {
 				setPoint = 270;
 				setRobotHeading (setPoint);
 			} else {
-				if (lift.getLiftEncPosition() >= Constants.scaleNormal) {
-					RobotMap.R1.set(ControlMode.PercentOutput, side * .5 - forward * .5);
-					RobotMap.L1.set(ControlMode.PercentOutput, side * .5 + forward * .5);
-				} else {
-					RobotMap.R1.set(ControlMode.PercentOutput, side - forward);
-					RobotMap.L1.set(ControlMode.PercentOutput, side + forward);
-				}
+				RobotMap.R1.set(ControlMode.PercentOutput, side - forward);
+				RobotMap.L1.set(ControlMode.PercentOutput, side + forward);
 			}
 			//low gear
 			setShifters(false);

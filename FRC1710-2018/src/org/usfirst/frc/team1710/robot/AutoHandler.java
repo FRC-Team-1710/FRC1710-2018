@@ -2,9 +2,12 @@ package org.usfirst.frc.team1710.robot;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.util.HashMap;
 
+import commandGroups.LeftStartDoubleScaleLeft;
+import commandGroups.LeftStartDoubleScaleRight;
 import commandGroups.LeftStartLeftScale;
 import commandGroups.LeftStartLeftScaleLeftSwitch;
 import commandGroups.LeftStartLeftScaleLeftSwitchDriveBy;
@@ -14,12 +17,15 @@ import commandGroups.LeftStartRightScaleRightSwitch;
 import commandGroups.LeftStartRightSwitch;
 import commandGroups.MiddleToLeftSwitch;
 import commandGroups.MiddleToRightSwitch;
+import commandGroups.RightStartDoubleScale;
+import commandGroups.RightStartDoubleScaleLeft;
 import commandGroups.RightStartLeftScaleLeftSwitch;
 import commandGroups.RightStartLeftSwitch;
 import commandGroups.RightStartRightScale;
 import commandGroups.RightStartRightScaleLeftSwitch;
 import commandGroups.RightStartRightScaleRightSwitch;
 import commandGroups.RightStartRightSwitch;
+import commandGroups.RightStartRightSwitchLeftScale;
 import commandGroups.Testing;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -129,6 +135,7 @@ public class AutoHandler {
 		// one cube, starts left, going to switch, switch and scale on left (scale doesn't matter)
 		autoMap.put("121LL", new LeftStartLeftSwitch());
 		autoMap.put("121LR", new LeftStartLeftSwitch());
+		autoMap.put("223LR", new LeftStartLeftSwitch());
 		// one cube, starts left, going to switch, switch and scale on right (scale doesn't matter)
 		autoMap.put("121RL", new LeftStartRightSwitch());
 		autoMap.put("121RR", new LeftStartRightSwitch());
@@ -140,21 +147,31 @@ public class AutoHandler {
 		autoMap.put("131RR", new RightStartRightSwitch());
 		// two cubes, starts left, going to switch and scale, switch and scale on left 
 		autoMap.put("223LL", new LeftStartLeftScaleLeftSwitch());
-		autoMap.put("223RL", new LeftStartLeftScaleRightSwitch());
-		autoMap.put("223RR", new LeftStartRightScaleRightSwitch());
+		autoMap.put("223RL", new LeftStartLeftScale());
+		autoMap.put("223RR", new LeftStartRightSwitch());
+		autoMap.put("223LR", new LeftStartLeftSwitch());
 		
 		autoMap.put("233RR", new RightStartRightScaleRightSwitch());
 		autoMap.put("233LR", new RightStartRightScaleLeftSwitch());
-		autoMap.put("233LL", new RightStartLeftScaleLeftSwitch());
+		autoMap.put("233LL", new Testing());
+		autoMap.put("233RL", new RightStartRightSwitch());
+		autoMap.put("232RR", new Testing());
+		autoMap.put("232LL", new RightStartDoubleScaleLeft());
+		
+		autoMap.put("222LL", new LeftStartDoubleScaleLeft());
+		autoMap.put("232RR", new LeftStartDoubleScaleRight());
 		
 		autoMap.put("122LL", new LeftStartLeftScale());
 		autoMap.put("122RL", new LeftStartLeftScale());
 
-		autoMap.put("122LR", new RightStartRightScale());
-		autoMap.put("122RR", new RightStartRightScale());
+		autoMap.put("132LR", new RightStartRightScale());
+		autoMap.put("132RR", new RightStartRightScale());
 		
 		///autoMap.put("223RR", new LeftStartRightScaleRightSwitch());
-		autoMap.put("000RR", new LeftStartLeftScaleLeftSwitchDriveBy());
+		autoMap.put("000RR", new Testing());
+		autoMap.put("000LR", new Testing());
+		autoMap.put("000RL", new Testing());
+		autoMap.put("000LL", new Testing());
 	}
 	
 	public static CommandGroup getAuto(char switchPos, char scalePos, int cubeAmount, int destination, int startPosition) {
@@ -165,13 +182,9 @@ public class AutoHandler {
 		key.append(switchPos);
 		key.append(scalePos);
 		System.out.println("key " + key);
-		if(key.equals("233RL")) {
-			return autoMap.get("131RL");
-		} else if(key.equals("223LR")) {
-			return autoMap.get("121RL");
-		} else {
-			return autoMap.get(key.toString());
-		}
+		SmartDashboard.putString("key generated", key.toString());
+		SmartDashboard.putString("auto that ran", autoMap.get(key.toString()).getName());
+		return autoMap.get(key.toString());
 	}
 	
 }

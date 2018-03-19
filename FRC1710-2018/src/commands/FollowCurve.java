@@ -9,11 +9,19 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class FollowCurve extends Command {
 
-	int[][] _points;
+	double _left, _right;
+	double _radius, _length, _speed;
 	int i;
 	
-    public FollowCurve(int[][] points) {
-    	_points = points;
+    public FollowCurve(double left, double right) {
+    	_left = left;
+    	_right = right;
+    }
+    
+    public FollowCurve(double radius, double length, double speed) {
+    	_radius = radius;
+    	_length = length;
+    	_speed = speed;
     }
 
     // Called just before this Command runs the first time
@@ -23,12 +31,13 @@ public class FollowCurve extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	i++;
-    	Drive.straightDriveTele(_points[i][0], _points[i][1]);
+    	Drive.rightDrive(-_right);
+    	Drive.leftDrive(_left);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return i > 500;
     }
 
     // Called once after isFinished returns true

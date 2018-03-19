@@ -4,6 +4,7 @@ import org.usfirst.frc.team1710.robot.Constants;
 import org.usfirst.frc.team1710.robot.lift;
 
 import edu.wpi.first.wpilibj.command.Command;
+import utility.RobotMath;
 
 /**
  *
@@ -31,7 +32,7 @@ public class ChangeLiftSetpoint extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
+    	System.out.println("lifting " + _setpoint);
     	timeoutCount++;
     	if (timeoutCount>(_timeout/20)) {
     		count++;
@@ -49,7 +50,7 @@ public class ChangeLiftSetpoint extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	
-        return lift.getLiftPosition().equals(goalLiftPosition) || count > 40;
+        return RobotMath.isInRange(lift.getLiftEncPosition(), _setpoint, 500);
     }
 
     // Called once after isFinished returns true

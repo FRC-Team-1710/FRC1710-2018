@@ -20,12 +20,14 @@ public class Vision {
 	
 	static NetworkTableInstance table = NetworkTableInstance.getDefault();
 	static NetworkTable tableTwo = table.getTable("limelight");
-	static NetworkTableEntry ledEntry = tableTwo.getEntry("ledMode");
+	public static NetworkTableEntry ledEntry = tableTwo.getEntry("ledMode");
 	double ledValue = ledEntry.getDouble(0);
 
 	static NetworkTableEntry txEntry = tableTwo.getEntry("tx");
 	static NetworkTableEntry tyEntry = tableTwo.getEntry("ty");
 	static NetworkTableEntry tvEntry = tableTwo.getEntry("tv");
+	
+	static int intakeCount = 0;
 	
 	/**
 	 * Initializing tje table so it can be used in the rest of the cube
@@ -81,29 +83,29 @@ public class Vision {
 	 * @return the Ty value if its less than the ty intake constant but greater than 1
 	 */
 	public static boolean areCubesIntakable() {
-		return Math.abs(getTyValue()) < Constants.tyIntake && getTvValue() >=1;
+		return Math.abs(getTyValue()) < Constants.tyIntake && Math.abs(getTxValue()) < 10;
 	}
 	/**
 	 * Spins the robot to the right until it sees a cube, then it will go towards the cube and intakes it automatically
 	 */
 	public static void cubeTrackRight() {
-		//if bot cannot find box turn right
 		SmartDashboard.putBoolean("is cube intakeable", areCubesIntakable());
-
-		if(areCubesIntakable() == true) {
-			//if bot cannot find box turn left
-			Intake.intake(Constants.cubeIntakeSpeed,0);
-			Drive.arcadeDrive(0, -.2, false);
-			//arms closed
-		} else {
-			if(areCubesAvailable() == false) {
+		if(areCubesAvailable() == false) {
+			if(Intake.isCubeInIntake() == false) {
 				Drive.leftDrive(-Constants.seekingSpeed);
 				Drive.rightDrive(-Constants.seekingSpeed);
-			//else go forward to track box
 			} else {
-				Drive.arcadeDrive(-Constants.kpAim * getTxValue(), -getTyValue() * Constants.kpDistance , false );
+				Drive.stopDriving();
 			}
-			Intake.intake(0, 0);
+		} else {
+			if(areCubesIntakable() == true && Intake.getUltraSonic() > 238) {
+				Intake.intake(Constants.cubeIntakeSpeed, 0);
+				Drive.arcadeDrive(0,-.3,false);
+			} else {
+				Drive.arcadeDrive(-Constants.kpAim * getTxValue(), Constants.kpDistance * getTyValue(), false );
+				Intake.intake(0, 0);
+				intakeCount = 0;
+			}
 		}
 	}
 	
@@ -112,20 +114,22 @@ public class Vision {
 	 */
 	public static void cubeTrackLeft() {
 		SmartDashboard.putBoolean("is cube intakeable", areCubesIntakable());
-		if(areCubesIntakable() == true) {
-			//if bot cannot find box turn left
-			Intake.intake(Constants.cubeIntakeSpeed, 0);
-			Drive.arcadeDrive(0,-.2,false);
-			//arms closed
-		} else {
-			if(areCubesAvailable() == false) {
+		if(areCubesAvailable() == false) {
+			if(Intake.isCubeInIntake() == false) {
 				Drive.leftDrive(Constants.seekingSpeed);
 				Drive.rightDrive(Constants.seekingSpeed);
-			//else go forward to track box
 			} else {
-				Drive.arcadeDrive(-Constants.kpAim * getTxValue(), -getTyValue() * Constants.kpDistance , false );
+				Drive.stopDriving();
 			}
-			Intake.intake(0, 0);
+		} else {
+			if(areCubesIntakable() == true && Intake.getUltraSonic() > 238) {
+				Intake.intake(Constants.cubeIntakeSpeed, 0);
+				Drive.arcadeDrive(0,-.3,false);
+			} else {
+				Drive.arcadeDrive(-Constants.kpAim * getTxValue(), Constants.kpDistance * getTyValue(), false );
+				Intake.intake(0, 0);
+				intakeCount = 0;
+			}
 		}
 	}
 	

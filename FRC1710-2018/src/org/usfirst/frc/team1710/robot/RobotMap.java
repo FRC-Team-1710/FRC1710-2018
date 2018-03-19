@@ -7,8 +7,10 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Talon;
 
@@ -21,6 +23,8 @@ public class RobotMap {
 	public static AHRS navx;
 	public static DoubleSolenoid shifter, intakeRight, intakeLeft, rampDeploy, rampExtendo, rampLifto;
 	public static DigitalInput liftBottom, liftTop;
-	public static AnalogInput ultraSonicL, ultraSonicR, pressureSensor;
+	//public static Relay ledStrip;
+	static Relay ledStrip;
+	public static AnalogInput ultraSonic, ultraSonicR, pressureSensor;
 	public static Compressor compressor;
 }

@@ -9,7 +9,7 @@ public class Constants {
 	public static double switchPosition = 3500;
 	public static double scaleLow= 4500;
 	public static double scaleNormal = 6500;
-	public static double scaleHigh = 8350;
+	public static double scaleHigh = 8250;
 	public static String intakeLevelName = "intake";
 	public static String switchLevelName = "switch";
 	public static String lowLevelName = "low level";
@@ -21,21 +21,32 @@ public class Constants {
 	//kpUp - comp: .0004`
 	//kpDown - comp : .00008
 	public static double kPLiftUp = 0.00039;
+	//.000215
 	public static double kPLiftDown = 0.000215;
 	
 	public static int shifterReverse = 0;
 	public static int shifterForward = 1;
 	
 	//constants for drive
-	public static double kpStraight = 0.013;
-	public static double kpTurn = 0.009;
+	//.013
+	public static double kpStraight = .025;
+	public static double kiStraight = .00045;
+	public static double kdStraight = .00075;
+	
+	public static double kpStraightHi = .01;
+	public static double kiStraightHi = .000025;
+	public static double kdStraightHi = .005;
+	
+	public static double kiDrive = .000025;
+	
+	public static double kpTurn = 0.01;
 	
 	//constants for Vision
-	public static double kpAim = .5;
-	public static double kpDistance= .6;
+	public static double kpAim = .03;
+	public static double kpDistance= 0.1;
 	public static double seekingSpeed = .3;
 	public static double cubeIntakeSpeed = 1;
-	public static double tyIntake = 3;
+	public static double tyIntake = 5.5;
 	
 	//constants for talons srx 
 	public static int rightLeaderid=8;
@@ -60,7 +71,7 @@ public class Constants {
 	public static double kPWrist = .0008;
 	
 	//pathfinder (dimensions in meters)
-	public static double robotDriveBaseWidth = .6985;
+	public static double robotDriveBaseWidth = 25;
 	public static double wheelDiameter = .1524;
 	public static int ticksPerRev = 3900;
 	public static double kpPath = 0.01;
@@ -82,6 +93,6 @@ public class Constants {
 	
 	public static int ultraSonicConstant = 4;
 	public static double ultraSonic0 = 0;
-	public static double ultraSonicInIntake = .28;
+	public static double ultraSonicInIntake = 245;
 	
 }

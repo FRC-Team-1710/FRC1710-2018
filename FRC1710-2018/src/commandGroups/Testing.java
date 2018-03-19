@@ -4,6 +4,8 @@ import org.usfirst.frc.team1710.robot.Constants;
 
 import commands.ChangeLiftSetpoint;
 import commands.DriveToPosition;
+import commands.RunIntake;
+import commands.TrackCube;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -12,8 +14,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class Testing extends CommandGroup {
 
     public Testing() {
-    	addSequential(new DriveToPosition(80, 0.7, false, 0,false,false));
-    	//addSequential(new DriveToPosition(80, 0.7, false, 90,false,false));
-    	//addSequential(new DriveToPosition(-40, 0.7, false, 0,false,true));
+    	addSequential(new RunIntake(false));
+    	addSequential(new DriveToPosition(60, 0.75, false, 0,false,false));
+    	addSequential(new DriveToPosition(-100, 0.75, false, 180,false,true));
+    	addSequential(new DriveToPosition(160, 0.75, false, 180,false,false));
     }
 }

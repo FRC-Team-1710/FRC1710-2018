@@ -23,11 +23,13 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -52,7 +54,6 @@ public class Robot extends IterativeRobot {
 	
 	@Override
 	public void robotInit() {
-		RobotMap.pressureSensor = new AnalogInput(0);
 		SubsystemManager.masterinitialization();
 		RobotMap.driveStick = new Joystick(0);
 		RobotMap.mechStick = new Joystick(1);
@@ -78,9 +79,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("destination", destination);
 		SmartDashboard.putData("cubeAmount", cubeAmount);*/
 		
-		SmartDashboard.putNumber("cube amount", 2);
-		SmartDashboard.putNumber("Starting position", 3);
-		SmartDashboard.putNumber("destination",3);
+		SmartDashboard.putNumber("cube amount", 0);
+		SmartDashboard.putNumber("Starting position", 0);
+		SmartDashboard.putNumber("destination",0);
 		AutoHandler.initAutoMap();
 	}
 
@@ -163,7 +164,8 @@ public class Robot extends IterativeRobot {
 		Intake.manipulateWrist();
 		SmartDashboard.putNumber("Left Drive", Drive.getLeftPosition());
 		SmartDashboard.putNumber("Right Drive", Drive.getRightPosition());
-		SmartDashboard.putNumber("Wrist enc", Intake.getWristEncPosition());
+		SmartDashboard.putBoolean("Is cube in", Intake.isCubeInIntake());
+		SmartDashboard.putNumber("Intake Ultrasonic", Intake.getUltraSonic());
 	}
 	
 	

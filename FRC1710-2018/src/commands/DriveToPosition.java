@@ -13,13 +13,13 @@ import utility.RobotMath;
 public class DriveToPosition extends Command {
 
 	double _speed;
-	int _encGoal;
+	int _encGoal, count;
 	double _slowPercent;
 	double _speedFactor;
-	boolean _isInHighGear, _endBehavior, _direction;
+	boolean _isInHighGear, _endBehavior, _direction, _startReset, _needToResetStart, _foundSlowDownStart;
 	double _heading;
 	double _startingPosition;
-	double _totalTicks, _currentTicks, _percentComplete, _error, _output, _deltaPos, _goalDist;
+	double _totalTicks, _currentTicks, _percentComplete, _error, _lastPos, _slowDownStart, _posIntegral, _output, _deltaPos, _goalDist;
 	double  _exitAngle = 0;
 
     public DriveToPosition(int encGoal, double speed, boolean isInHighGear, double heading, boolean endBehavior, double exitAngle) {
@@ -44,10 +44,21 @@ public class DriveToPosition extends Command {
     }
 
     protected void initialize() {
+    	RobotMap.R1.configSelectedFeedbackSensor(com.ctre.phoenix.motorcontrol.FeedbackDevice.QuadEncoder, 0, 0);
+    	RobotMap.L1.configSelectedFeedbackSensor(com.ctre.phoenix.motorcontrol.FeedbackDevice.QuadEncoder, 0, 0);
     	RobotMap.R1.setSensorPhase(false);
     	RobotMap.L1.setSensorPhase(true);
     	Drive.setShifters(_isInHighGear);
 
+    	count = 0;
+    	
+    	if(Math.abs(Drive.getNavxAngle() - _heading) < 5) {
+    		_needToResetStart = false;
+    	} else {
+    		_needToResetStart = true;
+			System.out.println("need to fix heading");
+    	}
+    	
     	_startingPosition = (Drive.getRightPosition() + Drive.getLeftPosition())/2;
     	System.out.println("Start " + _startingPosition);
     	//actual goal enc value
@@ -64,44 +75,61 @@ public class DriveToPosition extends Command {
     protected void execute() { 
     	_currentTicks = (Drive.getRightPosition() + Drive.getLeftPosition())/2;
     	_deltaPos = _currentTicks - _startingPosition;
-    	if(_encGoal < 0) {
-        	_output =  ( (Math.pow(_deltaPos/_goalDist, 2) - 1) * _speed) - .3;
-    	} else {
-        	_output =  ( (1 - Math.pow(_deltaPos/_goalDist, 2)) * _speed) + .3;
-    	}
-
-    	//System.out.println("Current Output: " + _output);
-    	//System.out.println("Current Ticks: " + _currentTicks);
-    	
-    	SmartDashboard.putNumber("percent complete", _percentComplete);
-    	SmartDashboard.putNumber("Inches", Drive.getRightPosition()/215);
-    	SmartDashboard.putNumber("Starting Position", _startingPosition);
-    	SmartDashboard.putNumber("Goal Inches", _totalTicks/215);
-    	SmartDashboard.putNumber("Angle", Drive.getNavxAngle());
-    	SmartDashboard.putNumber("Right", Drive.getRightPosition());
-    	SmartDashboard.putNumber("Left", Drive.getLeftPosition());
+    	_error = _currentTicks - _totalTicks;
+    	_percentComplete = _currentTicks/_totalTicks;
+                
+    	SmartDashboard.putNumber("Drive Output", _output);
+    	SmartDashboard.putNumber("ENC Pos", _currentTicks);
+    	SmartDashboard.putNumber("Perc", _percentComplete);
 
     	if(_endBehavior == true) {
     		if(_direction == true) {
-    	    	Drive.straightDriveTele(-1 * _speed, _heading);
+    	    	Drive.straightDriveTele(-1 * _speed, _heading, _isInHighGear);
     		} else {
-    	    	Drive.straightDriveTele(_speed, _heading);
+    	    	Drive.straightDriveTele(_speed, _heading, _isInHighGear);
     		}
     	} else {
-    	   Drive.straightDriveTele(_output, _heading);
+        	if(_encGoal < 0) {
+            	if(Math.abs(_percentComplete) > .675) {
+            		count++;
+            		if(_foundSlowDownStart == false) {
+            			_slowDownStart = Math.abs(_currentTicks);
+            			_foundSlowDownStart = true;
+            		} else {
+                		_output =  ( (Math.pow(_deltaPos/(_goalDist + (_slowDownStart * 1.5)), 2) - 1) * _speed); 
+            		}
+            	} else {
+            		_output = -_speed;
+            	}
+        	} else {
+           		if(_percentComplete > .675) {
+            		count++;
+            		if(_foundSlowDownStart == false) {
+            			_slowDownStart = Math.abs(_currentTicks);
+            			_foundSlowDownStart = true;
+            		} else {
+                        _output =  ( (1 - Math.pow(_deltaPos/(_goalDist + (_slowDownStart * 1.5)), 2)) * _speed);
+            		}
+           		} else {
+           			_output = _speed;
+           		}
+        	}
+        	Drive.straightDriveTele(_output, _heading, _isInHighGear);
     	}
+    	
+    	_lastPos = (Drive.getRightPosition() + Drive.getLeftPosition())/2;
     }
     	
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return RobotMath.isInRange(_currentTicks, _totalTicks, 400);
+    	return RobotMath.isInRange(_currentTicks, _totalTicks, 250) || count > 40;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Drive.setRobotHeading(_exitAngle);
     	System.out.println("done");
+		_foundSlowDownStart = false;
     	Drive.stopDriving();
     }
 

@@ -13,17 +13,12 @@ import edu.wpi.first.wpilibj.Spark;
  */
 public class Intake {
 	static double wristSetPoint;
-
 	
-	/**
-	 * 
-	 */
 	public static void initializeIntake () {
 		RobotMap.intakeR = new Spark (Constants.intakeRSpark);
 		RobotMap.intakeL = new Spark (Constants.intakeLSpark);
 		RobotMap.wrist = new TalonSRX (Constants.wristTalon);
-		RobotMap.ultraSonicL = new AnalogInput (2);
-		RobotMap.ultraSonicR = new AnalogInput (1);
+		RobotMap.ultraSonic = new AnalogInput (1);
 		
 		RobotMap.wrist.configContinuousCurrentLimit(10, 0);
 		RobotMap.wrist.configPeakCurrentLimit(15, 0);
@@ -32,13 +27,8 @@ public class Intake {
 	}
 	
 	public static void intake (double in, double out) {
-		//if (isCubeInIntake()== false) {
 			RobotMap.intakeR.set(in-out);
-			RobotMap.intakeL.set(out-in);
-		//} else {
-			//RobotMap.intakeR.set(0);
-			//RobotMap.intakeL.set(0);
-		//}
+			RobotMap.intakeL.set(in-out);
 	}
 	public static int getWristEncPosition() {
 		return Math.abs(RobotMap.wrist.getSelectedSensorPosition(0));
@@ -100,18 +90,9 @@ public class Intake {
 	 * Gets the ultra sonic proximity in voltage.
 	 * @return returns the ultra sonic voltage
 	 */
-	public static double getUltraSonicL() {
+	public static double getUltraSonic() {
 		//Ultra sonic L is going to be further out on the robot
-		return RobotMap.ultraSonicL.getVoltage();
-	}
-	/**
-	 * Gets the ultra sonic proximity in voltage.
-	 * @return returns the ultra sonic voltage
-	 */
-	public static double getUltraSonicR() {
-		//Ultra sonic R is going to be closer to the robot
-		return RobotMap.ultraSonicR.getVoltage();
-		
+		return RobotMap.ultraSonic.getValue();
 	}
 	/**
 	 * The method checks if the ultra sonic sensor is within a certain range.
@@ -122,13 +103,10 @@ public class Intake {
 	 * @return if the cube is in the intake
 	 */
 	public static boolean isCubeInIntake() {
-		if ((getUltraSonicL() > Constants.ultraSonic0 || getUltraSonicL() < Constants.ultraSonicInIntake) && (getUltraSonicR() > Constants.ultraSonic0 || getUltraSonicR() < Constants.ultraSonicInIntake)) {
+		if ((getUltraSonic() <= Constants.ultraSonicInIntake)) {
 			//when returns, means cube is secure
 			return true;
 		} else {
-			/* this accounts for if one is in range, and one is out.
-			 * or if both are out of range
-			 */
 			return false;
 		}
 	}
@@ -148,24 +126,24 @@ public class Intake {
 	static boolean ultraSonicToggle = true;
 
 	public static void ultraSonicIntake() {
-			if (isCubeInIntake() == true && ControllerMap.ultraSonicIntake() == true) {
-				//checks if the cube is in the intake. If it is, then when button is pressed, it will outtake.
-				RobotMap.intakeL.set(outtakeSpeed);
-				RobotMap.intakeR.set(outtakeSpeed);
-				//spit out cube
-			} else if (isCubeInIntake() == true && ControllerMap.ultraSonicIntake() == false) {
-				//if the intake button is false, dont do anything
-				RobotMap.intakeL.set(0);
-				RobotMap.intakeR.set(0);
-			} else if (isCubeInIntake() == false && ControllerMap.ultraSonicIntake() == false) {
-				//don't do anything since the button is not being pressed.
-				RobotMap.intakeL.set(0);
-				RobotMap.intakeR.set(0);
-			} else if (isCubeInIntake() == false && ControllerMap.ultraSonicIntake() == true) {
-				//checks if the cube is in the intake. If it is, then when button is pressed, it will outtake.
-				RobotMap.intakeL.set(intakeSpeed);
-				RobotMap.intakeR.set(intakeSpeed);
-	}
+		if (isCubeInIntake() == true && ControllerMap.ultraSonicIntake() == true) {
+			//checks if the cube is in the intake. If it is, then when button is pressed, it will outtake.
+			RobotMap.intakeL.set(outtakeSpeed);
+			RobotMap.intakeR.set(outtakeSpeed);
+			//spit out cube
+		} else if (isCubeInIntake() == true && ControllerMap.ultraSonicIntake() == false) {
+			//if the intake button is false, dont do anything
+			RobotMap.intakeL.set(0);
+			RobotMap.intakeR.set(0);
+		} else if (isCubeInIntake() == false && ControllerMap.ultraSonicIntake() == false) {
+			//don't do anything since the button is not being pressed.
+			RobotMap.intakeL.set(0);
+			RobotMap.intakeR.set(0);
+		} else if (isCubeInIntake() == false && ControllerMap.ultraSonicIntake() == true) {
+			//checks if the cube is in the intake. If it is, then when button is pressed, it will outtake.
+			RobotMap.intakeL.set(intakeSpeed);
+			RobotMap.intakeR.set(intakeSpeed);
+		}
 	}
 }
 	

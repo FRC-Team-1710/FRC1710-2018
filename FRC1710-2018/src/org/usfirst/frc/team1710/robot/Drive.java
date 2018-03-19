@@ -15,6 +15,7 @@ public class Drive {
 	
 	static boolean navxReset = false;
 	static double setPoint;
+	static double lastAngle, angleIntegral, output;
 
 	public static void initializeDrive () {
 		RobotMap.R1 = new TalonSRX (Constants.rightLeaderid);
@@ -31,8 +32,8 @@ public class Drive {
 		RobotMap.L2.follow (RobotMap.L1);
 		RobotMap.L3.follow (RobotMap.L1);
 		//these need to be inverted with robot 1 as of now... hopefully matt will fix that
-		RobotMap.R2.setInverted(false);
-		RobotMap.L3.setInverted(false);
+		RobotMap.R2.setInverted(true);
+		RobotMap.L3.setInverted(true);
 		
 		RobotMap.shifter = new DoubleSolenoid(Constants.shifterForward,Constants.shifterReverse);
 		
@@ -60,22 +61,8 @@ public class Drive {
 			RobotMap.R1.set(ControlMode.PercentOutput, side - forward);
 			RobotMap.L1.set(ControlMode.PercentOutput, side + forward);
 		} else {
-			if (RobotMap.driveStick.getPOV() == 0) {
-				setPoint = 0;
-				setRobotHeading (setPoint);
-			} else if (RobotMap.driveStick.getPOV() == 90) {
-				setPoint = 90;
-				setRobotHeading (setPoint);
-			} else if (RobotMap.driveStick.getPOV() == 180) {
-				setPoint = 180;
-				setRobotHeading (setPoint);
-			} else if (RobotMap.driveStick.getPOV() == 270) {
-				setPoint = 270;
-				setRobotHeading (setPoint);
-			} else {
-				RobotMap.R1.set(ControlMode.PercentOutput, side - forward);
-				RobotMap.L1.set(ControlMode.PercentOutput, side + forward);
-			}
+			RobotMap.R1.set(ControlMode.PercentOutput, side - forward);
+			RobotMap.L1.set(ControlMode.PercentOutput, side + forward);
 			//low gear
 			setShifters(false);
 			navxReset = false;
@@ -97,10 +84,38 @@ public class Drive {
 		leftDrive(error*Constants.kpStraight - power);
 	}
 	
-	public static void straightDriveTele (double power, double heading) {
-		double error = (RobotMap.navx.getAngle() - heading);
-		rightDrive(error *Constants.kpStraight + power);
-		leftDrive(error*Constants.kpStraight - power);
+	public static void straightDriveTele (double power, double heading, boolean high) {
+
+		double currentAngle = Drive.getNavxAngle();
+		double error = (currentAngle - heading);
+		angleIntegral += error;
+		double angleDeriv = currentAngle - lastAngle;
+		if(high == true) {
+			output = (error * Constants.kpStraightHi) + (angleDeriv * Constants.kdStraightHi);
+			
+			if(Constants.kiStraightHi * angleIntegral > 1) {
+				angleIntegral = 1/Constants.kiStraightHi;
+			} else if(Constants.kiStraightHi * angleIntegral < -1){
+				angleIntegral = -1/Constants.kiStraightHi;
+			}
+			
+			output += (angleIntegral * Constants.kiStraightHi);
+		} else {
+			output = (error * Constants.kpStraight) + (angleDeriv * Constants.kdStraight);
+			
+			if(Constants.kiStraight * angleIntegral > 1) {
+				angleIntegral = 1/Constants.kiStraight;
+			} else if(Constants.kiStraight * angleIntegral < -1){
+				angleIntegral = -1/Constants.kiStraight;
+			}
+			
+			output += (angleIntegral * Constants.kiStraight);
+		}
+		rightDrive(output + power);
+		leftDrive(output - power);
+		lastAngle = Drive.getNavxAngle();
+		SmartDashboard.putNumber("Auto Drive Output", output);
+		SmartDashboard.putNumber("Auto Drive Angle", currentAngle);
 	}
 	
 	public static void setRobotHeading(double heading) {

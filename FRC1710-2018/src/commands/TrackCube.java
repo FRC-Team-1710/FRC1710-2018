@@ -24,10 +24,12 @@ public class TrackCube extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Drive.setShifters(false);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	System.out.println("tracking");
     	if(_isSeekingLeft == true) {
     		Vision.cubeTrackLeft();
     	} else {
@@ -39,7 +41,7 @@ public class TrackCube extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	//ideally we will keep runnning until a cube is detected to be secure in the intake but for now we stop when ty is a certain value
-        return count > 200;
+        return Intake.isCubeInIntake();
     }
 
     // Called once after isFinished returns true

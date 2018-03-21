@@ -12,10 +12,15 @@ import edu.wpi.first.wpilibj.command.Command;
 public class RunIntake extends Command {
 
 	boolean _didCubeStartInIntake;
-	int count;
+	int count, _waitTime;
 	
     public RunIntake(boolean didCubeStartInIntake) {
     	_didCubeStartInIntake = didCubeStartInIntake;
+    }
+    
+    public RunIntake(boolean didCubeStartInIntake, int waitTime) {
+    	_didCubeStartInIntake = didCubeStartInIntake;
+    	_waitTime = waitTime;
     }
 
     // Called just before this Command runs the first time
@@ -27,15 +32,17 @@ public class RunIntake extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	count++;
-        if(_didCubeStartInIntake == true) {
-           	Intake.intake(0, .85);
-    		Vision.ledEntry.forceSetNumber(2);
-           	System.out.println("outtaking " + Intake.getUltraSonic());
-        }else {
-        	Intake.intake(1, 0);
-        	Drive.arcadeDrive(0, -.25, false);
-           	System.out.println("intaking " + Intake.getUltraSonic());
-        }
+    	if(count > (_waitTime/20)) {
+            if(_didCubeStartInIntake == true) {
+               	Intake.intake(0, .85);
+        		Vision.ledEntry.forceSetNumber(2);
+               	System.out.println("outtaking " + Intake.getUltraSonic());
+            }else {
+            	Intake.intake(1, 0);
+            	Drive.arcadeDrive(0, -.25, false);
+               	System.out.println("intaking " + Intake.getUltraSonic());
+            }
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

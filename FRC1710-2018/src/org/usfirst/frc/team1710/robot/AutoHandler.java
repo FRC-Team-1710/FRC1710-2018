@@ -21,10 +21,12 @@ import commandGroups.RightStartDoubleScale;
 import commandGroups.RightStartDoubleScaleLeft;
 import commandGroups.RightStartLeftScaleLeftSwitch;
 import commandGroups.RightStartLeftSwitch;
+import commandGroups.RightStartLeftSwitchDoubleLeftScale;
 import commandGroups.RightStartRightScale;
 import commandGroups.RightStartRightScaleLeftSwitch;
 import commandGroups.RightStartRightScaleRightSwitch;
 import commandGroups.RightStartRightSwitch;
+import commandGroups.RightStartRightSwitchDoubleRightScale;
 import commandGroups.RightStartRightSwitchLeftScale;
 import commandGroups.Testing;
 import commandGroups.ThreeCubeRightScale;
@@ -158,6 +160,10 @@ public class AutoHandler {
 		autoMap.put("233RL", new RightStartRightSwitch());
 		autoMap.put("232RR", new Testing());
 		autoMap.put("232LL", new RightStartDoubleScaleLeft());
+		
+		autoMap.put("332RR", new ThreeCubeRightScale());
+		autoMap.put("333RR", new RightStartRightSwitchDoubleRightScale());
+		autoMap.put("333LL", new RightStartLeftSwitchDoubleLeftScale());
 		
 		autoMap.put("222LL", new LeftStartDoubleScaleLeft());
 		autoMap.put("232RR", new LeftStartDoubleScaleRight());

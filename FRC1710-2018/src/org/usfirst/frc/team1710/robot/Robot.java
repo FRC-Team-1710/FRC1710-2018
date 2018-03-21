@@ -79,9 +79,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("destination", destination);
 		SmartDashboard.putData("cubeAmount", cubeAmount);*/
 		
-		SmartDashboard.putNumber("cube amount", 0);
-		SmartDashboard.putNumber("Starting position", 0);
-		SmartDashboard.putNumber("destination",0);
+		SmartDashboard.putNumber("cube amount", 3);
+		SmartDashboard.putNumber("Starting position", 3);
+		SmartDashboard.putNumber("destination",3);
 		AutoHandler.initAutoMap();
 	}
 
@@ -139,10 +139,19 @@ public class Robot extends IterativeRobot {
 	
 	@Override
 	public void teleopPeriodic() {
+		SmartDashboard.putBoolean("Is lift at bottom", lift.isAtBottom());
+		SmartDashboard.putBoolean("Is lift at top", lift.isAtTop());
+
 		if(ControllerMap.visionActivated() == true) {
 			Vision.cubeTrackLeft();
 		} else {
-			Drive.arcadeDrive(ControllerMap.getTurnPower(), ControllerMap.getForwardPower(), ControllerMap.shift());
+			if(lift.getLiftEncPosition() > Constants.scaleNormal) {
+				Drive.arcadeDrive(ControllerMap.getTurnPower() * .3, ControllerMap.getForwardPower() * .4, false);
+			} else if( ControllerMap.intakeR() > .4) {
+				Drive.arcadeDrive(ControllerMap.getTurnPower() * .7, ControllerMap.getForwardPower() * .7, false);
+			} else {
+				Drive.arcadeDrive(ControllerMap.getTurnPower(), ControllerMap.getForwardPower(), ControllerMap.shift());
+			}
 			Intake.intake(ControllerMap.intakeR()*2, ControllerMap.intakeL()*.95);
 		}
 		
@@ -158,6 +167,12 @@ public class Robot extends IterativeRobot {
 			RobotMap.climber.set(RobotMap.mechStick.getRawAxis(0));
 		} else {
 			RobotMap.climber.set(0);
+		}
+		
+		if(RobotMap.driveStick.getRawButton(3) == true) {
+			Vision.ledEntry.forceSetNumber(2);
+		} else {
+			Vision.ledEntry.forceSetNumber(1);
 		}
 		
 		lift.manipulateLift();

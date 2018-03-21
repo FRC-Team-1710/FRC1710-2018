@@ -76,14 +76,13 @@ public class Vision {
 		}else {
 			return false;
 		}
-			
 	}
 	/**
 	 * checks to see if the cube is close enough to the intake to be intaked
 	 * @return the Ty value if its less than the ty intake constant but greater than 1
 	 */
 	public static boolean areCubesIntakable() {
-		return Math.abs(getTyValue()) < Constants.tyIntake && Math.abs(getTxValue()) < 10;
+		return Math.abs(getTyValue()) < Constants.tyIntake && Math.abs(getTxValue()) < Constants.txIntake;
 	}
 	/**
 	 * Spins the robot to the right until it sees a cube, then it will go towards the cube and intakes it automatically
@@ -98,7 +97,7 @@ public class Vision {
 				Drive.stopDriving();
 			}
 		} else {
-			if(areCubesIntakable() == true && Intake.getUltraSonic() > 238) {
+			if(areCubesIntakable() == true && Intake.getUltraSonic() > Constants.ultraSonicInIntakeVision) {
 				Intake.intake(Constants.cubeIntakeSpeed, 0);
 				Drive.arcadeDrive(0,-.3,false);
 			} else {
@@ -122,7 +121,7 @@ public class Vision {
 				Drive.stopDriving();
 			}
 		} else {
-			if(areCubesIntakable() == true && Intake.getUltraSonic() > 238) {
+			if(areCubesIntakable() == true && Intake.getUltraSonic() > Constants.ultraSonicInIntakeVision) {
 				Intake.intake(Constants.cubeIntakeSpeed, 0);
 				Drive.arcadeDrive(0,-.3,false);
 			} else {

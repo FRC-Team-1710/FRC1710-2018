@@ -4,12 +4,12 @@ public class Constants {
 	
 	
 	public static double psiPerVolts = 44.494;
-	public static double intake = 100;
+	public static double intake = 250;
 	public static double aboveBump = 1000;
 	public static double switchPosition = 3500;
 	public static double scaleLow= 4500;
 	public static double scaleNormal = 6500;
-	public static double scaleHigh = 8250;
+	public static double scaleHigh = 8500;
 	public static String intakeLevelName = "intake";
 	public static String switchLevelName = "switch";
 	public static String lowLevelName = "low level";
@@ -20,7 +20,7 @@ public class Constants {
 	//getting too violent
 	//kpUp - comp: .0004`
 	//kpDown - comp : .00008
-	public static double kPLiftUp = 0.00039;
+	public static double kPLiftUp = 0.00075;
 	//.000215
 	public static double kPLiftDown = 0.000215;
 	
@@ -29,11 +29,11 @@ public class Constants {
 	
 	//constants for drive
 	//.013
-	public static double kpStraight = .025;
-	public static double kiStraight = .00045;
+	public static double kpStraight = .015;
+	public static double kiStraight = .001;
 	public static double kdStraight = .00075;
 	
-	public static double kpStraightHi = .01;
+	public static double kpStraightHi = .015;
 	public static double kiStraightHi = .000025;
 	public static double kdStraightHi = .005;
 	
@@ -47,6 +47,9 @@ public class Constants {
 	public static double seekingSpeed = .3;
 	public static double cubeIntakeSpeed = 1;
 	public static double tyIntake = 5.5;
+	public static double txIntake = 10;
+	public static double autoTrackTimeout = 45;
+	public static double ultraSonicInIntakeVision = 238;
 	
 	//constants for talons srx 
 	public static int rightLeaderid=8;
@@ -93,6 +96,6 @@ public class Constants {
 	
 	public static int ultraSonicConstant = 4;
 	public static double ultraSonic0 = 0;
-	public static double ultraSonicInIntake = 245;
+	public static double ultraSonicInIntake = 240;
 	
 }

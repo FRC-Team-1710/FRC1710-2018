@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1710.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -18,16 +19,24 @@ public class lift {
 		RobotMap.lift1 = new TalonSRX (Constants.liftRightTalon);
 		RobotMap.lift2 = new TalonSRX (Constants.liftLeftTalon);
 		//commented out for testing which motor
-		RobotMap.lift2.follow (RobotMap.lift1);
+		//RobotMap.lift2.follow (RobotMap.lift1);
 		RobotMap.lift2.setInverted(true);
 		RobotMap.lift1.setInverted(true);
-		RobotMap.liftBottom = new DigitalInput(0);
-		RobotMap.liftTop = new DigitalInput(1);
+		RobotMap.liftBottom = new DigitalInput(1);
+		RobotMap.liftTop = new DigitalInput(0);
 		
-		RobotMap.lift1.configContinuousCurrentLimit(25, 0);
-		RobotMap.lift1.configPeakCurrentLimit(30, 0);
+		RobotMap.lift1.setNeutralMode(NeutralMode.Brake);
+		RobotMap.lift2.setNeutralMode(NeutralMode.Brake);
+		
+		RobotMap.lift1.configContinuousCurrentLimit(10, 0);
+		RobotMap.lift1.configPeakCurrentLimit(20, 0);
 		RobotMap.lift1.configPeakCurrentDuration(100, 0);
-		RobotMap.lift1.enableCurrentLimit(false);
+		RobotMap.lift1.enableCurrentLimit(true);
+		
+		RobotMap.lift2.configContinuousCurrentLimit(10, 0);
+		RobotMap.lift2.configPeakCurrentLimit(20, 0);
+		RobotMap.lift2.configPeakCurrentDuration(100, 0);
+		RobotMap.lift2.enableCurrentLimit(true);
 	}
 /**
  * tells lift what set-points to move to based on the mech-driver input
@@ -65,46 +74,31 @@ public class lift {
 	 */
 	public static void manipulateLift() {
 		
-		outputUp = (-1 * ((getLiftError()) *  Constants.kPLiftUp));
-		outputDown = (-1 * ((getLiftError()) *  Constants.kPLiftDown));
-		
+		outputUp = (-1 * (getLiftError() *  Constants.kPLiftUp));
+		//outputDown = (-1 * ((getLiftError()) *  Constants.kPLiftDown));
+				
 		//if the stick is being moved...
 		if ((ControllerMap.liftPower() > 0.2 || ControllerMap.liftPower() < -0.2) && ControllerMap.getMechTrigger() == false){
 			//if the stick is being moved down and the lift isn't near the bottom
-			if(ControllerMap.liftPower() > 0 && isAtBottom() == false) {
-				RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower() * .35);
-				System.out.println("moving down");
+			if(ControllerMap.liftPower() >= 0 && isAtBottom() == false) {
+				RobotMap.lift2.set(ControlMode.PercentOutput, ControllerMap.liftPower() * .35);
 			//if the stick is moving up and the lift isn't near the top
-			} else if(ControllerMap.liftPower() < 0 && isAtTop() == false) {
-				RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower() * .7);	
-				System.out.println("moving up");
-			//uh oh
-			} else {
-				stopLift();
+			} else if(ControllerMap.liftPower() <= 0 && isAtTop() == false) {
+				RobotMap.lift2.set(ControlMode.PercentOutput, ControllerMap.liftPower() * .8);	
+				System.out.println("upsies");
 			}
 			setPoint = getLiftEncPosition();
 		} else {	
-			if(getMovementDirection() == "moving up") {
-				if(isAtTop() == true) {
-					stopLift();
-				} else {
-					RobotMap.lift1.set(ControlMode.PercentOutput, outputUp);
-				}
+			if(outputUp > .4) {
+				RobotMap.lift2.set(ControlMode.PercentOutput, .4);
+				System.out.println("Overriding output");
+			} else if(outputUp < -.7) {
+				RobotMap.lift2.set(ControlMode.PercentOutput, -.7);
+				System.out.println("Overriding output");
 			} else {
-				if(isAtBottom() == true) {
-					stopLift();
-				} else {
-					if(outputDown > .5) {
-						RobotMap.lift1.set(ControlMode.PercentOutput, .5);
-					} else {
-						RobotMap.lift1.set(ControlMode.PercentOutput, outputDown);
-					}
-				}
+				RobotMap.lift2.set(ControlMode.PercentOutput, outputUp);
 			}
 		}	
-		if(isAtBottom() == true) {
-			//RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);	 
-		}
 	}
 	/**
 	 * find the direction to travel
@@ -129,16 +123,14 @@ public class lift {
 	 * @return value of the hall effect sensors.
 	 */
 	public static boolean isAtBottom() {
-		//return !RobotMap.liftBottom.get();
-		return getLiftEncPosition() <= 100;
+		return !RobotMap.liftBottom.get();
 	}
 	/**
 	 * tell if lifts at the top using hall effect sensors.
 	 * @return value of the hall effect sensors.
 	 */
 	public static boolean isAtTop() {
-		//return !RobotMap.liftTop.get();
-		return getLiftEncPosition() >= 8300;
+		return !RobotMap.liftTop.get();
 	}
 	/**
 	 * tells what position lift is at
@@ -173,6 +165,7 @@ public class lift {
 	 */
 	public static void stopLift() {
 		RobotMap.lift1.set(ControlMode.PercentOutput, 0);	
+		RobotMap.lift2.set(ControlMode.PercentOutput, 0);	
 	}
 	/**
 	 * manually changes the set-point

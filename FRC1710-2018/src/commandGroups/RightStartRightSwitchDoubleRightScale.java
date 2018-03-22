@@ -44,7 +44,7 @@ public class RightStartRightSwitchDoubleRightScale extends CommandGroup {
     	addSequential(new DriveToPosition(-70,.8,true,270, true,true));
     	addSequential(new DriveToPosition(-25,.8,true,360, false,true));
     	addParallel(new ChangeLiftSetpoint(Constants.scaleHigh, 250));
-    	addParallel(new RunIntake(true, 500));
     	addSequential(new DriveToPosition(70,.3,true,330, false,false));
+    	addSequential(new RunIntake(true, 500));
     }
 }

@@ -89,14 +89,18 @@ public class lift {
 			}
 			setPoint = getLiftEncPosition();
 		} else {	
-			if(outputUp > .4) {
-				RobotMap.lift2.set(ControlMode.PercentOutput, .4);
-				System.out.println("Overriding output");
-			} else if(outputUp < -.7) {
-				RobotMap.lift2.set(ControlMode.PercentOutput, -.7);
-				System.out.println("Overriding output");
+			if(Math.abs(RobotMap.navx.getPitch()) < 15) {
+				if(outputUp > .4) {
+					RobotMap.lift2.set(ControlMode.PercentOutput, .4);
+					System.out.println("Overriding output");
+				} else if(outputUp < -.7) {
+					RobotMap.lift2.set(ControlMode.PercentOutput, -.7);
+					System.out.println("Overriding output");
+				} else {
+					RobotMap.lift2.set(ControlMode.PercentOutput, outputUp);
+				}	
 			} else {
-				RobotMap.lift2.set(ControlMode.PercentOutput, outputUp);
+				setPoint = Constants.intake;
 			}
 		}	
 	}

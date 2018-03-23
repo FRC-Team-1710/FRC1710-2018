@@ -34,14 +34,16 @@ public class RunIntake extends Command {
     	count++;
     	if(count > (_waitTime/20)) {
             if(_didCubeStartInIntake == true) {
-               	Intake.intake(0, .85);
+               	Intake.intake(0, .6);
         		Vision.ledEntry.forceSetNumber(2);
                	System.out.println("outtaking " + Intake.getUltraSonic());
             }else {
             	Intake.intake(1, 0);
-            	Drive.arcadeDrive(0, -.25, false);
+            	Drive.arcadeDrive(0, -.2, false);
                	System.out.println("intaking " + Intake.getUltraSonic());
             }
+    	} else {
+    		Intake.intake(0, 0);
     	}
     }
 

@@ -27,7 +27,7 @@ public class Intake {
 	}
 	
 	public static void intake (double in, double out) {
-		RobotMap.intakeR.set(out-in);
+		RobotMap.intakeR.set(in-out);
 		RobotMap.intakeL.set(in-out);
 	}
 	public static int getWristEncPosition() {

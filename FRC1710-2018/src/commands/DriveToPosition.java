@@ -60,7 +60,7 @@ public class DriveToPosition extends Command {
 			System.out.println("need to fix heading");
     	}
     	
-    	_startingPosition = (Drive.getRightPosition()); //+ Drive.getLeftPosition())/2;
+    	_startingPosition = (Drive.getRightPosition() + Drive.getLeftPosition())/2;
     	System.out.println("Start " + _startingPosition);
     	//actual goal enc value
     	
@@ -74,7 +74,7 @@ public class DriveToPosition extends Command {
 
 
     protected void execute() { 
-    	_currentTicks = (Drive.getRightPosition()); //+ Drive.getLeftPosition())/2;
+    	_currentTicks = (Drive.getRightPosition() + Drive.getLeftPosition())/2;
     	_deltaPos = _currentTicks - _startingPosition;
     	_error = _currentTicks - _totalTicks;
     	_percentComplete = _currentTicks/_totalTicks;
@@ -125,9 +125,9 @@ public class DriveToPosition extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	if(_skipIfCube) {
-        	return RobotMath.isInRange(_currentTicks, _totalTicks, 250) || Intake.isCubeInIntake();
+        	return _currentTicks >= _totalTicks || Intake.isCubeInIntake();
     	} else {
-    		return RobotMath.isInRange(_currentTicks, _totalTicks, 250) || _skipIfCube;
+    		return _currentTicks >= _totalTicks || _skipIfCube;
     	}
     }
 

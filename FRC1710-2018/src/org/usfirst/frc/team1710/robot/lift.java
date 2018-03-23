@@ -93,8 +93,8 @@ public class lift {
 				if(outputUp > .4) {
 					RobotMap.lift1.set(ControlMode.PercentOutput, .4);
 					System.out.println("Overriding output");
-				} else if(outputUp < -.7) {
-					RobotMap.lift1.set(ControlMode.PercentOutput, -.7);
+				} else if(outputUp < -.8) {
+					RobotMap.lift1.set(ControlMode.PercentOutput, -.8);
 					System.out.println("Overriding output");
 				} else {
 					RobotMap.lift1.set(ControlMode.PercentOutput, outputUp);

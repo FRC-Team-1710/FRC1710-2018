@@ -4,7 +4,7 @@ public class Constants {
 	
 	
 	public static double psiPerVolts = 44.494;
-	public static double intake = 250;
+	public static double intake = 100;
 	public static double aboveBump = 1000;
 	public static double switchPosition = 3500;
 	public static double scaleLow= 4500;
@@ -33,7 +33,7 @@ public class Constants {
 	public static double kiStraight = .001;
 	public static double kdStraight = .00075;
 	
-	public static double kpStraightHi = .015;
+	public static double kpStraightHi = .0125;
 	public static double kiStraightHi = .000025;
 	public static double kdStraightHi = .005;
 	

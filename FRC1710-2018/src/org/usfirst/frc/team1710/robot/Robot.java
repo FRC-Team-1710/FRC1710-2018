@@ -151,7 +151,7 @@ public class Robot extends IterativeRobot {
 			} else {
 				Drive.arcadeDrive(ControllerMap.getTurnPower(), ControllerMap.getForwardPower(), ControllerMap.shift());
 			}
-			Intake.intake(ControllerMap.intakeR()*2, ControllerMap.intakeL()*.95);
+			Intake.intake(ControllerMap.intakeR()*2, ControllerMap.intakeL()*.6);
 		}
 		
 		if(RobotMap.mechStick.getRawButton(2) == true) {
@@ -169,9 +169,7 @@ public class Robot extends IterativeRobot {
 		}
 		
 		if(RobotMap.driveStick.getRawButton(3) == true) {
-			Vision.ledEntry.forceSetNumber(2);
-		} else {
-			Vision.ledEntry.forceSetNumber(1);
+			RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);
 		}
 		
 		lift.manipulateLift();
@@ -180,6 +178,10 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Drive", Drive.getRightPosition());
 		SmartDashboard.putBoolean("Is cube in", Intake.isCubeInIntake());
 		SmartDashboard.putNumber("Intake Ultrasonic", Intake.getUltraSonic());
+		
+		if(lift.isAtBottom() == true) {
+			RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);
+		}
 	}
 	
 	

@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.util.HashMap;
 
+import commandGroups.LeftStartDoubleLeftScaleLeftSwitch;
 import commandGroups.LeftStartDoubleScaleLeft;
 import commandGroups.LeftStartDoubleScaleRight;
 import commandGroups.LeftStartLeftScale;
@@ -169,6 +170,11 @@ public class AutoHandler {
 		autoMap.put("333LR", new RightStartDoubleScaleLeftSwitch());
 		autoMap.put("333RL", new RightStartRightSwitchLeftScale());
 		
+		autoMap.put("323LL", new LeftStartDoubleLeftScaleLeftSwitch());
+		autoMap.put("323LR", new LeftStartLeftSwitch());
+		autoMap.put("323RL", new LeftStartLeftScale());
+		autoMap.put("323RR", new Testing());
+		
 		autoMap.put("222LL", new LeftStartDoubleScaleLeft());
 		autoMap.put("232RR", new LeftStartDoubleScaleRight());
 		
@@ -179,7 +185,7 @@ public class AutoHandler {
 		autoMap.put("132RR", new RightStartRightScale());
 		
 		///autoMap.put("223RR", new LeftStartRightScaleRightSwitch());
-		autoMap.put("000RR", new ThreeCubeRightScale());
+		autoMap.put("000RR", new Testing());
 		autoMap.put("000LR", new Testing());
 		autoMap.put("000RL", new Testing());
 		autoMap.put("000LL", new Testing());

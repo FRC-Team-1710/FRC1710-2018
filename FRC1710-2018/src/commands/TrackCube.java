@@ -53,7 +53,7 @@ public class TrackCube extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Intake.isCubeInIntake();
+        return Intake.isCubeInIntake() || Vision.getTvValue() == 0;
     }
 
     // Called once after isFinished returns true

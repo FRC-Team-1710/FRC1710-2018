@@ -58,7 +58,7 @@ public class Robot extends IterativeRobot {
 		RobotMap.driveStick = new Joystick(0);
 		RobotMap.mechStick = new Joystick(1);
 		RobotMap.compressor = new Compressor(0);
-		
+		RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);
 		DashboardInput.setUpDashboard();
 		/*startPosition = new SendableChooser();
 		destination= new SendableChooser();
@@ -124,7 +124,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		lift.setSetpoint(Constants.intake);
-		RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);
 		RobotMap.wrist.setSelectedSensorPosition(0, 0, 0);
 		RobotMap.R1.setSelectedSensorPosition(0, 0, 0);
 		RobotMap.L1.setSelectedSensorPosition(0, 0, 0);

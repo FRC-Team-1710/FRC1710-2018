@@ -18,7 +18,7 @@ public class Intake {
 		RobotMap.intakeR = new Spark (Constants.intakeRSpark);
 		RobotMap.intakeL = new Spark (Constants.intakeLSpark);
 		RobotMap.wrist = new TalonSRX (Constants.wristTalon);
-		RobotMap.ultraSonic = new AnalogInput (1);
+		RobotMap.ultraSonic = new AnalogInput (0);
 		
 		RobotMap.wrist.configContinuousCurrentLimit(10, 0);
 		RobotMap.wrist.configPeakCurrentLimit(15, 0);
@@ -27,7 +27,7 @@ public class Intake {
 	}
 	
 	public static void intake (double in, double out) {
-		RobotMap.intakeR.set(in-out);
+		RobotMap.intakeR.set(out-in);
 		RobotMap.intakeL.set(in-out);
 	}
 	public static int getWristEncPosition() {

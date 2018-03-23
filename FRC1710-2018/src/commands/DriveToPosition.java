@@ -2,6 +2,7 @@ package commands;
 
 import org.usfirst.frc.team1710.robot.Constants;
 import org.usfirst.frc.team1710.robot.Drive;
+import org.usfirst.frc.team1710.robot.Intake;
 import org.usfirst.frc.team1710.robot.RobotMap;
 import org.usfirst.frc.team1710.robot.SubsystemManager;
 
@@ -16,22 +17,22 @@ public class DriveToPosition extends Command {
 	int _encGoal, count;
 	double _slowPercent;
 	double _speedFactor;
-	boolean _isInHighGear, _endBehavior, _direction, _startReset, _needToResetStart, _foundSlowDownStart;
+	boolean _isInHighGear, _skipIfCube, _endBehavior, _direction, _startReset, _needToResetStart, _foundSlowDownStart;
 	double _heading;
 	double _startingPosition;
 	double _totalTicks, _currentTicks, _percentComplete, _error, _lastPos, _slowDownStart, _posIntegral, _output, _deltaPos, _goalDist;
 	double  _exitAngle = 0;
 
-    public DriveToPosition(int encGoal, double speed, boolean isInHighGear, double heading, boolean endBehavior, double exitAngle) {
+    public DriveToPosition(int encGoal, double speed, boolean isInHighGear, double heading, boolean endBehavior, boolean direction, boolean skipIfCube) {
     	_speed = speed;
     	//217 encoder ticks per inch (4096 (in a rev)/18.15 (wheel C))
     	_encGoal = encGoal * 217;
     	_isInHighGear=isInHighGear;
     	_heading = heading;
     	_endBehavior = endBehavior;
-    	_exitAngle = exitAngle;
+    	_skipIfCube = skipIfCube;
     }
-
+    
     public DriveToPosition(int encGoal, double speed, boolean isInHighGear, double heading, boolean endBehavior, boolean direction) {
     	_speed = speed;
     	//217 encoder ticks per inch (4096 (in a rev)/18.15 (wheel C))
@@ -59,7 +60,7 @@ public class DriveToPosition extends Command {
 			System.out.println("need to fix heading");
     	}
     	
-    	_startingPosition = (Drive.getRightPosition() + Drive.getLeftPosition())/2;
+    	_startingPosition = (Drive.getRightPosition()); //+ Drive.getLeftPosition())/2;
     	System.out.println("Start " + _startingPosition);
     	//actual goal enc value
     	
@@ -73,7 +74,7 @@ public class DriveToPosition extends Command {
 
 
     protected void execute() { 
-    	_currentTicks = (Drive.getRightPosition() + Drive.getLeftPosition())/2;
+    	_currentTicks = (Drive.getRightPosition()); //+ Drive.getLeftPosition())/2;
     	_deltaPos = _currentTicks - _startingPosition;
     	_error = _currentTicks - _totalTicks;
     	_percentComplete = _currentTicks/_totalTicks;
@@ -123,7 +124,11 @@ public class DriveToPosition extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return RobotMath.isInRange(_currentTicks, _totalTicks, 250) || count > 40;
+    	if(_skipIfCube) {
+        	return RobotMath.isInRange(_currentTicks, _totalTicks, 250) || Intake.isCubeInIntake();
+    	} else {
+    		return RobotMath.isInRange(_currentTicks, _totalTicks, 250) || _skipIfCube;
+    	}
     }
 
     // Called once after isFinished returns true

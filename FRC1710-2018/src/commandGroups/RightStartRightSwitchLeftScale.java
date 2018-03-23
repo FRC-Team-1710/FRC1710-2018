@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class RightStartRightSwitchLeftScale extends CommandGroup {
 
     public RightStartRightSwitchLeftScale() {
-    	addSequential(new PitchIntake(false));
+    	addParallel(new PitchIntake(false));
     	addParallel(new ChangeLiftSetpoint(Constants.switchPosition));
     	addSequential(new DriveToPosition(70,.6,true,0,false,false));
     	addParallel(new DriveToPosition(30,.6,true,-60,false,false));
@@ -26,6 +26,8 @@ public class RightStartRightSwitchLeftScale extends CommandGroup {
     	addSequential(new DriveToPosition(-20,.6,true,-225,true,true));
     	addSequential(new DriveToPosition(-20,.6,true,-180,false,true));
     	addSequential(new TrackCube(true));
+    	addSequential(new DriveToPosition(20,.6,true,-150,false,false,true));
+    	addSequential(new RunIntake(false));
     	addParallel(new ChangeLiftSetpoint(Constants.aboveBump));
     	addSequential(new DriveToPosition(-25,.6,true,-90,false,true));
     	addParallel(new ChangeLiftSetpoint(Constants.intake,750));

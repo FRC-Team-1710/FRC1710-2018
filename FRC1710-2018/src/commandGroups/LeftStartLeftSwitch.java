@@ -17,10 +17,9 @@ import trajectory.waypoints;
 public class LeftStartLeftSwitch extends CommandGroup {
 
     public LeftStartLeftSwitch() {
+    	addParallel(new PitchIntake(false));
+    	addSequential(new DriveToPosition(90,.6,true,-3,false,false));
     	addParallel(new ChangeLiftSetpoint(Constants.switchPosition));
-    	addSequential(new DriveToPosition(65,.6,true,0,true,false));
-    	addParallel(new DriveToPosition(25,.6,true,65,false,false));
-    	addSequential(new PitchIntake(false));
-    	addSequential(new RunIntake(true));
+    	addSequential(new DriveToPosition(30,.4,true,60,false,false));
     }
 }

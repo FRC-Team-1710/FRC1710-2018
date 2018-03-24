@@ -30,6 +30,7 @@ import commandGroups.RightStartRightScaleRightSwitch;
 import commandGroups.RightStartRightSwitch;
 import commandGroups.RightStartRightSwitchDoubleRightScale;
 import commandGroups.RightStartRightSwitchLeftScale;
+import commandGroups.RightStartThreeCubeLeftScale;
 import commandGroups.Testing;
 import commandGroups.ThreeCubeRightScale;
 import edu.wpi.first.networktables.NetworkTable;
@@ -39,92 +40,6 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 public class AutoHandler {
 	
 	static HashMap<String, CommandGroup> autoMap = new HashMap<String, CommandGroup>();
-	
-	/**
-	 * 
-	 * @param switchPos position of the switch, retrieved from FMS 'L' or 'R'
-	 * @param scalePos position of the scale, retrieved from FMS 'L' or 'R'
-	 * @param cubeAmount amount of cubes to be utilized in auto
-	 * @param destination switch, scale, or both
-	 * @param startPosition left, middle, or right
-	 * @return CommandGroup to run based on condition of the field, and conditions input at driverstation
-	 */
-	public static CommandGroup getAutoToRun(char switchPos, char scalePos, int cubeAmount, int destination, int startPosition) {
-		System.out.println("analyzing... gorgonomics...");
-		if(cubeAmount == 1) {
-    		//going to switch
-    		System.out.println("placing one cube");
-    		if(destination == 1) {
-        		System.out.println("going to switch");
-    			//starting left
-    			if(startPosition == 2) {
-            		System.out.println("starting left");
-    				if(switchPos == 'L') {
-                		System.out.println("switch is on left");
-    					return (CommandGroup) new LeftStartLeftSwitch();
-    				} else {
-                		System.out.println("switch is on right");
-    					return (CommandGroup) new LeftStartRightSwitch();
-    				}
-    			//starting right
-    			} else if(startPosition == 3) {
-    				if(switchPos == 'L') {
-    					return (CommandGroup) new RightStartLeftSwitch();
-    				} else {
-    					return (CommandGroup) new RightStartRightSwitch();
-    				}
-    			//starting middle
-    			} else {
-    				if(switchPos=='L') {
-    					return (CommandGroup) new MiddleToLeftSwitch();
-    				} else {
-    					return (CommandGroup) new MiddleToRightSwitch();
-    				}
-    			}
-    		//scale 1 cubes
-    		} else {
-    			return null;
-    		}
-    	//2+ cube autos
-    	} else if (cubeAmount == 2){
-    		System.out.println("doing 2 cubes");
-    		//switch
-    		if(destination == 1) {
-    			return null;
-    		//scale
-    		} else if(destination == 2) {
-    			return null;
-    		//both
-    		} else {
-        		System.out.println("going to switch and scale");
-    			if(startPosition == 2) {
-            		System.out.println("starting left");
-    				if(switchPos == 'L' && scalePos == 'L') {
-    					//223
-    					return (CommandGroup) new LeftStartLeftScaleLeftSwitch();
-    				} else if(switchPos == 'R' && scalePos == 'L'){
-    					return (CommandGroup) new LeftStartLeftScaleRightSwitch();
-    				} else {
-    					return null;
-    				}
-    			} else if(startPosition == 3){
-            		System.out.println("starting right");
-    				if(switchPos == 'R' && scalePos == 'R') {
-    					//223
-    					return (CommandGroup) new RightStartRightScaleRightSwitch();
-    				} else if(switchPos == 'L' && scalePos == 'R'){
-    					return (CommandGroup) new RightStartRightScaleLeftSwitch();
-    				} else {
-    					return null;
-    				}
-    			} else {
-    				return null;
-    			}
-    		}
-    	} else {
-    		return null;
-    	}
-	}
 	
 	/**
 	 * initializes the hashmap that stores every auto. The key is formatted as follows:
@@ -164,6 +79,10 @@ public class AutoHandler {
 		autoMap.put("232LL", new RightStartDoubleScaleLeft());
 		
 		autoMap.put("332RR", new ThreeCubeRightScale());
+		autoMap.put("332LR", new ThreeCubeRightScale());
+		
+		autoMap.put("332LL", new RightStartThreeCubeLeftScale());
+		autoMap.put("332RL", new RightStartThreeCubeLeftScale());
 		
 		autoMap.put("333RR", new RightStartRightSwitchDoubleRightScale());
 		autoMap.put("333LL", new RightStartLeftSwitchDoubleLeftScale());

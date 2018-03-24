@@ -21,7 +21,7 @@ public class RightStartLeftSwitchDoubleLeftScale extends CommandGroup {
     	addSequential(new DriveToPosition(230, .6, true,-87,false,false));
     	addSequential(new DriveToPosition(40, .6, true,0,true,false));
     	addParallel(new DriveToPosition(15, .3, true,20,false,false));
-    	addSequential(new ChangeLiftSetpoint(Constants.scaleHigh, 500));
+    	addSequential(new ChangeLiftSetpoint(Constants.scaleHigh));
     	addSequential(new RunIntake(true));
     	addSequential(new TurnToAngle(-10));
     	addSequential(new ChangeLiftSetpoint(Constants.intake));

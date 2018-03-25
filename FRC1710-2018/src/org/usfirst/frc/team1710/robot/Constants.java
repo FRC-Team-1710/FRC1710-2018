@@ -96,6 +96,6 @@ public class Constants {
 	
 	public static int ultraSonicConstant = 4;
 	public static double ultraSonic0 = 0;
-	public static double ultraSonicInIntake = 240;
+	public static double ultraSonicInIntake = 241;
 	
 }

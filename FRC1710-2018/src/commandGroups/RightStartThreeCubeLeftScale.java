@@ -6,6 +6,7 @@ import commands.ChangeLiftSetpoint;
 import commands.DriveToPosition;
 import commands.PitchIntake;
 import commands.RunIntake;
+import commands.TurnToAngle;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -15,21 +16,15 @@ public class RightStartThreeCubeLeftScale extends CommandGroup {
 
     public RightStartThreeCubeLeftScale() {
     	addParallel(new PitchIntake(false));
-    	addSequential(new DriveToPosition(200, .75, true,-2,false,false));
-    	addParallel(new DriveToPosition(30,.35,true,40, true,false));
+    	addSequential(new DriveToPosition(180, .75, true,0,false,false));
+    	addSequential(new DriveToPosition(255, .6, true,-90,false,false));
+    	addSequential(new DriveToPosition(35, .4, true,5,true,false));
+    	addParallel(new DriveToPosition(10, .3, true,20,false,false));
     	addSequential(new ChangeLiftSetpoint(Constants.scaleHigh));
     	addSequential(new RunIntake(true));
-    	addParallel(new ChangeLiftSetpoint(Constants.intake));
-    	addSequential(new DriveToPosition(-40,.35,true,45, true,true));
-    	addSequential(new DriveToPosition(-40,.35,true,90, true,true));
-    	addSequential(new DriveToPosition(20,.4,true,145, false,false));
-    	addSequential(new DriveToPosition(25,.4,true,155, false,false));
+    	addSequential(new TurnToAngle(135));
+    	addParallel(new DriveToPosition(40,.3,true,135, false,true));
+    	addSequential(new ChangeLiftSetpoint(Constants.intake, 500));
     	addSequential(new RunIntake(false));
-    	addSequential(new DriveToPosition(-30,.4,true, 120, true, true));
-    	addSequential(new DriveToPosition(-65,.4,true, 90, true, true));
-    	addSequential(new DriveToPosition(-30,.4,true, 0, true, true));
-    	addParallel(new ChangeLiftSetpoint(Constants.scaleHigh));
-    	addSequential(new DriveToPosition(15,.4,false, 0, true, false));
-    	addSequential(new RunIntake(true));
     }
 }

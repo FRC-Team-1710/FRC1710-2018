@@ -50,7 +50,7 @@ public class ChangeLiftSetpoint extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	
-        return RobotMath.isInRange(lift.getLiftEncPosition(), _setpoint, 500);
+        return RobotMath.isInRange(lift.getLiftEncPosition(), _setpoint, 500) || timeoutCount > 200;
     }
 
     // Called once after isFinished returns true

@@ -34,7 +34,7 @@ public class RunIntake extends Command {
     	count++;
     	if(count > (_waitTime/20)) {
             if(_didCubeStartInIntake == true) {
-               	Intake.intake(0, .6);
+               	Intake.intake(0, .7);
         		Vision.ledEntry.forceSetNumber(2);
                	System.out.println("outtaking " + Intake.getUltraSonic());
             }else {

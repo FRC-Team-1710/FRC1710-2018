@@ -127,7 +127,7 @@ public class DriveToPosition extends Command {
     	if(_skipIfCube) {
         	return _currentTicks >= _totalTicks || Intake.isCubeInIntake();
     	} else {
-    		return _currentTicks >= _totalTicks || _skipIfCube;
+    		return _currentTicks >= _totalTicks;
     	}
     }
 

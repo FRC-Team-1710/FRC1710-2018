@@ -81,7 +81,7 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putNumber("cube amount", 3);
 		SmartDashboard.putNumber("Starting position", 3);
-		SmartDashboard.putNumber("destination",3);
+		SmartDashboard.putNumber("destination",2);
 		AutoHandler.initAutoMap();
 	}
 
@@ -151,7 +151,7 @@ public class Robot extends IterativeRobot {
 			} else {
 				Drive.arcadeDrive(ControllerMap.getTurnPower(), ControllerMap.getForwardPower(), ControllerMap.shift());
 			}
-			Intake.intake(ControllerMap.intakeR()*2, ControllerMap.intakeL()*.6);
+			Intake.intake(ControllerMap.intakeR()*2, ControllerMap.intakeL()*.75);
 		}
 		
 		if(RobotMap.mechStick.getRawButton(2) == true) {

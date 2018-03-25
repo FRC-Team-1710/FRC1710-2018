@@ -85,11 +85,11 @@ public class Drive {
 	}
 	
 	public static void straightDriveTele (double power, double heading, boolean high) {
-
 		double currentAngle = Drive.getNavxAngle();
 		double error = (currentAngle - heading);
 		angleIntegral += error;
 		double angleDeriv = currentAngle - lastAngle;
+		
 		if(high == true) {
 			output = (error * Constants.kpStraightHi) + (angleDeriv * Constants.kdStraightHi);
 			

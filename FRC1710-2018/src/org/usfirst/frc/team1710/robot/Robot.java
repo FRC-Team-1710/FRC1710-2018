@@ -84,6 +84,7 @@ public class Robot extends IterativeRobot {
 		
         Writer writer = null;
 		try {
+			// change /home/lvuser to /media/sda1 to write to a usb stick instead of using filezilla
 			writer = Files.newBufferedWriter(Paths.get("/home/lvuser/driving_log.csv"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

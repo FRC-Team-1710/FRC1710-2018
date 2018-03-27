@@ -84,7 +84,7 @@ public class Robot extends IterativeRobot {
 		
         Writer writer = null;
 		try {
-			writer = Files.newBufferedWriter(Paths.get("driving_log.csv"));
+			writer = Files.newBufferedWriter(Paths.get("/home/lvuser/driving_log.csv"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

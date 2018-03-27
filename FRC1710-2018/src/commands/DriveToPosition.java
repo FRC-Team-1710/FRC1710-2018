@@ -63,7 +63,6 @@ public class DriveToPosition extends Command {
 
     protected void execute() { 
     	_currentTicks = (Drive.getRightPosition() + Drive.getLeftPosition())/2;
-    	_deltaPos = _currentTicks - _startingPosition;
     	_percentComplete = _currentTicks/_totalTicks;
 
     	if(_endBehavior == true) {
@@ -81,6 +80,7 @@ public class DriveToPosition extends Command {
             			_slowDownStart = Math.abs(_currentTicks);
             			_foundSlowDownStart = true;
             		} else {
+				_deltaPos = _currentTicks - _slowDownStart;
                 		_output =  ( (Math.pow(_deltaPos/(_goalDist + (_slowDownStart * 1.25)), 2) - 1) * _speed); 
             		}
             	} else {
@@ -100,6 +100,7 @@ public class DriveToPosition extends Command {
             			_slowDownStart = Math.abs(_currentTicks);
             			_foundSlowDownStart = true;
             		} else {
+			_deltaPos = _currentTicks - _slowDownStart;
                         _output =  ( (1 - Math.pow(_deltaPos/(_goalDist + (_slowDownStart * 1.25)), 2)) * _speed);
             		}
            		} else {

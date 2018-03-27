@@ -41,6 +41,8 @@ public class Constants {
 	
 	public static double kpTurn = 0.01;
 	
+	public static int ticksPerInch = 217;
+	
 	//constants for Vision
 	public static double kpAim = .03;
 	public static double kpDistance= 0.1;
@@ -76,7 +78,7 @@ public class Constants {
 	//pathfinder (dimensions in meters)
 	public static double robotDriveBaseWidth = 25;
 	public static double wheelDiameter = .1524;
-	public static int ticksPerRev = 3900;
+	public static int ticksPerRev = 4096;
 	public static double kpPath = 0.01;
 	public static double kiPath = 0;
 	public static double kdPath = 0;
@@ -97,5 +99,6 @@ public class Constants {
 	public static int ultraSonicConstant = 4;
 	public static double ultraSonic0 = 0;
 	public static double ultraSonicInIntake = 241;
+	public static double slowDownPercent = 0.675;
 	
 }

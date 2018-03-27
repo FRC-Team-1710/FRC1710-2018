@@ -17,9 +17,10 @@ public class ChangeLiftSetpoint extends Command {
 	
     public ChangeLiftSetpoint(double setpoint, double timeout) {
     	_setpoint = setpoint;
+    	//_timeout is in milliseconds
     	_timeout = timeout;
-    	
     }
+    
     public ChangeLiftSetpoint(double setpoint) {
     	_setpoint = setpoint;
     	_timeout = 0;
@@ -32,9 +33,9 @@ public class ChangeLiftSetpoint extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	System.out.println("lifting " + _setpoint);
     	timeoutCount++;
     	if (timeoutCount>(_timeout/20)) {
+    		//count is how long is spends lifting
     		count++;
     		if(_setpoint == Constants.intake) {
     			goalLiftPosition = Constants.intakeLevelName;
@@ -49,13 +50,13 @@ public class ChangeLiftSetpoint extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	
-        return RobotMath.isInRange(lift.getLiftEncPosition(), _setpoint, 500) || timeoutCount > 200;
+    	// tries to reach the setpoint until its within 500 ticks of it or it spends longer than 2 seconds trying to get there.
+    	// if it spends 2+ seconds the lift probably smashed into the scale or is stuck on the switch
+        return RobotMath.isInRange(lift.getLiftEncPosition(), _setpoint, 500) || count > 100;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	System.out.println("done lifting");
     }
 
     // Called when another command which requires one or more of the same

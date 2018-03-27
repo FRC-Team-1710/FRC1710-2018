@@ -1,11 +1,16 @@
 package org.usfirst.frc.team1710.robot;
 
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.opencsv.CSVWriter;
 
 import commandGroups.BuildPath;
 import commandGroups.LeftStartLeftScale;
@@ -37,19 +42,13 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import trajectory.trajectoryTestCGroup;
+import utility.Logger;
 import utility.RobotMath;
 
 
 public class Robot extends IterativeRobot {
-	PowerDistributionPanel pdp = new PowerDistributionPanel();
-	List<Object> thingsToPutOnDashboard = new ArrayList<Object>();
-	boolean done;
-	double pressure;
-	DashboardReport report;
 	
-	int wristTimeout;
-		
-	//public static SendableChooser startPosition, destination, cubeAmount;
+	public static Logger driveLog;		
 	public static int cubeAmount, startingPosition, destination;
 	
 	@Override
@@ -58,30 +57,10 @@ public class Robot extends IterativeRobot {
 		RobotMap.driveStick = new Joystick(0);
 		RobotMap.mechStick = new Joystick(1);
 		RobotMap.compressor = new Compressor(0);
-		RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);
-		DashboardInput.setUpDashboard();
-		/*startPosition = new SendableChooser();
-		destination= new SendableChooser();
-		cubeAmount = new SendableChooser();
 		
-		startPosition.addObject("Middle", 1);
-		startPosition.addObject("Left", 2);
-		startPosition.addObject("Right",3);
-		startPosition.setName("start position");
-		destination.addObject("switch", 1);
-		destination.addObject("Scale", 2);
-		destination.addObject("Both", 3);
-		cubeAmount.addObject("0", 0);
-		cubeAmount.addObject("1", 1);
-		cubeAmount.addObject("2", 2);
-		cubeAmount.addObject("3", 3);
-		SmartDashboard.putData("Start Position", startPosition);
-		SmartDashboard.putData("destination", destination);
-		SmartDashboard.putData("cubeAmount", cubeAmount);*/
-		
-		SmartDashboard.putNumber("cube amount", 3);
-		SmartDashboard.putNumber("Starting position", 3);
-		SmartDashboard.putNumber("destination",2);
+		SmartDashboard.putNumber("cube amount", 0);
+		SmartDashboard.putNumber("Starting position", 0);
+		SmartDashboard.putNumber("destination",0);
 		AutoHandler.initAutoMap();
 	}
 
@@ -91,10 +70,7 @@ public class Robot extends IterativeRobot {
 		RobotMap.navx.reset();
 		Vision.ledEntry.forceSetNumber(0);
 		Vision.ledEntry.forceSetNumber(1);
-		RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);
-    	RobotMap.L1.setSelectedSensorPosition(0, 0, 0);
-    	RobotMap.R1.setSelectedSensorPosition(0, 0, 0);
-    	RobotMap.wrist.setSelectedSensorPosition(0, 0, 0);
+		SubsystemManager.masterReset();
 		char switchPos = DriverStation.getInstance().getGameSpecificMessage().charAt(0);
 		char scalePos = DriverStation.getInstance().getGameSpecificMessage().charAt(1);
 		
@@ -105,8 +81,24 @@ public class Robot extends IterativeRobot {
 		CommandGroup autoMode = AutoHandler.getAuto(switchPos, scalePos, cubeAmount,
 				destination,startingPosition);
 		lift.setSetpoint(Constants.intake);
-		Intake.setWristPosition(Constants.wristDown);
-		System.out.println("auto " + autoMode);
+		
+        Writer writer = null;
+		try {
+			writer = Files.newBufferedWriter(Paths.get("driving_log.csv"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+        CSVWriter csvWriter = new CSVWriter(writer,
+                CSVWriter.DEFAULT_SEPARATOR,
+                CSVWriter.NO_QUOTE_CHARACTER,
+                CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                CSVWriter.DEFAULT_LINE_END);
+		
+        driveLog = new Logger(csvWriter, new String[] {"Command", "Time elapsed", "Starting enc pos", "End enc pos", "goal enc pos", "Exit angle",
+        												"Goal Angle", "timed out?", "ending motor output"});
+		
 		autoMode.start();
 	}
 
@@ -133,7 +125,6 @@ public class Robot extends IterativeRobot {
 		Vision.ledEntry.forceSetNumber(0);
 		Vision.ledEntry.forceSetNumber(1);
 		RobotMap.compressor.setClosedLoopControl(false);
-		wristTimeout = 0;
 	}
 	
 	@Override

@@ -11,7 +11,9 @@ import utility.RobotMath;
 
 public class lift {
 
-	public static double setPoint, outputUp, outputDown;	
+	public static double setPoint, outputUp, outputDown;
+	// during auto this will change to true when is not safe to lift
+	public static boolean safeToLift;
 	/**
 	 * give talons their id numbers
 	 */
@@ -89,7 +91,7 @@ public class lift {
 			}
 			setPoint = getLiftEncPosition();
 		} else {	
-			if(Math.abs(RobotMap.navx.getPitch()) < 15) {
+			if(Math.abs(RobotMap.navx.getPitch()) < 15 && safeToLift == true) {
 				if(outputUp > .4) {
 					RobotMap.lift1.set(ControlMode.PercentOutput, .4);
 					System.out.println("Overriding output");

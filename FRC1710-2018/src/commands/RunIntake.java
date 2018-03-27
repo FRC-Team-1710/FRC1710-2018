@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class RunIntake extends Command {
 
 	boolean _didCubeStartInIntake;
-	int count, _waitTime;
+	int count, _waitTime, sweepDir;
 	
     public RunIntake(boolean didCubeStartInIntake) {
     	_didCubeStartInIntake = didCubeStartInIntake;
@@ -39,7 +39,6 @@ public class RunIntake extends Command {
                	System.out.println("outtaking " + Intake.getUltraSonic());
             }else {
             	Intake.intake(1, 0);
-            	Drive.arcadeDrive(0, -.2, false);
                	System.out.println("intaking " + Intake.getUltraSonic());
             }
     	} else {

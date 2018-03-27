@@ -1,5 +1,4 @@
-/commandGroups/
-/commands/
-/org/
-/trajectory/
 /utility/
+/org/
+/commands/
+/commandGroups/

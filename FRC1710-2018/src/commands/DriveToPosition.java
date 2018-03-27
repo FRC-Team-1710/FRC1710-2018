@@ -3,9 +3,12 @@ package commands;
 import org.usfirst.frc.team1710.robot.Constants;
 import org.usfirst.frc.team1710.robot.Drive;
 import org.usfirst.frc.team1710.robot.Intake;
+import org.usfirst.frc.team1710.robot.Robot;
 import org.usfirst.frc.team1710.robot.RobotMap;
 import org.usfirst.frc.team1710.robot.SubsystemManager;
+import org.usfirst.frc.team1710.robot.lift;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import utility.RobotMath;
@@ -14,18 +17,32 @@ import utility.RobotMath;
 public class DriveToPosition extends Command {
 
 	int _encGoal, count;
-	boolean _isInHighGear, _endBehavior, _direction, _startReset, _needToResetStart, _foundSlowDownStart;
+	boolean _isInHighGear, _endBehavior, _direction, _startReset, _needToResetStart, _foundSlowDownStart, _hellaAccurate;
 	double _totalTicks, _currentTicks, _percentComplete, _output, _slowDownStart,
 			_speed, _deltaPos, _goalDist, _heading, _startingPosition;
     
+	Timer driveTime = new Timer();
+	
     public DriveToPosition(int encGoal, double speed, boolean isInHighGear, double heading, boolean endBehavior, boolean direction) {
     	_speed = speed;
-    	//217 encoder ticks per inch (4096 (in a rev)/18.15 (wheel C))
-    	_encGoal = encGoal * 217;
+    	//encGoal is in inches, there are 217 encoder ticks per inch (4096 (in a rev)/18.15 (wheel C))
+    	_encGoal = encGoal * Constants.ticksPerInch;
     	_isInHighGear=isInHighGear;
     	_heading = heading;
     	_endBehavior = endBehavior;
     	_direction = direction;
+    	_hellaAccurate = false;
+    }
+    
+    public DriveToPosition(int encGoal, double speed, boolean isInHighGear, double heading, boolean endBehavior, boolean direction, boolean hellaAccurate) {
+    	_speed = speed;
+    	//encGoal is in inches, there are 217 encoder ticks per inch (4096 (in a rev)/18.15 (wheel C))
+    	_encGoal = encGoal * Constants.ticksPerInch;
+    	_isInHighGear=isInHighGear;
+    	_heading = heading;
+    	_endBehavior = endBehavior;
+    	_direction = direction;
+    	_hellaAccurate = hellaAccurate;
     }
 
     protected void initialize() {
@@ -40,6 +57,7 @@ public class DriveToPosition extends Command {
     	_startingPosition = (Drive.getRightPosition() + Drive.getLeftPosition())/2;
         _totalTicks = _encGoal + _startingPosition;	
     	_goalDist = Math.abs(_encGoal);
+    	driveTime.start();
     }
 
 
@@ -56,9 +74,9 @@ public class DriveToPosition extends Command {
     		}
     	} else {
         	if(_encGoal < 0) {
-            	if(Math.abs(_percentComplete) > .675) {
-            		//TODO: Make some sort of signal that allows the lift to be manipulated when changeliftsetpoint is added in parallel w this
+            	if(Math.abs(_percentComplete) > Constants.slowDownPercent) {
             		count++;
+            		lift.safeToLift = true;
             		if(_foundSlowDownStart == false) {
             			_slowDownStart = Math.abs(_currentTicks);
             			_foundSlowDownStart = true;
@@ -66,11 +84,18 @@ public class DriveToPosition extends Command {
                 		_output =  ( (Math.pow(_deltaPos/(_goalDist + (_slowDownStart * 1.25)), 2) - 1) * _speed); 
             		}
             	} else {
+            		//if a ChangeLiftSetpoint is added in parallel with driving, this handles when the lift will run as not to tip the robot
+           			if(_speed < -.4) {
+                		lift.safeToLift = false;
+           			} else {
+                		lift.safeToLift = true;
+           			}
             		_output = -_speed;
             	}
         	} else {
-           		if(_percentComplete > .675) {
+           		if(_percentComplete > Constants.slowDownPercent) {
             		count++;
+            		lift.safeToLift = true;
             		if(_foundSlowDownStart == false) {
             			_slowDownStart = Math.abs(_currentTicks);
             			_foundSlowDownStart = true;
@@ -78,12 +103,26 @@ public class DriveToPosition extends Command {
                         _output =  ( (1 - Math.pow(_deltaPos/(_goalDist + (_slowDownStart * 1.25)), 2)) * _speed);
             		}
            		} else {
+           			if(_speed > .4) {
+                		lift.safeToLift = false;
+           			} else {
+                		lift.safeToLift = true;
+           			}
            			_output = _speed;
            		}
         	}
-        	Drive.straightDriveTele(_output, _heading, _isInHighGear);
-    	}
-    	
+        	
+        	if(_hellaAccurate) {
+        		if(!RobotMath.isInRange(Drive.getNavxAngle(), _heading, 20) || _percentComplete >= 1 && !RobotMath.isInRange(Drive.getNavxAngle(), _heading, 20)) {
+        			//turns in place until heading is close to prevent giant over corrections that eat the drive distance
+                	Drive.straightDriveTele(0 ,_heading, _isInHighGear);
+        		} else {
+                	Drive.straightDriveTele(_output, _heading, _isInHighGear);
+        		}
+        	} else {
+            	Drive.straightDriveTele(_output, _heading, _isInHighGear);
+        	}
+       	}
     }
     	
 
@@ -91,20 +130,27 @@ public class DriveToPosition extends Command {
     protected boolean isFinished() {
     	/*
     	 * heading must be within 8 degrees of the goal, if it isn't and we have met the correct distance the robot should turn
-    	 * in place and correct itself. However, if it gets stuck there for more than 2 seconds we will move on.
+    	 * in place and correct itself. However, if it gets stuck there for more than 3 seconds we will move on.
     	 */
     	
     	if(_direction) {
-        	return (_currentTicks <= _totalTicks && Math.abs(Math.abs(_heading) - Math.abs(RobotMap.navx.getAngle())) < 8) || count > 100;
+        	return (_currentTicks <= _totalTicks && RobotMath.isInRange(Drive.getNavxAngle(), _heading, 10)) || count > 150;
     	} else {
-    		return (_currentTicks >= _totalTicks && Math.abs(Math.abs(_heading) - Math.abs(RobotMap.navx.getAngle())) < 8) || count > 100;
+    		return (_currentTicks >= _totalTicks && RobotMath.isInRange(Drive.getNavxAngle(), _heading, 10)) || count > 150;
     	}
     }
 
     // Called once after isFinished returns true
     protected void end() { 
-    	System.out.println("done");
+    	driveTime.stop();
     	Drive.stopDriving();
+    	String timedOut = "naw";
+    	if(count >= 150) {
+    		timedOut = "chyea";
+    	}
+    	Robot.driveLog.addRow(new String[] {"DriveToPosition", Double.toString(driveTime.get()), Double.toString(_startingPosition),
+    										Double.toString(_currentTicks), Double.toString(_totalTicks), Double.toString(Drive.getNavxAngle()),
+    										Double.toString(_heading), timedOut, Double.toString(_output)});
     }
 
     // Called when another command which requires one or more of the same

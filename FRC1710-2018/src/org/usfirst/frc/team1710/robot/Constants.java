@@ -1,7 +1,11 @@
 package org.usfirst.frc.team1710.robot;
 
+import commandGroups.Testing;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+
 public class Constants {
 	
+	public static CommandGroup defaultAuto = new Testing();
 	
 	public static double psiPerVolts = 44.494;
 	public static double intake = 100;
@@ -99,6 +103,6 @@ public class Constants {
 	public static int ultraSonicConstant = 4;
 	public static double ultraSonic0 = 0;
 	public static double ultraSonicInIntake = 241;
-	public static double slowDownPercent = 0.675;
+	public static double slowDownPercent = 0.2;
 	
 }

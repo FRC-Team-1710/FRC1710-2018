@@ -10,7 +10,6 @@ import java.util.List;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.opencsv.CSVWriter;
 
 import commandGroups.BuildPath;
 import commandGroups.LeftStartLeftScale;
@@ -42,13 +41,11 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import trajectory.trajectoryTestCGroup;
-import utility.Logger;
 import utility.RobotMath;
 
 
 public class Robot extends IterativeRobot {
 	
-	public static Logger driveLog;		
 	public static int cubeAmount, startingPosition, destination;
 	
 	@Override
@@ -58,19 +55,25 @@ public class Robot extends IterativeRobot {
 		RobotMap.mechStick = new Joystick(1);
 		RobotMap.compressor = new Compressor(0);
 		
-		SmartDashboard.putNumber("cube amount", 0);
-		SmartDashboard.putNumber("Starting position", 0);
-		SmartDashboard.putNumber("destination",0);
+		RobotMap.navx.reset();
+		RobotMap.R1.setSelectedSensorPosition(0, 0, 0);
+		RobotMap.R2.setSelectedSensorPosition(0, 0, 0);
+		
+		SmartDashboard.putNumber("cube amount", 3);
+		SmartDashboard.putNumber("Starting position", 3);
+		SmartDashboard.putNumber("destination",2);
 		AutoHandler.initAutoMap();
 	}
 
 	@Override 
 	public void autonomousInit() {
 		AutoHandler.initAutoMap();
-		RobotMap.navx.reset();
 		Vision.ledEntry.forceSetNumber(0);
 		Vision.ledEntry.forceSetNumber(1);
 		SubsystemManager.masterReset();
+		RobotMap.navx.reset();
+		RobotMap.R1.setSelectedSensorPosition(0, 0, 0);
+		RobotMap.L1.setSelectedSensorPosition(0, 0, 0);
 		char switchPos = DriverStation.getInstance().getGameSpecificMessage().charAt(0);
 		char scalePos = DriverStation.getInstance().getGameSpecificMessage().charAt(1);
 		
@@ -90,15 +93,6 @@ public class Robot extends IterativeRobot {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-        CSVWriter csvWriter = new CSVWriter(writer,
-                CSVWriter.DEFAULT_SEPARATOR,
-                CSVWriter.NO_QUOTE_CHARACTER,
-                CSVWriter.DEFAULT_ESCAPE_CHARACTER,
-                CSVWriter.DEFAULT_LINE_END);
-		
-        driveLog = new Logger(csvWriter, new String[] {"Command", "Time elapsed", "Starting enc pos", "End enc pos", "goal enc pos", "Exit angle",
-        												"Goal Angle", "timed out?", "ending motor output"});
 		
 		autoMode.start();
 	}
@@ -106,6 +100,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousPeriodic() {
+		SmartDashboard.putNumber("Robot Heading", RobotMap.navx.getAngle());
 		lift.manipulateLift();
 		Intake.manipulateWrist();
 		SmartDashboard.putNumber("lift enc", lift.getLiftEncPosition());
@@ -132,7 +127,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		SmartDashboard.putBoolean("Is lift at bottom", lift.isAtBottom());
 		SmartDashboard.putBoolean("Is lift at top", lift.isAtTop());
-
+				
 		if(ControllerMap.visionActivated() == true) {
 			Vision.cubeTrackLeft();
 		} else {

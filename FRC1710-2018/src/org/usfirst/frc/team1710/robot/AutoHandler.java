@@ -46,6 +46,19 @@ public class AutoHandler {
 	 * cube amount, starting position, destination, switch position, scale position
 	 */
 	public static void initAutoMap() {
+		/*
+		 * TODO:
+		 * Autos to work on:
+		 *  -Two cube scales
+		 *  -Three cube scales
+		 * 	-LeftStartRightScaleRightSwitch
+		 *  -RightStartLeftScaleLeftSwitch
+		 *  -all side switch autos
+		 *  -modify one cube scale autos to place from the side and out of the way of 
+		 *   a two cube robot (the poofs hehe)
+		 *  -make a middle switch to scale auto
+		 */
+		
 		// one cube, starts middle, going to switch, switch and scale on left (scale doesn't matter)
 		autoMap.put("111LL", new MiddleToLeftSwitch());
 		autoMap.put("111LR", new MiddleToLeftSwitch());
@@ -73,9 +86,9 @@ public class AutoHandler {
 		
 		autoMap.put("233RR", new RightStartRightScaleRightSwitch());
 		autoMap.put("233LR", new RightStartRightScaleLeftSwitch());
-		autoMap.put("233LL", new Testing());
+		autoMap.put("233LL", new RightStartLeftScaleLeftSwitch());
 		autoMap.put("233RL", new RightStartRightSwitch());
-		autoMap.put("232RR", new Testing());
+		autoMap.put("232RR", new LeftStartRightScaleRightSwitch());
 		autoMap.put("232LL", new RightStartDoubleScaleLeft());
 		
 		autoMap.put("332RR", new ThreeCubeRightScale());
@@ -92,7 +105,7 @@ public class AutoHandler {
 		autoMap.put("323LL", new LeftStartDoubleLeftScaleLeftSwitch());
 		autoMap.put("323LR", new LeftStartLeftSwitch());
 		autoMap.put("323RL", new LeftStartLeftScale());
-		autoMap.put("323RR", new Testing());
+		autoMap.put("323RR", new LeftStartRightScaleRightSwitch());
 		
 		autoMap.put("222LL", new LeftStartDoubleScaleLeft());
 		autoMap.put("232RR", new LeftStartDoubleScaleRight());
@@ -117,10 +130,15 @@ public class AutoHandler {
 		key.append(destination);
 		key.append(switchPos);
 		key.append(scalePos);
-		System.out.println("key " + key);
+		
 		SmartDashboard.putString("key generated", key.toString());
 		SmartDashboard.putString("auto that ran", autoMap.get(key.toString()).getName());
-		return autoMap.get(key.toString());
+		
+		if(autoMap.containsKey(key.toString())) {
+			return autoMap.get(key.toString());
+		} else {
+			return Constants.defaultAuto;
+		}
 	}
 	
 }

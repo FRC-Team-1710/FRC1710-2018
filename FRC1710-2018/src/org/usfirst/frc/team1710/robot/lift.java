@@ -40,10 +40,10 @@ public class lift {
 		RobotMap.lift2.configPeakCurrentDuration(100, 0);
 		RobotMap.lift2.enableCurrentLimit(true);
 	}
-/**
- * tells lift what set-points to move to based on the mech-driver input
- * @return lifts location
- */
+	/**
+	 * tells lift what set-points to move to based on the mech-driver input
+	 * @return lifts location
+	 */
 	public static double getLiftSetpoint () {
 		if(ControllerMap.bottomLift() == true) {
 			setPoint = Constants.intake;
@@ -77,7 +77,6 @@ public class lift {
 	public static void manipulateLift() {
 		
 		outputUp = (-1 * (getLiftError() *  Constants.kPLiftUp));
-		//outputDown = (-1 * ((getLiftError()) *  Constants.kPLiftDown));
 				
 		//if the stick is being moved...
 		if ((ControllerMap.liftPower() > 0.2 || ControllerMap.liftPower() < -0.2) && ControllerMap.getMechTrigger() == false){
@@ -95,8 +94,8 @@ public class lift {
 				if(outputUp > .4) {
 					RobotMap.lift1.set(ControlMode.PercentOutput, .4);
 					System.out.println("Overriding output");
-				} else if(outputUp < -.8) {
-					RobotMap.lift1.set(ControlMode.PercentOutput, -.8);
+				} else if(outputUp < -.9) {
+					RobotMap.lift1.set(ControlMode.PercentOutput, -.9);
 					System.out.println("Overriding output");
 				} else {
 					RobotMap.lift1.set(ControlMode.PercentOutput, outputUp);

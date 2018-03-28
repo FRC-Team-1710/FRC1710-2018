@@ -9,19 +9,19 @@ public class ControllerMap {
 	}
 	//buttons 
 	public static boolean bottomLift() {
-		return RobotMap.mechStick.getRawButton(7);
+		return RobotMap.mechStick.getRawButton(7) || RobotMap.driveStick.getRawButton(1);
 	}
 	public static boolean liftAtSwitchHeight() {
-		return RobotMap.mechStick.getRawButton(8);
+		return RobotMap.mechStick.getRawButton(8) || RobotMap.driveStick.getRawButton(2);
 	}
 	public static boolean liftAtScaleLow() {
 		return RobotMap.mechStick.getRawButton(9);
 	}
 	public static boolean liftAtScaleNormal() {
-		return RobotMap.mechStick.getRawButton(10);
+		return RobotMap.mechStick.getRawButton(10) || RobotMap.driveStick.getRawButton(3);
 	}
 	public static boolean liftAtScaleHigh() {
-		return RobotMap.mechStick.getRawButton(11);
+		return RobotMap.mechStick.getRawButton(11) || RobotMap.driveStick.getRawButton(4);
 	}
 	public static boolean getMechTrigger() {
 		return RobotMap.mechStick.getRawButton(1);
@@ -43,7 +43,7 @@ public class ControllerMap {
 	}
 
 	public static boolean shift() {
-		return RobotMap.driveStick.getRawButton(5);
+		return RobotMap.driveStick.getRawButton(9);
 	}
 	public static boolean visionActivated() {
 		return  RobotMap.driveStick.getRawButton(1);
@@ -60,7 +60,15 @@ public class ControllerMap {
 		return RobotMap.driveStick.getRawAxis(1);
 	}
 	public static double liftPower() {
-		return RobotMap.mechStick.getRawAxis(1);
+		if(Math.abs(RobotMap.mechStick.getRawAxis(1)) >= 0.2) {
+			return RobotMap.mechStick.getRawAxis(1); 
+		}else if(RobotMap.driveStick.getRawButton(6) == true) {
+			return .5;
+		}else if(RobotMap.driveStick.getRawButton(5) == true) {
+			return -.5;
+		}else {
+			return 0;
+		}
 	}
 	public static double wristPower() {
 		return RobotMap.mechStick.getRawAxis(1);

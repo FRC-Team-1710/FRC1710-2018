@@ -17,7 +17,8 @@ import utility.RobotMath;
 public class DriveToPosition extends Command {
 
 	int _encGoal, count;
-	boolean _isInHighGear, _endBehavior, _direction, _startReset, _needToResetStart, _foundSlowDownStart, _hellaAccurate;
+	boolean _isInHighGear, _endBehavior, _direction, _startReset, _shouldFixHeading,
+			_newStart, _needToResetStart, _foundSlowDownStart, _hellaAccurate, _fixingHeading;
 	double _totalTicks, _currentTicks, _percentComplete, _output, _slowDownStart,
 			_speed, _deltaPos, _goalDist, _heading, _startingPosition;
     
@@ -55,7 +56,13 @@ public class DriveToPosition extends Command {
 
     	count = 0;
     	_startingPosition = (Drive.getRightPosition() + Drive.getLeftPosition())/2;
-        _totalTicks = _encGoal + _startingPosition;	
+    	if(!RobotMath.isInRange(Drive.getNavxAngle(), _heading, 20)) {
+    		_shouldFixHeading = true;
+            _totalTicks = _encGoal + _startingPosition;	
+    	} else {
+    		_shouldFixHeading = false;
+            _totalTicks = _encGoal + _startingPosition;	
+    	}
     	_goalDist = Math.abs(_encGoal);
     	driveTime.start();
     }
@@ -80,8 +87,8 @@ public class DriveToPosition extends Command {
             			_slowDownStart = Math.abs(_currentTicks);
             			_foundSlowDownStart = true;
             		} else {
-				_deltaPos = _currentTicks - _slowDownStart;
-                		_output =  ( (Math.pow(_deltaPos/(_goalDist + (_slowDownStart * 1.25)), 2) - 1) * _speed); 
+            			_deltaPos = _currentTicks - _slowDownStart;
+                		_output =  ( (Math.pow(_deltaPos/(_goalDist + Math.abs(_slowDownStart)), 2) - 1) * _speed); 
             		}
             	} else {
             		//if a ChangeLiftSetpoint is added in parallel with driving, this handles when the lift will run as not to tip the robot
@@ -100,8 +107,8 @@ public class DriveToPosition extends Command {
             			_slowDownStart = Math.abs(_currentTicks);
             			_foundSlowDownStart = true;
             		} else {
-			_deltaPos = _currentTicks - _slowDownStart;
-                        _output =  ( (1 - Math.pow(_deltaPos/(_goalDist + (_slowDownStart * 1.25)), 2)) * _speed);
+            			_deltaPos = _currentTicks - _slowDownStart;
+                        _output =  ( (1 - Math.pow(_deltaPos/(_goalDist + Math.abs(_slowDownStart)), 2)) * _speed);
             		}
            		} else {
            			if(_speed > .4) {
@@ -112,15 +119,24 @@ public class DriveToPosition extends Command {
            			_output = _speed;
            		}
         	}
-        	
-        	if(_hellaAccurate) {
-        		if(!RobotMath.isInRange(Drive.getNavxAngle(), _heading, 20) || _percentComplete >= 1 && !RobotMath.isInRange(Drive.getNavxAngle(), _heading, 20)) {
+        	        	
+        	if(_hellaAccurate == true) {
+        		if(!RobotMath.isInRange(Drive.getNavxAngle(), _heading, 20)) {
         			//turns in place until heading is close to prevent giant over corrections that eat the drive distance
                 	Drive.straightDriveTele(0 ,_heading, _isInHighGear);
+                	_fixingHeading = true;
         		} else {
-                	Drive.straightDriveTele(_output, _heading, _isInHighGear);
+        			if(!_newStart && _shouldFixHeading) {
+        		    	_startingPosition = (Drive.getRightPosition() + Drive.getLeftPosition())/2;
+        	            _totalTicks = _encGoal + _startingPosition;	
+        	            _newStart = true;
+        			} else {
+                    	_fixingHeading = false;
+                    	Drive.straightDriveTele(_output, _heading, _isInHighGear);
+        			}
         		}
         	} else {
+            	_fixingHeading = false;
             	Drive.straightDriveTele(_output, _heading, _isInHighGear);
         	}
        	}
@@ -134,24 +150,20 @@ public class DriveToPosition extends Command {
     	 * in place and correct itself. However, if it gets stuck there for more than 3 seconds we will move on.
     	 */
     	
-    	if(_direction) {
-        	return (_currentTicks <= _totalTicks && RobotMath.isInRange(Drive.getNavxAngle(), _heading, 10)) || count > 150;
+    	if(_direction == true) {
+        	return _currentTicks <= _totalTicks && RobotMath.isInRange(Drive.getNavxAngle(), _heading, 10) && !_fixingHeading;
     	} else {
-    		return (_currentTicks >= _totalTicks && RobotMath.isInRange(Drive.getNavxAngle(), _heading, 10)) || count > 150;
+    		return _currentTicks >= _totalTicks && RobotMath.isInRange(Drive.getNavxAngle(), _heading, 10) && !_fixingHeading;
     	}
     }
 
     // Called once after isFinished returns true
     protected void end() { 
+    	System.out.println(_currentTicks >= _totalTicks && RobotMath.isInRange(Drive.getNavxAngle(), _heading, 10) && !_fixingHeading);
     	driveTime.stop();
+		System.out.println("Goal pos: " + _totalTicks);
+		System.out.println("End pos: " + _currentTicks);
     	Drive.stopDriving();
-    	String timedOut = "naw";
-    	if(count >= 150) {
-    		timedOut = "chyea";
-    	}
-    	Robot.driveLog.addRow(new String[] {"DriveToPosition", Double.toString(driveTime.get()), Double.toString(_startingPosition),
-    										Double.toString(_currentTicks), Double.toString(_totalTicks), Double.toString(Drive.getNavxAngle()),
-    										Double.toString(_heading), timedOut, Double.toString(_output)});
     }
 
     // Called when another command which requires one or more of the same

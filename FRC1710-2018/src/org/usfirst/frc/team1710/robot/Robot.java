@@ -111,6 +111,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
+		lift.safeToLift = true;
 		lift.setSetpoint(Constants.intake);
 		RobotMap.wrist.setSelectedSensorPosition(0, 0, 0);
 		RobotMap.R1.setSelectedSensorPosition(0, 0, 0);
@@ -153,10 +154,6 @@ public class Robot extends IterativeRobot {
 			RobotMap.climber.set(RobotMap.mechStick.getRawAxis(0));
 		} else {
 			RobotMap.climber.set(0);
-		}
-		
-		if(RobotMap.driveStick.getRawButton(3) == true) {
-			RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);
 		}
 		
 		lift.manipulateLift();

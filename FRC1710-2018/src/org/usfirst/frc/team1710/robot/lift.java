@@ -90,16 +90,18 @@ public class lift {
 			}
 			setPoint = getLiftEncPosition();
 		} else {	
-			if(Math.abs(RobotMap.navx.getPitch()) < 15 && safeToLift == true) {
-				if(outputUp > .4) {
+			if(Math.abs(RobotMap.navx.getPitch()) < 15) {
+				if(outputUp > .4 && safeToLift == true) {
 					RobotMap.lift1.set(ControlMode.PercentOutput, .4);
 					System.out.println("Overriding output");
-				} else if(outputUp < -.9) {
+				} else if(outputUp < -.9 && safeToLift == true) {
 					RobotMap.lift1.set(ControlMode.PercentOutput, -.9);
 					System.out.println("Overriding output");
-				} else {
+				} else if(safeToLift == true){
 					RobotMap.lift1.set(ControlMode.PercentOutput, outputUp);
-				}	
+				} else {
+					System.out.println("Waiting for bot to slow down before I get crazy");
+				}
 			} else {
 				setPoint = Constants.intake;
 			}

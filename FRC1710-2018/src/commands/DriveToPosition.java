@@ -82,7 +82,6 @@ public class DriveToPosition extends Command {
         	if(_encGoal < 0) {
             	if(Math.abs(_percentComplete) > Constants.slowDownPercent) {
             		count++;
-            		lift.safeToLift = true;
             		if(_foundSlowDownStart == false) {
             			_slowDownStart = Math.abs(_currentTicks);
             			_foundSlowDownStart = true;
@@ -91,18 +90,16 @@ public class DriveToPosition extends Command {
                 		_output =  ( (Math.pow(_deltaPos/(_goalDist + Math.abs(_slowDownStart)), 2) - 1) * _speed); 
             		}
             	} else {
-            		//if a ChangeLiftSetpoint is added in parallel with driving, this handles when the lift will run as not to tip the robot
-           			if(_speed < -.4) {
-                		lift.safeToLift = false;
-           			} else {
-                		lift.safeToLift = true;
-           			}
             		_output = -_speed;
             	}
+       			if(_output < -.4) {
+            		lift.safeToLift = false;
+       			} else {
+            		lift.safeToLift = true;
+       			}
         	} else {
            		if(_percentComplete > Constants.slowDownPercent) {
             		count++;
-            		lift.safeToLift = true;
             		if(_foundSlowDownStart == false) {
             			_slowDownStart = Math.abs(_currentTicks);
             			_foundSlowDownStart = true;
@@ -111,13 +108,14 @@ public class DriveToPosition extends Command {
                         _output =  ( (1 - Math.pow(_deltaPos/(_goalDist + Math.abs(_slowDownStart)), 2)) * _speed);
             		}
            		} else {
-           			if(_speed > .4) {
-                		lift.safeToLift = false;
-           			} else {
-                		lift.safeToLift = true;
-           			}
+
            			_output = _speed;
            		}
+       			if(_output > .4) {
+            		lift.safeToLift = false;
+       			} else {
+            		lift.safeToLift = true;
+       			}
         	}
         	        	
         	if(_hellaAccurate == true) {
@@ -161,6 +159,7 @@ public class DriveToPosition extends Command {
     protected void end() { 
     	System.out.println(_currentTicks >= _totalTicks && RobotMath.isInRange(Drive.getNavxAngle(), _heading, 10) && !_fixingHeading);
     	driveTime.stop();
+		lift.safeToLift = true;
 		System.out.println("Goal pos: " + _totalTicks);
 		System.out.println("End pos: " + _currentTicks);
     	Drive.stopDriving();

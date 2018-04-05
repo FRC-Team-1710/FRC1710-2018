@@ -10,10 +10,17 @@ import edu.wpi.first.wpilibj.command.Command;
 public class TurnToAngle extends Command {
 	
 	double _angle;
+	boolean _slow;
 	int count;
 	
     public TurnToAngle(double angle) {
     	_angle = angle;
+    	_slow = false;
+    }
+    
+    public TurnToAngle(double angle, boolean slow) {
+    	_angle = angle;
+    	_slow = slow;
     }
 
     // Called just before this Command runs the first time
@@ -23,12 +30,17 @@ public class TurnToAngle extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Drive.setRobotHeading(_angle);
+    	if(_slow) {
+    		Drive.setShifters(false);
+        	Drive.straightDriveTele(0 , _angle, false);
+    	} else {
+        	Drive.straightDriveTele(0 , _angle, true);
+    	}
     	count++;
     }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return (RobotMap.navx.getAngle() < _angle + Constants.rotateToAngleHiEnd && RobotMap.navx.getAngle() > _angle - Constants.rotateToAngleLoEnd) || count > 50;
+    	return Math.abs(Math.abs(Drive.getNavxAngle()) - Math.abs(_angle)) < 5;
     }
 
     // Called once after isFinished returns true

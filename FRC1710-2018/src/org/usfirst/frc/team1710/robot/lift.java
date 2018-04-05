@@ -91,11 +91,11 @@ public class lift {
 			setPoint = getLiftEncPosition();
 		} else {	
 			if(Math.abs(RobotMap.navx.getPitch()) < 15) {
-				if(outputUp > .4 && safeToLift == true) {
-					RobotMap.lift1.set(ControlMode.PercentOutput, .4);
+				if(outputUp > .6 && safeToLift == true) {
+					RobotMap.lift1.set(ControlMode.PercentOutput, .6);
 					System.out.println("Overriding output");
-				} else if(outputUp < -.9 && safeToLift == true) {
-					RobotMap.lift1.set(ControlMode.PercentOutput, -.9);
+				} else if(outputUp < -.95 && safeToLift == true) {
+					RobotMap.lift1.set(ControlMode.PercentOutput, -.95);
 					System.out.println("Overriding output");
 				} else if(safeToLift == true){
 					RobotMap.lift1.set(ControlMode.PercentOutput, outputUp);

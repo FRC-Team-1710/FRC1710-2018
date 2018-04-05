@@ -35,6 +35,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -48,6 +49,8 @@ public class Robot extends IterativeRobot {
 	
 	public static int cubeAmount, startingPosition, destination;
 	
+	public static Timer autoTime;
+	
 	@Override
 	public void robotInit() {
 		SubsystemManager.masterinitialization();
@@ -59,10 +62,11 @@ public class Robot extends IterativeRobot {
 		RobotMap.R1.setSelectedSensorPosition(0, 0, 0);
 		RobotMap.R2.setSelectedSensorPosition(0, 0, 0);
 		
-		SmartDashboard.putNumber("cube amount", 3);
+		SmartDashboard.putNumber("cube amount", 2);
 		SmartDashboard.putNumber("Starting position", 3);
-		SmartDashboard.putNumber("destination",2);
+		SmartDashboard.putNumber("destination",3);
 		AutoHandler.initAutoMap();
+		autoTime = new Timer();
 	}
 
 	@Override 
@@ -71,7 +75,6 @@ public class Robot extends IterativeRobot {
 		Vision.ledEntry.forceSetNumber(0);
 		Vision.ledEntry.forceSetNumber(1);
 		SubsystemManager.masterReset();
-		RobotMap.navx.reset();
 		RobotMap.R1.setSelectedSensorPosition(0, 0, 0);
 		RobotMap.L1.setSelectedSensorPosition(0, 0, 0);
 		char switchPos = DriverStation.getInstance().getGameSpecificMessage().charAt(0);
@@ -84,16 +87,7 @@ public class Robot extends IterativeRobot {
 		CommandGroup autoMode = AutoHandler.getAuto(switchPos, scalePos, cubeAmount,
 				destination,startingPosition);
 		lift.setSetpoint(Constants.intake);
-		
-        Writer writer = null;
-		try {
-			// change /home/lvuser to /media/sda1 to write to a usb stick instead of using filezilla
-			writer = Files.newBufferedWriter(Paths.get("/home/lvuser/driving_log.csv"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		autoTime.start();
 		autoMode.start();
 	}
 
@@ -103,7 +97,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Robot Heading", RobotMap.navx.getAngle());
 		lift.manipulateLift();
 		Intake.manipulateWrist();
-		SmartDashboard.putNumber("lift enc", lift.getLiftEncPosition());
 		RobotMap.wrist.setSelectedSensorPosition(0, 0, 0);
 		Scheduler.getInstance().run();
 		RobotMap.compressor.setClosedLoopControl(false);
@@ -112,7 +105,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		lift.safeToLift = true;
-		lift.setSetpoint(Constants.intake);
 		RobotMap.wrist.setSelectedSensorPosition(0, 0, 0);
 		RobotMap.R1.setSelectedSensorPosition(0, 0, 0);
 		RobotMap.L1.setSelectedSensorPosition(0, 0, 0);
@@ -162,6 +154,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Drive", Drive.getRightPosition());
 		SmartDashboard.putBoolean("Is cube in", Intake.isCubeInIntake());
 		SmartDashboard.putNumber("Intake Ultrasonic", Intake.getUltraSonic());
+		SmartDashboard.putNumber("Lift Enc", lift.getLiftEncPosition());
 		
 		if(lift.isAtBottom() == true) {
 			RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);
@@ -175,9 +168,7 @@ public class Robot extends IterativeRobot {
 	
 	@Override
 	public void disabledInit() {
-		lift.setSetpoint(Constants.intake);
 		Vision.ledEntry.forceSetNumber(1);
-		RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);
 	}
 	
 	@Override

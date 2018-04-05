@@ -17,6 +17,7 @@ import commandGroups.LeftStartLeftSwitch;
 import commandGroups.LeftStartRightScaleRightSwitch;
 import commandGroups.LeftStartRightSwitch;
 import commandGroups.MiddleToLeftSwitch;
+import commandGroups.MiddleToLeftSwitchRightScale;
 import commandGroups.MiddleToRightSwitch;
 import commandGroups.RightStartDoubleScale;
 import commandGroups.RightStartDoubleScaleLeft;
@@ -46,19 +47,9 @@ public class AutoHandler {
 	 * cube amount, starting position, destination, switch position, scale position
 	 */
 	public static void initAutoMap() {
-		/*
-		 * TODO:
-		 * Autos to work on:
-		 *  -Two cube scales
-		 *  -Three cube scales
-		 * 	-LeftStartRightScaleRightSwitch
-		 *  -RightStartLeftScaleLeftSwitch
-		 *  -all side switch autos
-		 *  -modify one cube scale autos to place from the side and out of the way of 
-		 *   a two cube robot (the poofs hehe)
-		 *  -make a middle switch to scale auto
-		 */
-		
+		//TODO: Get rid of the waits before comp!!! test all autos again when intake is back on
+		autoMap.put("213LR", new MiddleToLeftSwitchRightScale());
+
 		// one cube, starts middle, going to switch, switch and scale on left (scale doesn't matter)
 		autoMap.put("111LL", new MiddleToLeftSwitch());
 		autoMap.put("111LR", new MiddleToLeftSwitch());
@@ -87,7 +78,8 @@ public class AutoHandler {
 		autoMap.put("233RR", new RightStartRightScaleRightSwitch());
 		autoMap.put("233LR", new RightStartRightScaleLeftSwitch());
 		autoMap.put("233LL", new RightStartLeftScaleLeftSwitch());
-		autoMap.put("233RL", new RightStartRightSwitch());
+		autoMap.put("233RL", new RightStartRightSwitchLeftScale());
+		
 		autoMap.put("232RR", new LeftStartRightScaleRightSwitch());
 		autoMap.put("232LL", new RightStartDoubleScaleLeft());
 		
@@ -131,10 +123,9 @@ public class AutoHandler {
 		key.append(switchPos);
 		key.append(scalePos);
 		
-		SmartDashboard.putString("key generated", key.toString());
-		SmartDashboard.putString("auto that ran", autoMap.get(key.toString()).getName());
-		
 		if(autoMap.containsKey(key.toString())) {
+			SmartDashboard.putString("key generated", key.toString());
+			SmartDashboard.putString("auto that ran", autoMap.get(key.toString()).getName());
 			return autoMap.get(key.toString());
 		} else {
 			return Constants.defaultAuto;

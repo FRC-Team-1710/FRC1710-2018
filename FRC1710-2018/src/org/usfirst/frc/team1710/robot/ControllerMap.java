@@ -62,9 +62,9 @@ public class ControllerMap {
 	public static double liftPower() {
 		if(Math.abs(RobotMap.mechStick.getRawAxis(1)) >= 0.2) {
 			return RobotMap.mechStick.getRawAxis(1); 
-		}else if(RobotMap.driveStick.getRawButton(6) == true) {
-			return .5;
 		}else if(RobotMap.driveStick.getRawButton(5) == true) {
+			return .5;
+		}else if(RobotMap.driveStick.getRawButton(6) == true) {
 			return -.5;
 		}else {
 			return 0;

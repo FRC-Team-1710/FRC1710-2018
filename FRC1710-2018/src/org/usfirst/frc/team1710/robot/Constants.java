@@ -8,7 +8,7 @@ public class Constants {
 	public static CommandGroup defaultAuto = new Testing();
 	
 	public static double psiPerVolts = 44.494;
-	public static double intake = 100;
+	public static double intake = 200;
 	public static double aboveBump = 1000;
 	public static double switchPosition = 3500;
 	public static double scaleLow= 4500;
@@ -33,7 +33,7 @@ public class Constants {
 	
 	//constants for drive
 	//.013
-	public static double kpStraight = .015;
+	public static double kpStraight = .01;
 	public static double kiStraight = .001;
 	public static double kdStraight = .00075;
 	
@@ -97,12 +97,12 @@ public class Constants {
 	public static double maxAccelHi = 3;
 	
 	//rotate to angle
-	public static double rotateToAngleHiEnd = 10;
-	public static double rotateToAngleLoEnd = 10;
+	public static double rotateToAngleHiEnd = 7;
+	public static double rotateToAngleLoEnd = 7;
 	
 	public static int ultraSonicConstant = 4;
 	public static double ultraSonic0 = 0;
 	public static double ultraSonicInIntake = 241;
-	public static double slowDownPercent = 0.2;
+	public static double slowDownPercent = 0.1;
 	
 }

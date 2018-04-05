@@ -2,12 +2,14 @@ package commandGroups;
 
 import org.usfirst.frc.team1710.robot.Constants;
 
+import commands.AutoTimer;
 import commands.ChangeLiftSetpoint;
 import commands.DriveToPosition;
 import commands.PitchIntake;
 import commands.RunIntake;
 import commands.TrackCube;
 import commands.TurnToAngle;
+import commands.Wait;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -17,23 +19,32 @@ public class ThreeCubeRightScale extends CommandGroup {
 
     public ThreeCubeRightScale() {
     	//addParallel(new PitchIntake(false));
-    	addSequential(new DriveToPosition(240, .75, true,3,false,false));
-    	addSequential(new DriveToPosition(35,.35,true,-40, true,false));
-    	//addSequential(new ChangeLiftSetpoint(Constants.scaleHigh));
-    	//addSequential(new RunIntake(true));
-    	//addParallel(new ChangeLiftSetpoint(Constants.intake));
-    	addSequential(new DriveToPosition(-10,.3,true,-40, true,true));
-    	addSequential(new DriveToPosition(-30,.5,true,0, true,true, true));
-    	addSequential(new DriveToPosition(-20,.5,true,50, true,true));
-    	addSequential(new DriveToPosition(-80,.5,true,90, true,true, true));
-    	addSequential(new DriveToPosition(-10,.5,true,120, false,true, true));
-    	//addSequential(new RunIntake(false));
-    	/*addSequential(new ChangeLiftSetpoint(Constants.intake));
-    	addSequential(new DriveToPosition(-40,.4,true, -120, false, true));
-    	addSequential(new DriveToPosition(-65,.4,true, -90, false, true));
-    	addSequential(new DriveToPosition(-30,.4,true, 0, false, true));
     	addParallel(new ChangeLiftSetpoint(Constants.scaleHigh));
-    	addSequential(new DriveToPosition(15,.4,false, 0, true, false));
-    	addSequential(new RunIntake(true));*/
+    	addSequential(new DriveToPosition(260, .75, true,0,false,false));
+    	addSequential(new TurnToAngle(-40));
+    	addSequential(new Wait(500));
+    	//addSequential(new RunIntake(true));
+    	addParallel(new ChangeLiftSetpoint(Constants.intake, 200));
+    	addSequential(new TurnToAngle(-150));
+    	addSequential(new DriveToPosition(60,.4,true,-150, false,false,true));
+    	//addSequential(new RunIntake(false));
+    	addSequential(new Wait(500));
+    	addParallel(new ChangeLiftSetpoint(Constants.scaleHigh));
+    	addSequential(new DriveToPosition(-60,.4,true,-150, false,true));
+    	addSequential(new TurnToAngle(-60));
+    	addSequential(new Wait(500));
+    	//addSequential(new RunIntake(true));
+    	addSequential(new DriveToPosition(-10,.4,true,-60, false,true));
+    	addParallel(new ChangeLiftSetpoint(Constants.intake, 200));
+    	addSequential(new TurnToAngle(-125));
+    	addSequential(new DriveToPosition(90,.6,true,-125, false,false,true));
+    	addSequential(new Wait(500));
+    	//addSequential(new RunIntake(false));
+    	addSequential(new DriveToPosition(-50,.6,true,-135, false,true));
+    	addParallel(new ChangeLiftSetpoint(Constants.scaleHigh));
+    	addSequential(new TurnToAngle(-90));
+    	//addSequential(new RunIntake(true));
+    	addSequential(new AutoTimer());
     }
+    
 }

@@ -16,12 +16,10 @@ public class RightStartLeftSwitch extends CommandGroup {
 
     public RightStartLeftSwitch() {
     	addParallel(new PitchIntake(false));
-    	addSequential(new DriveToPosition(170,.75,true,0,false,false));
-    	addParallel(new ChangeLiftSetpoint(Constants.aboveBump));
-    	addSequential(new DriveToPosition(240,.8,true,-83,false,false));
+    	addSequential(new DriveToPosition(185,.75,true,0,false,false));
+    	addSequential(new DriveToPosition(210,.75,true,-90,false,false,true));
     	addParallel(new ChangeLiftSetpoint(Constants.switchPosition));
-    	addSequential(new TurnToAngle(-170));
-    	addSequential(new DriveToPosition (50,.8,false,-200,true,false));
+    	addSequential(new DriveToPosition (55,.4,true,-225,true,false,true));
     	addSequential(new RunIntake(true));
     }
 }

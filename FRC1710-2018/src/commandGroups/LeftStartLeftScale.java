@@ -16,9 +16,9 @@ public class LeftStartLeftScale extends CommandGroup {
 
     public LeftStartLeftScale() {
     	addParallel(new PitchIntake(false));
-    	addSequential(new DriveToPosition(200, .75, true,0,false,false));
-    	addParallel(new DriveToPosition(30,.35,true,20, true,false));
-    	addSequential(new ChangeLiftSetpoint(Constants.scaleHigh));
+    	addParallel(new ChangeLiftSetpoint(Constants.scaleHigh));
+    	addSequential(new DriveToPosition(290, .75, true,0,false,false));
+    	addSequential(new DriveToPosition(5, .3, true,90,false,false,true));
     	addSequential(new RunIntake(true));
     }
 }

@@ -71,6 +71,7 @@ public class Robot extends IterativeRobot {
 
 	@Override 
 	public void autonomousInit() {
+		Constants.inAuto = true;
 		AutoHandler.initAutoMap();
 		Vision.ledEntry.forceSetNumber(0);
 		Vision.ledEntry.forceSetNumber(1);
@@ -86,7 +87,6 @@ public class Robot extends IterativeRobot {
 		
 		CommandGroup autoMode = AutoHandler.getAuto(switchPos, scalePos, cubeAmount,
 				destination,startingPosition);
-		lift.setSetpoint(Constants.intake);
 		autoTime.start();
 		autoMode.start();
 	}
@@ -104,6 +104,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
+		Constants.inAuto = false;
 		lift.safeToLift = true;
 		RobotMap.wrist.setSelectedSensorPosition(0, 0, 0);
 		RobotMap.R1.setSelectedSensorPosition(0, 0, 0);
@@ -118,6 +119,7 @@ public class Robot extends IterativeRobot {
 	
 	@Override
 	public void teleopPeriodic() {
+		lift.safeToLift = true;
 		SmartDashboard.putBoolean("Is lift at bottom", lift.isAtBottom());
 		SmartDashboard.putBoolean("Is lift at top", lift.isAtTop());
 				

@@ -5,11 +5,15 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class Constants {
 	
+	public static boolean inAuto = true;
+	//idk, run robot in auto at 60% output and look at the velocity
+	public static double liftingNotSafeVelocity = 10000;
+	
 	public static CommandGroup defaultAuto = new Testing();
 	
 	public static double psiPerVolts = 44.494;
-	public static double intake = 200;
-	public static double aboveBump = 1000;
+	public static double intake = 100;
+	public static double aboveBump = 1500;
 	public static double switchPosition = 3500;
 	public static double scaleLow= 4500;
 	public static double scaleNormal = 6500;
@@ -24,7 +28,10 @@ public class Constants {
 	//getting too violent
 	//kpUp - comp: .0004`
 	//kpDown - comp : .00008
-	public static double kPLiftUp = 0.00075;
+	public static double kPLift = 0.001;
+	public static double kDLift = 0.0;	
+	public static double kILift = 0.0000001;
+
 	//.000215
 	public static double kPLiftDown = 0.000215;
 	
@@ -102,7 +109,7 @@ public class Constants {
 	
 	public static int ultraSonicConstant = 4;
 	public static double ultraSonic0 = 0;
-	public static double ultraSonicInIntake = 241;
+	public static double ultraSonicInIntake = 239;
 	public static double slowDownPercent = 0.1;
 	
 }

@@ -39,6 +39,7 @@ public class RunIntake extends Command {
                	System.out.println("outtaking " + Intake.getUltraSonic());
             }else {
             	Intake.intake(1, 0);
+            	Drive.arcadeDrive(0, -.3, false);
                	System.out.println("intaking " + Intake.getUltraSonic());
             }
     	} else {

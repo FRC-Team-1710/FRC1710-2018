@@ -87,16 +87,11 @@ public class DriveToPosition extends Command {
             			_foundSlowDownStart = true;
             		} else {
             			_deltaPos = _currentTicks - _slowDownStart;
-                		_output =  ( (Math.pow(_deltaPos/(_goalDist + Math.abs(_slowDownStart)), 2) - 1) * _speed); 
+                		_output =  ((Math.pow(_deltaPos/(_goalDist + Math.abs(_slowDownStart)), 2) - 1) * _speed); 
             		}
             	} else {
             		_output = -_speed;
             	}
-       			if(_output < -.4) {
-            		lift.safeToLift = false;
-       			} else {
-            		lift.safeToLift = true;
-       			}
         	} else {
            		if(_percentComplete > Constants.slowDownPercent) {
             		count++;
@@ -111,11 +106,6 @@ public class DriveToPosition extends Command {
 
            			_output = _speed;
            		}
-       			if(_output > .4) {
-            		lift.safeToLift = false;
-       			} else {
-            		lift.safeToLift = true;
-       			}
         	}
         	        	
         	if(_hellaAccurate == true) {
@@ -126,7 +116,7 @@ public class DriveToPosition extends Command {
         		} else {
         			if(!_newStart && _shouldFixHeading) {
         		    	_startingPosition = (Drive.getRightPosition() + Drive.getLeftPosition())/2;
-        	            _totalTicks = _encGoal + _startingPosition;	
+        	            _totalTicks = _encGoal + _startingPosition;
         	            _newStart = true;
         			} else {
                     	_fixingHeading = false;
@@ -149,9 +139,9 @@ public class DriveToPosition extends Command {
     	 */
     	
     	if(_direction == true) {
-        	return _currentTicks <= _totalTicks && RobotMath.isInRange(Drive.getNavxAngle(), _heading, 10) && !_fixingHeading;
+        	return (_currentTicks <= _totalTicks && RobotMath.isInRange(Drive.getNavxAngle(), _heading, 10) && !_fixingHeading);
     	} else {
-    		return _currentTicks >= _totalTicks && RobotMath.isInRange(Drive.getNavxAngle(), _heading, 10) && !_fixingHeading;
+    		return (_currentTicks >= _totalTicks && RobotMath.isInRange(Drive.getNavxAngle(), _heading, 10) && !_fixingHeading);
     	}
     }
 
@@ -160,6 +150,7 @@ public class DriveToPosition extends Command {
     	System.out.println(_currentTicks >= _totalTicks && RobotMath.isInRange(Drive.getNavxAngle(), _heading, 10) && !_fixingHeading);
     	driveTime.stop();
 		lift.safeToLift = true;
+		System.out.println("Start pos: " + _startingPosition);
 		System.out.println("Goal pos: " + _totalTicks);
 		System.out.println("End pos: " + _currentTicks);
     	Drive.stopDriving();

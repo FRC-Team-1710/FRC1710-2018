@@ -11,7 +11,7 @@ import utility.RobotMath;
 
 public class lift {
 
-	public static double setPoint, outputUp, outputDown;
+	public static double setPoint, output, currentPos, lastPos, posIntegral;
 	// during auto this will change to true when is not safe to lift
 	public static boolean safeToLift;
 	/**
@@ -64,7 +64,7 @@ public class lift {
 	 */
 	public static double getLiftOutput() {
 		if(getMovementDirection() == "moving up") {
-			return (-1 * ((getLiftError()) *  Constants.kPLiftUp));
+			return (-1 * ((getLiftError()) *  Constants.kPLift));
 		} else {
 			return (-1 * ((getLiftError()) *  Constants.kPLiftDown));
 		}
@@ -75,9 +75,11 @@ public class lift {
 	 * Prevents the lift from slamming into the top or bottom
 	 */
 	public static void manipulateLift() {
-		
-		outputUp = (-1 * (getLiftError() *  Constants.kPLiftUp));
-				
+		//TODO: instead of changing safeToLift based on % output in DriveToPosition, change it in here based on robot velocity... only in auto
+		double angleDeriv = currentPos - lastPos;
+		currentPos = getLiftEncPosition();
+		posIntegral += getLiftError();
+		output = (-1 * ((getLiftError() * Constants.kPLift) + (angleDeriv * Constants.kDLift) + (posIntegral * Constants.kILift)));
 		//if the stick is being moved...
 		if ((ControllerMap.liftPower() > 0.2 || ControllerMap.liftPower() < -0.2) && ControllerMap.getMechTrigger() == false){
 			//if the stick is being moved down and the lift isn't near the bottom
@@ -90,23 +92,29 @@ public class lift {
 			}
 			setPoint = getLiftEncPosition();
 		} else {	
-			if(Math.abs(RobotMap.navx.getPitch()) < 15) {
-				if(outputUp > .6 && safeToLift == true) {
-					RobotMap.lift1.set(ControlMode.PercentOutput, .6);
-					System.out.println("Overriding output");
-				} else if(outputUp < -.95 && safeToLift == true) {
-					RobotMap.lift1.set(ControlMode.PercentOutput, -.95);
-					System.out.println("Overriding output");
-				} else if(safeToLift == true){
-					RobotMap.lift1.set(ControlMode.PercentOutput, outputUp);
+			if(Math.abs(RobotMap.navx.getPitch()) < 15 && isSafeToLift() == true) {
+				if(output > .35) {
+					RobotMap.lift1.set(ControlMode.PercentOutput, .35);
+				} else if(output < -.8) {
+					RobotMap.lift1.set(ControlMode.PercentOutput, -.8);
 				} else {
-					System.out.println("Waiting for bot to slow down before I get crazy");
+					RobotMap.lift1.set(ControlMode.PercentOutput, output);
 				}
 			} else {
 				setPoint = Constants.intake;
 			}
 		}	
+		lastPos = getLiftEncPosition();
 	}
+	
+	/**
+	 * Used to override lift completely if robot moves to fast in auto
+	 * @return true if speed is below our velocity constant that is too fast to keep the lift high
+	 */
+	public static boolean isSafeToLift() {
+		return Math.abs(Drive.getRightVelocity()) > Constants.liftingNotSafeVelocity || Math.abs(Drive.getLeftVelocity()) > Constants.liftingNotSafeVelocity;
+	}
+	
 	/**
 	 * find the direction to travel
 	 * @return direction

@@ -22,12 +22,14 @@ public class RightStartRightSwitchLeftScale extends CommandGroup {
     	addSequential(new DriveToPosition(100,.5,true,0,false,false));
     	addParallel(new ChangeLiftSetpoint(Constants.switchPosition));
     	addSequential(new DriveToPosition(30,.35,true,-60,false,false));
-    	addSequential(new Wait(500));
-    	//addSequential(new RunIntake(true));
-    	addSequential(new DriveToPosition(-20,.4,true,-120,true,true));
+    	addSequential(new RunIntake(true));
+    	addSequential(new DriveToPosition(-15,.4,true,-120,true,true,true));
     	addParallel(new ChangeLiftSetpoint(Constants.intake));
-    	addSequential(new DriveToPosition(-40,.6,true,-180,false,true));
-    	addSequential(new DriveToPosition(-200,.6,true,-270,true,true,true));
-    	addSequential(new DriveToPosition(-30,.6,true,-180,false,true));
+    	addSequential(new DriveToPosition(-65,.6,true,-180,false,true,true));
+    	addSequential(new DriveToPosition(15,.6,true,-142,false,false,true));
+    	addSequential(new RunIntake(false));
+    	addSequential(new ChangeLiftSetpoint(Constants.aboveBump));
+    	addSequential(new DriveToPosition(-190,.6,true,-255,false,true));
+    	//addSequential(new DriveToPosition(-10,.6,true,-310,false,true));
     }
 }

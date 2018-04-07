@@ -28,7 +28,7 @@ public class ChangeLiftSetpoint extends Command {
     
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+    	System.out.println("Starting at: " + lift.getLiftEncPosition() + " and going to: " + _setpoint);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -37,13 +37,6 @@ public class ChangeLiftSetpoint extends Command {
     	if (timeoutCount>(_timeout/20)) {
     		//count is how long is spends lifting
     		count++;
-    		if(_setpoint == Constants.intake) {
-    			goalLiftPosition = Constants.intakeLevelName;
-    		} else if(_setpoint == Constants.switchPosition) {
-    			goalLiftPosition = Constants.switchLevelName;
-    		} else if(_setpoint == Constants.scaleHigh) {
-    			goalLiftPosition = Constants.highLevelName;
-    		}
     		lift.setSetpoint(_setpoint);
     	}
     }

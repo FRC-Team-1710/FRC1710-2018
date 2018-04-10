@@ -15,8 +15,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class Testing extends CommandGroup {
 
     public Testing() {
-    	addSequential(new DriveToPosition(60, 0.75, true, 0,false,false));
-    	//should turn left and intake
-    	//addSequential(new SweepingIntake(false));
+    	addSequential(new DriveToPosition(100, 0.6, true, 0,false,false));
+    	addSequential(new DriveToPosition(-60, 0.4, true, 0,false,true));
+    	addSequential(new DriveToPosition(40, 0.4, true, 0,false,false));
+    	addSequential(new DriveToPosition(-150, 0.4, true, 0,false,true));
     }
 }

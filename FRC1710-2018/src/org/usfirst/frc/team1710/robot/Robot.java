@@ -60,11 +60,11 @@ public class Robot extends IterativeRobot {
 		
 		RobotMap.navx.reset();
 		RobotMap.R1.setSelectedSensorPosition(0, 0, 0);
-		RobotMap.R2.setSelectedSensorPosition(0, 0, 0);
+		RobotMap.L1.setSelectedSensorPosition(0, 0, 0);
 		
-		SmartDashboard.putNumber("cube amount", 2);
-		SmartDashboard.putNumber("Starting position", 3);
-		SmartDashboard.putNumber("destination",3);
+		SmartDashboard.putNumber("cube amount", 0);
+		SmartDashboard.putNumber("Starting position", 0);
+		SmartDashboard.putNumber("destination",0);
 		AutoHandler.initAutoMap();
 		autoTime = new Timer();
 	}
@@ -78,6 +78,10 @@ public class Robot extends IterativeRobot {
 		SubsystemManager.masterReset();
 		RobotMap.R1.setSelectedSensorPosition(0, 0, 0);
 		RobotMap.L1.setSelectedSensorPosition(0, 0, 0);
+		
+		RobotMap.R1.configClosedloopRamp(.5, 0);
+		RobotMap.L1.configClosedloopRamp(.5, 0);
+		
 		char switchPos = DriverStation.getInstance().getGameSpecificMessage().charAt(0);
 		char scalePos = DriverStation.getInstance().getGameSpecificMessage().charAt(1);
 		
@@ -104,6 +108,8 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
+		RobotMap.R1.configClosedloopRamp(0, 0);
+		RobotMap.L1.configClosedloopRamp(0, 0);
 		Constants.inAuto = false;
 		lift.safeToLift = true;
 		RobotMap.wrist.setSelectedSensorPosition(0, 0, 0);
@@ -125,6 +131,9 @@ public class Robot extends IterativeRobot {
 				
 		if(ControllerMap.visionActivated() == true) {
 			Vision.cubeTrackLeft();
+		} else if(ControllerMap.carefulPlace()) {
+			Drive.arcadeDrive(0, .4, false);
+			Intake.intake(0, .4);
 		} else {
 			if(lift.getLiftEncPosition() > Constants.scaleNormal) {
 				Drive.arcadeDrive(ControllerMap.getTurnPower() * .3, ControllerMap.getForwardPower() * .4, false);
@@ -155,8 +164,10 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Left Drive", Drive.getLeftPosition());
 		SmartDashboard.putNumber("Right Drive", Drive.getRightPosition());
 		SmartDashboard.putBoolean("Is cube in", Intake.isCubeInIntake());
+		SmartDashboard.putBoolean("Safe To Lift?", lift.isSafeToLift());
 		SmartDashboard.putNumber("Intake Ultrasonic", Intake.getUltraSonic());
 		SmartDashboard.putNumber("Lift Enc", lift.getLiftEncPosition());
+		SmartDashboard.putNumber("Robot Velocity", Drive.getLeftVelocity());
 		
 		if(lift.isAtBottom() == true) {
 			RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);

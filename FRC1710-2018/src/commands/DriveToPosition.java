@@ -47,8 +47,9 @@ public class DriveToPosition extends Command {
     }
 
     protected void initialize() {
-    	RobotMap.R1.configSelectedFeedbackSensor(com.ctre.phoenix.motorcontrol.FeedbackDevice.QuadEncoder, 0, 0);
-    	RobotMap.L1.configSelectedFeedbackSensor(com.ctre.phoenix.motorcontrol.FeedbackDevice.QuadEncoder, 0, 0);
+    	//todo try this, if weird things happen go back to QuadEncoder
+    	RobotMap.R1.configSelectedFeedbackSensor(com.ctre.phoenix.motorcontrol.FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
+    	RobotMap.L1.configSelectedFeedbackSensor(com.ctre.phoenix.motorcontrol.FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
     	RobotMap.R1.setSensorPhase(false);
     	RobotMap.L1.setSensorPhase(true);
     	
@@ -83,7 +84,7 @@ public class DriveToPosition extends Command {
             	if(Math.abs(_percentComplete) > Constants.slowDownPercent) {
             		count++;
             		if(_foundSlowDownStart == false) {
-            			_slowDownStart = Math.abs(_currentTicks);
+            			_slowDownStart = _currentTicks;
             			_foundSlowDownStart = true;
             		} else {
             			_deltaPos = _currentTicks - _slowDownStart;
@@ -96,14 +97,13 @@ public class DriveToPosition extends Command {
            		if(_percentComplete > Constants.slowDownPercent) {
             		count++;
             		if(_foundSlowDownStart == false) {
-            			_slowDownStart = Math.abs(_currentTicks);
+            			_slowDownStart = _currentTicks;
             			_foundSlowDownStart = true;
             		} else {
             			_deltaPos = _currentTicks - _slowDownStart;
                         _output =  ( (1 - Math.pow(_deltaPos/(_goalDist + Math.abs(_slowDownStart)), 2)) * _speed);
             		}
            		} else {
-
            			_output = _speed;
            		}
         	}
@@ -147,9 +147,7 @@ public class DriveToPosition extends Command {
 
     // Called once after isFinished returns true
     protected void end() { 
-    	System.out.println(_currentTicks >= _totalTicks && RobotMath.isInRange(Drive.getNavxAngle(), _heading, 10) && !_fixingHeading);
     	driveTime.stop();
-		lift.safeToLift = true;
 		System.out.println("Start pos: " + _startingPosition);
 		System.out.println("Goal pos: " + _totalTicks);
 		System.out.println("End pos: " + _currentTicks);

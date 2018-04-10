@@ -7,7 +7,7 @@ public class Constants {
 	
 	public static boolean inAuto = true;
 	//idk, run robot in auto at 60% output and look at the velocity
-	public static double liftingNotSafeVelocity = 10000;
+	public static double liftingNotSafeVelocity = 1000;
 	
 	public static CommandGroup defaultAuto = new Testing();
 	
@@ -28,9 +28,9 @@ public class Constants {
 	//getting too violent
 	//kpUp - comp: .0004`
 	//kpDown - comp : .00008
-	public static double kPLift = 0.001;
-	public static double kDLift = 0.0;	
-	public static double kILift = 0.0000001;
+	public static double kPLift = 0.00085;
+	public static double kDLift = 0;	
+	public static double kILift = 0;
 
 	//.000215
 	public static double kPLiftDown = 0.000215;
@@ -40,7 +40,7 @@ public class Constants {
 	
 	//constants for drive
 	//.013
-	public static double kpStraight = .01;
+	public static double kpStraight = .0125;
 	public static double kiStraight = .001;
 	public static double kdStraight = .00075;
 	
@@ -68,7 +68,8 @@ public class Constants {
 	public static int rightLeaderid=8;
 	public static int rightFollowerid=1;
 	public static int rightFollowerid2=3;
-	public static int leftLeaderid=9;
+	//practice bot messed up change this back to 9 for comp
+	public static int leftLeaderid=6;
 	public static int leftFollowerid= 2;
 	public static int leftFollowerid2= 4;
 	
@@ -76,7 +77,8 @@ public class Constants {
 	public static int intakeRSpark=0;
 	public static int intakeLSpark=1;
 	
-	public static int wristTalon=6;
+	//change back to 6
+	public static int wristTalon=9;
 	public static int liftRightTalon=5;
 	public static int liftLeftTalon=10;
 	

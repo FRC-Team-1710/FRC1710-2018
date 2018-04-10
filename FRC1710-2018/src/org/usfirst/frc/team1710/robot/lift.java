@@ -30,15 +30,20 @@ public class lift {
 		RobotMap.lift1.setNeutralMode(NeutralMode.Brake);
 		RobotMap.lift2.setNeutralMode(NeutralMode.Brake);
 		
-		RobotMap.lift1.configContinuousCurrentLimit(10, 0);
-		RobotMap.lift1.configPeakCurrentLimit(20, 0);
-		RobotMap.lift1.configPeakCurrentDuration(100, 0);
+		RobotMap.lift1.configContinuousCurrentLimit(30, 0);
+		RobotMap.lift1.configPeakCurrentLimit(40, 0);
+		RobotMap.lift1.configPeakCurrentDuration(1000, 0);
 		RobotMap.lift1.enableCurrentLimit(true);
 		
-		RobotMap.lift2.configContinuousCurrentLimit(10, 0);
-		RobotMap.lift2.configPeakCurrentLimit(20, 0);
-		RobotMap.lift2.configPeakCurrentDuration(100, 0);
+		RobotMap.lift2.configContinuousCurrentLimit(30, 0);
+		RobotMap.lift2.configPeakCurrentLimit(40, 0);
+		RobotMap.lift2.configPeakCurrentDuration(1000, 0);
 		RobotMap.lift2.enableCurrentLimit(true);
+		
+		RobotMap.lift1.configPeakOutputReverse(-.9, 0);
+		RobotMap.lift1.configPeakOutputForward(.35, 0);
+		
+		RobotMap.lift1.configOpenloopRamp(.2, 0);
 	}
 	/**
 	 * tells lift what set-points to move to based on the mech-driver input
@@ -46,14 +51,19 @@ public class lift {
 	 */
 	public static double getLiftSetpoint () {
 		if(ControllerMap.bottomLift() == true) {
+			System.out.println("Setpoint: intake");
 			setPoint = Constants.intake;
 		}else if(ControllerMap.liftAtSwitchHeight() == true) {
+			System.out.println("Setpoint: switch");
 			setPoint = Constants.switchPosition;
 		}else if(ControllerMap.liftAtScaleLow() == true) {
+			System.out.println("Setpoint: low scale");
 			setPoint = Constants.scaleLow;
 		}else if(ControllerMap.liftAtScaleNormal() == true) {
+			System.out.println("Setpoint: normal scale");
 			setPoint = Constants.scaleNormal;
 		}else if(ControllerMap.liftAtScaleHigh() == true) {
+			System.out.println("Setpoint: high scale");
 			setPoint = Constants.scaleHigh;
 		}
 		return setPoint;
@@ -75,13 +85,12 @@ public class lift {
 	 * Prevents the lift from slamming into the top or bottom
 	 */
 	public static void manipulateLift() {
-		//TODO: instead of changing safeToLift based on % output in DriveToPosition, change it in here based on robot velocity... only in auto
-		double angleDeriv = currentPos - lastPos;
+		double posDeriv = currentPos - lastPos;
 		currentPos = getLiftEncPosition();
 		posIntegral += getLiftError();
-		output = (-1 * ((getLiftError() * Constants.kPLift) + (angleDeriv * Constants.kDLift) + (posIntegral * Constants.kILift)));
+		output = (-1 * ((getLiftError() * Constants.kPLift) + (posDeriv * Constants.kDLift) + (posIntegral * Constants.kILift)));
 		//if the stick is being moved...
-		if ((ControllerMap.liftPower() > 0.2 || ControllerMap.liftPower() < -0.2) && ControllerMap.getMechTrigger() == false){
+		if ((ControllerMap.liftPower() >= 0.4 || ControllerMap.liftPower() <= -0.4) && ControllerMap.getMechTrigger() == false){
 			//if the stick is being moved down and the lift isn't near the bottom
 			if(ControllerMap.liftPower() >= 0 && isAtBottom() == false) {
 				RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower() * .35);
@@ -92,14 +101,8 @@ public class lift {
 			}
 			setPoint = getLiftEncPosition();
 		} else {	
-			if(Math.abs(RobotMap.navx.getPitch()) < 15 && isSafeToLift() == true) {
-				if(output > .35) {
-					RobotMap.lift1.set(ControlMode.PercentOutput, .35);
-				} else if(output < -.8) {
-					RobotMap.lift1.set(ControlMode.PercentOutput, -.8);
-				} else {
-					RobotMap.lift1.set(ControlMode.PercentOutput, output);
-				}
+			if(Math.abs(RobotMap.navx.getPitch()) < 15 && isSafeToLift()) {
+				RobotMap.lift1.set(ControlMode.PercentOutput, output);
 			} else {
 				setPoint = Constants.intake;
 			}
@@ -112,7 +115,7 @@ public class lift {
 	 * @return true if speed is below our velocity constant that is too fast to keep the lift high
 	 */
 	public static boolean isSafeToLift() {
-		return Math.abs(Drive.getRightVelocity()) > Constants.liftingNotSafeVelocity || Math.abs(Drive.getLeftVelocity()) > Constants.liftingNotSafeVelocity;
+		return Math.abs(Drive.getRightVelocity()) < Constants.liftingNotSafeVelocity || Math.abs(Drive.getLeftVelocity()) < Constants.liftingNotSafeVelocity;
 	}
 	
 	/**

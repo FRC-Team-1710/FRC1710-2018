@@ -46,12 +46,14 @@ public class ControllerMap {
 		return RobotMap.driveStick.getRawButton(9);
 	}
 	public static boolean visionActivated() {
-		return  RobotMap.driveStick.getRawButton(1);
+		return  RobotMap.driveStick.getRawButton(12);
 	}
 	public static boolean ultraSonicIntake() {
 		return RobotMap.driveStick.getRawButton(3);
 	}
-	
+	public static boolean carefulPlace() {
+		return RobotMap.driveStick.getRawButton(10);
+	}
 	//Axis
 	public static double getTurnPower() {
 		return -RobotMap.driveStick.getRawAxis(4);
@@ -60,7 +62,7 @@ public class ControllerMap {
 		return RobotMap.driveStick.getRawAxis(1);
 	}
 	public static double liftPower() {
-		if(Math.abs(RobotMap.mechStick.getRawAxis(1)) >= 0.2) {
+		if(Math.abs(RobotMap.mechStick.getRawAxis(1)) >= 0.4) {
 			return RobotMap.mechStick.getRawAxis(1); 
 		}else if(RobotMap.driveStick.getRawButton(5) == true) {
 			return .5;

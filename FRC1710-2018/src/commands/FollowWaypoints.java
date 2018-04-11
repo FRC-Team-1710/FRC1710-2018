@@ -2,6 +2,7 @@ package commands;
 
 import org.usfirst.frc.team1710.robot.Constants;
 import org.usfirst.frc.team1710.robot.Drive;
+import org.usfirst.frc.team1710.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -22,9 +23,13 @@ public class FollowWaypoints extends Command {
     }
 
     protected void initialize() {
+    	Drive.setShifters(_inHighGear);
+		RobotMap.R1.setSelectedSensorPosition(0, 0, 0);
+		RobotMap.L1.setSelectedSensorPosition(0, 0, 0);
     	i=0;
     }
 
+    //20,20,.5
     protected void execute() {
     	x = _waypoints[i][0];
     	y = _waypoints[i][1];
@@ -32,21 +37,29 @@ public class FollowWaypoints extends Command {
     	
     	goalPos = Math.sqrt(Math.pow(x * Constants.ticksPerInch, 2) + Math.pow(y * Constants.ticksPerInch, 2)) + distanceCovered;
     	
-    	if(x >= 0 && y >= 0) {
-        	goalHeading = Math.atan((y/x));
-    	} else if(x <= 0 && y >= 0) {
-        	goalHeading = Math.atan((y/x)) + 180;
-    	} else if(x <= 0 && y <= 0) {
-        	goalHeading = Math.atan((y/x)) + 180;
-    	} else if(x >= 0 && y <= 0) {
-        	goalHeading = Math.atan((y/x)) + 360;
+    	if(x == 0) {
+    		if(y < 0) {
+    			goalHeading = -90;
+    		} else {
+    			goalHeading = 90;
+    		}
+    	} else {
+    		if(x >= 0 && y >= 0) {
+    			goalHeading = Math.atan((y/x));
+    		} else if(x <= 0 && y >= 0) {
+    			goalHeading = Math.atan((y/x)) + 180;
+    		} else if(x <= 0 && y <= 0) {
+    			goalHeading = Math.atan((y/x)) + 180;
+    		} else if(x >= 0 && y <= 0) {
+    			goalHeading = Math.atan((y/x)) + 360;
+    		}
     	}
     	
     	currentPos = (Drive.getLeftPosition() + Drive.getRightPosition())/2;
     	
     	if(i == 0) {
     		if(output < speed) {
-        		output = (Math.pow((currentPos/(goalPos*.25)),2) * speed) + .15;
+        		output = (Math.pow((currentPos/(goalPos*.5)),2) * speed) + .15;
     		} else {
     			output = speed;
     		}

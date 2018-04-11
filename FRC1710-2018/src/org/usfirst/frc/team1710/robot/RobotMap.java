@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Talon;
@@ -27,4 +28,5 @@ public class RobotMap {
 	static Relay ledStrip;
 	public static AnalogInput ultraSonic, ultraSonicR, pressureSensor;
 	public static Compressor compressor;
+	public static PowerDistributionPanel pdp;
 }

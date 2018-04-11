@@ -17,6 +17,5 @@ public class DriveDiagnostic extends CommandGroup {
     	 addSequential(new RunMotor(RobotMap.R1,.75,1000));
     	 addSequential(new RunMotor(RobotMap.R2,.75,1000));
     	 addSequential(new RunMotor(RobotMap.R3,.75,1000));
-    	 
     }
 }

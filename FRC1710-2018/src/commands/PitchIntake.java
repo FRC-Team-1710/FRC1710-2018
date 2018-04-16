@@ -1,5 +1,6 @@
 package commands;
 
+import org.usfirst.frc.team1710.robot.Intake;
 import org.usfirst.frc.team1710.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -11,9 +12,15 @@ import edu.wpi.first.wpilibj.command.Command;
 public class PitchIntake extends Command {
 
 	boolean _isGoingUp;
+	double _setpoint;
 	int count;
     public PitchIntake(boolean isGoingUp) {
     	_isGoingUp = isGoingUp;
+    	_setpoint = -254;
+    }
+    
+    public PitchIntake(double setpoint) {
+    	_setpoint = setpoint;
     }
 
     // Called just before this Command runs the first time
@@ -23,11 +30,16 @@ public class PitchIntake extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	count ++;
-    	if(_isGoingUp == true) {
-    		RobotMap.wrist.set(ControlMode.PercentOutput, -.65);
-    	}else {
-    		RobotMap.wrist.set(ControlMode.PercentOutput, .65);
+    	if(_setpoint == -254) {
+    		if(_isGoingUp == true) {
+    			RobotMap.wrist.set(ControlMode.PercentOutput, -.65);
+    		}else {
+    			RobotMap.wrist.set(ControlMode.PercentOutput, .65);
+    		}
+    	} else {
+    		Intake.setWristSetpoint(_setpoint);
     	}
+    		
     }
 
     // Make this return true when this Command no longer needs to run execute()

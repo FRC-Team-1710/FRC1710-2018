@@ -32,13 +32,19 @@ public class ControllerMap {
 	public static boolean rightIntakeToggle() {
 		return RobotMap.mechStick.getRawButton(6);
 	}
-	public static boolean wristUp() {
+	public static boolean matchClimb() {
 		return RobotMap.mechStick.getRawButton(3);
 	}
 	public static boolean wristLaunch() {
-		return RobotMap.mechStick.getRawButton(5);
+		return RobotMap.mechStick.getRawButton(12);
+	}
+	public static boolean wristUp() {
+		return RobotMap.mechStick.getRawButton(6);
 	}
 	public static boolean wristDown() {
+		return RobotMap.mechStick.getRawButton(5);
+	}
+	public static boolean practiceClimb() {
 		return RobotMap.mechStick.getRawButton(4);
 	}
 
@@ -46,7 +52,7 @@ public class ControllerMap {
 		return RobotMap.driveStick.getRawButton(9);
 	}
 	public static boolean visionActivated() {
-		return  RobotMap.driveStick.getRawButton(12);
+		return false;
 	}
 	public static boolean ultraSonicIntake() {
 		return RobotMap.driveStick.getRawButton(3);
@@ -62,7 +68,7 @@ public class ControllerMap {
 		return RobotMap.driveStick.getRawAxis(1);
 	}
 	public static double liftPower() {
-		if(Math.abs(RobotMap.mechStick.getRawAxis(1)) >= 0.4) {
+		if(Math.abs(RobotMap.mechStick.getRawAxis(1)) >= 0.25) {
 			return RobotMap.mechStick.getRawAxis(1); 
 		}else if(RobotMap.driveStick.getRawButton(5) == true) {
 			return .5;

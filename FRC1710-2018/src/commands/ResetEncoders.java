@@ -1,5 +1,6 @@
 package commands;
 
+import org.usfirst.frc.team1710.robot.Drive;
 import org.usfirst.frc.team1710.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -9,6 +10,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ResetEncoders extends Command {
 
+	int count;
+	
     public ResetEncoders() {
 
     }
@@ -21,13 +24,15 @@ public class ResetEncoders extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	count++;
 		RobotMap.R1.setSelectedSensorPosition(0, 0, 0);
 		RobotMap.L1.setSelectedSensorPosition(0, 0, 0);
+		Drive.stopDriving();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return count > 5;
     }
 
     // Called once after isFinished returns true

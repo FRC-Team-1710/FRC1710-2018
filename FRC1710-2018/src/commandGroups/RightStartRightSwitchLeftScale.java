@@ -2,6 +2,7 @@ package commandGroups;
 
 import org.usfirst.frc.team1710.robot.Constants;
 
+import commands.AutoTimer;
 import commands.ChangeLiftSetpoint;
 import commands.DriveToPosition;
 import commands.PitchIntake;
@@ -18,22 +19,26 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class RightStartRightSwitchLeftScale extends CommandGroup {
 
     public RightStartRightSwitchLeftScale() {
-    	//addParallel(new PitchIntake(false));
-    	addSequential(new DriveToPosition(100,.8,true,0,false,false));
+    	addParallel(new PitchIntake(Constants.wristDown));
+    	addSequential(new DriveToPosition(90,.8,true,0,false,false));
     	addParallel(new ChangeLiftSetpoint(Constants.switchPosition));
-    	addSequential(new DriveToPosition(30,.35,true,-70,false,false));
+    	addSequential(new DriveToPosition(35,.35,true,-60,false,false));
     	addSequential(new RunIntake(true));
-    	addSequential(new DriveToPosition(-15,.4,true,-120,true,true,true));
-    	addParallel(new DriveToPosition(-68,.55,true,-180,false,true,true));
+    	addSequential(new DriveToPosition(-10,.4,true,-120,true,true,true));
+    	addParallel(new DriveToPosition(-83,.6,true,-180,false,true));
     	addSequential(new ChangeLiftSetpoint(Constants.intake));
-    	addSequential(new DriveToPosition(15,.55,true,-150,false,false,true));
+    	addSequential(new DriveToPosition(12,.4,true,-145,false,false,true));
     	addSequential(new RunIntake(false));
-    	addSequential(new ResetEncoders());
-    	addSequential(new ChangeLiftSetpoint(Constants.aboveBump));
-    	addSequential(new DriveToPosition(-180,.5,true,-255,true,true));
-    	//for some reason the robot direction flip flops here...
-    	addSequential(new ResetEncoders());
-    	addSequential(new DriveToPosition(-30,.4,true,-315,false,true));
-    	//addSequential(new ChangeLiftSetpoint(Constants.scaleHigh));
+    	addParallel(new PitchIntake(Constants.wristUp));
+    	addSequential(new DriveToPosition(-10,.5,true,-180,true,true));
+    	addSequential(new DriveToPosition(-180,.75,true,-270,true,true));
+    	addSequential(new DriveToPosition(-10,.4,true,-320,false,true));
+    	addSequential(new DriveToPosition(10,.4,true,-335,false,false));
+    	addParallel(new PitchIntake(Constants.wristDown));
+    	addParallel(new DriveToPosition(38,.3,true,-335,false,false));
+    	addSequential(new ChangeLiftSetpoint(Constants.scaleHigh));
+    	addParallel(new PitchIntake(Constants.wristLaunch));
+    	addSequential(new RunIntake(true));
+    	addSequential(new AutoTimer());
     }
 }

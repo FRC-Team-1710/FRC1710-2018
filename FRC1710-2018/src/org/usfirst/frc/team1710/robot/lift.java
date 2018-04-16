@@ -11,9 +11,9 @@ import utility.RobotMath;
 
 public class lift {
 
-	public static double setPoint, output, currentPos, lastPos, posIntegral;
+	public static double setPoint, output, currentPos, lastPos, posIntegral, queuedSetpoint; //queued eclipse spell check pls
 	// during auto this will change to true when is not safe to lift
-	public static boolean safeToLift;
+	public static boolean safeToLift, override;
 	/**
 	 * give talons their id numbers
 	 */
@@ -41,7 +41,7 @@ public class lift {
 		RobotMap.lift2.enableCurrentLimit(true);
 		
 		RobotMap.lift1.configPeakOutputReverse(-.9, 0);
-		RobotMap.lift1.configPeakOutputForward(.35, 0);
+		RobotMap.lift1.configPeakOutputForward(.4, 0);
 		
 		RobotMap.lift1.configOpenloopRamp(.2, 0);
 	}
@@ -51,21 +51,17 @@ public class lift {
 	 */
 	public static double getLiftSetpoint () {
 		if(ControllerMap.bottomLift() == true) {
-			System.out.println("Setpoint: intake");
 			setPoint = Constants.intake;
 		}else if(ControllerMap.liftAtSwitchHeight() == true) {
-			System.out.println("Setpoint: switch");
 			setPoint = Constants.switchPosition;
 		}else if(ControllerMap.liftAtScaleLow() == true) {
-			System.out.println("Setpoint: low scale");
 			setPoint = Constants.scaleLow;
 		}else if(ControllerMap.liftAtScaleNormal() == true) {
-			System.out.println("Setpoint: normal scale");
 			setPoint = Constants.scaleNormal;
 		}else if(ControllerMap.liftAtScaleHigh() == true) {
-			System.out.println("Setpoint: high scale");
 			setPoint = Constants.scaleHigh;
 		}
+		
 		return setPoint;
 	}
 	/**
@@ -90,7 +86,7 @@ public class lift {
 		posIntegral += getLiftError();
 		output = (-1 * ((getLiftError() * Constants.kPLift) + (posDeriv * Constants.kDLift) + (posIntegral * Constants.kILift)));
 		//if the stick is being moved...
-		if ((ControllerMap.liftPower() >= 0.4 || ControllerMap.liftPower() <= -0.4) && ControllerMap.getMechTrigger() == false){
+		if ((ControllerMap.liftPower() >= 0.25 || ControllerMap.liftPower() <= -0.25) && ControllerMap.getMechTrigger() == false){
 			//if the stick is being moved down and the lift isn't near the bottom
 			if(ControllerMap.liftPower() >= 0 && isAtBottom() == false) {
 				RobotMap.lift1.set(ControlMode.PercentOutput, ControllerMap.liftPower() * .35);
@@ -115,7 +111,7 @@ public class lift {
 	 * @return true if speed is below our velocity constant that is too fast to keep the lift high
 	 */
 	public static boolean isSafeToLift() {
-		return Math.abs(Drive.getRightVelocity()) < Constants.liftingNotSafeVelocity || Math.abs(Drive.getLeftVelocity()) < Constants.liftingNotSafeVelocity;
+		return Math.abs(Drive.getRightVelocity()) < Constants.liftingNotSafeVelocity || Math.abs(Drive.getLeftVelocity()) < Constants.liftingNotSafeVelocity || override;
 	}
 	
 	/**
@@ -162,19 +158,19 @@ public class lift {
 	 * tells what position lift is at
 	 * @return the name of the position - can be used on the dash board
 	 */
-	public static String getLiftPosition() {
+	public static double getLiftPosition() {
 		if(RobotMath.isInRange(getLiftEncPosition(), Constants.intake, 175)) {
-			return Constants.intakeLevelName;
+			return Constants.intake;
 		} else if(RobotMath.isInRange(getLiftEncPosition(), Constants.switchPosition, 175)) {
-			return Constants.switchLevelName;
+			return Constants.switchPosition;
 		} else if(RobotMath.isInRange(getLiftEncPosition(), Constants.scaleLow, 175)) {
-			return Constants.lowLevelName;
+			return Constants.scaleLow;
 		} else if(RobotMath.isInRange(getLiftEncPosition(), Constants.scaleNormal, 175)){
-			return Constants.normalLevelName;
+			return Constants.scaleNormal;
 		} else if(RobotMath.isInRange(getLiftEncPosition(), Constants.scaleHigh, 175)) {
-			return Constants.highLevelName;
+			return Constants.scaleHigh;
 		} else {
-			return Constants.liftingLevelName;
+			return 254;
 		}
 
 	}

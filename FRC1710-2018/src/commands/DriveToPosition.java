@@ -52,7 +52,6 @@ public class DriveToPosition extends Command {
     	RobotMap.L1.configSelectedFeedbackSensor(com.ctre.phoenix.motorcontrol.FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
     	RobotMap.R1.setSensorPhase(false);
     	RobotMap.L1.setSensorPhase(true);
-    	
     	Drive.setShifters(_isInHighGear);
 
     	count = 0;
@@ -66,6 +65,8 @@ public class DriveToPosition extends Command {
     	}
     	_goalDist = Math.abs(_encGoal);
     	driveTime.start();
+		System.out.println("Start pos: " + _startingPosition);
+		System.out.println("Goal pos: " + _totalTicks);
     }
 
 
@@ -88,7 +89,7 @@ public class DriveToPosition extends Command {
             			_foundSlowDownStart = true;
             		} else {
             			_deltaPos = _currentTicks - _slowDownStart;
-                		_output =  ((Math.pow(_deltaPos/(_goalDist + Math.abs(_slowDownStart)), 2) - 1) * _speed); 
+                		_output =  ((Math.pow(_deltaPos/(_goalDist + Math.abs(_slowDownStart)), 3) - 1) * _speed); 
             		}
             	} else {
             		_output = -_speed;
@@ -101,7 +102,7 @@ public class DriveToPosition extends Command {
             			_foundSlowDownStart = true;
             		} else {
             			_deltaPos = _currentTicks - _slowDownStart;
-                        _output =  ( (1 - Math.pow(_deltaPos/(_goalDist + Math.abs(_slowDownStart)), 2)) * _speed);
+                        _output =  ( (1 - Math.pow(_deltaPos/(_goalDist + Math.abs(_slowDownStart)), 3)) * _speed);
             		}
            		} else {
            			_output = _speed;
@@ -109,6 +110,7 @@ public class DriveToPosition extends Command {
         	}
         	        	
         	if(_hellaAccurate == true) {
+        		lift.override = true;
         		if(!RobotMath.isInRange(Drive.getNavxAngle(), _heading, 20)) {
         			//turns in place until heading is close to prevent giant over corrections that eat the drive distance
                 	Drive.straightDriveTele(0 ,_heading, _isInHighGear);
@@ -124,6 +126,7 @@ public class DriveToPosition extends Command {
         			}
         		}
         	} else {
+        		lift.override = false;
             	_fixingHeading = false;
             	Drive.straightDriveTele(_output, _heading, _isInHighGear);
         	}
@@ -139,17 +142,17 @@ public class DriveToPosition extends Command {
     	 */
     	
     	if(_direction == true) {
-        	return (_currentTicks <= _totalTicks && RobotMath.isInRange(Drive.getNavxAngle(), _heading, 10) && !_fixingHeading);
+        	return (_currentTicks <= _totalTicks && RobotMath.isInRange(Drive.getNavxAngle(), _heading, 20) && !_fixingHeading);
     	} else {
-    		return (_currentTicks >= _totalTicks && RobotMath.isInRange(Drive.getNavxAngle(), _heading, 10) && !_fixingHeading);
+    		return (_currentTicks >= (_totalTicks-50) && RobotMath.isInRange(Drive.getNavxAngle(), _heading, 20) && !_fixingHeading);
     	}
     }
 
     // Called once after isFinished returns true
     protected void end() { 
+		lift.override = false;
     	driveTime.stop();
-		System.out.println("Start pos: " + _startingPosition);
-		System.out.println("Goal pos: " + _totalTicks);
+
 		System.out.println("End pos: " + _currentTicks);
     	Drive.stopDriving();
     }

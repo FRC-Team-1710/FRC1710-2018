@@ -11,8 +11,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class LiftDiagnostic extends CommandGroup {
 
     public LiftDiagnostic() {
-    addSequential(new RunMotor(RobotMap.lift1, 1,1000));
-    addSequential(new RunMotor(RobotMap.lift2, 1,1000));
-    
+    	/*addSequential(new RunMotor(RobotMap.lift1, 1,1000));
+    	addSequential(new RunMotor(RobotMap.lift2, 1,1000));*/
     }
 }

@@ -48,23 +48,27 @@ import utility.RobotMath;
 public class Robot extends IterativeRobot {
 	
 	public static int cubeAmount, startingPosition, destination;
-	
+	boolean wristReset;
 	public static Timer autoTime;
 	
 	@Override
 	public void robotInit() {
+		wristReset = false;
 		SubsystemManager.masterinitialization();
 		RobotMap.driveStick = new Joystick(0);
 		RobotMap.mechStick = new Joystick(1);
 		RobotMap.compressor = new Compressor(0);
 		
+		RobotMap.pdp = new PowerDistributionPanel();
+		
 		RobotMap.navx.reset();
 		RobotMap.R1.setSelectedSensorPosition(0, 0, 0);
 		RobotMap.L1.setSelectedSensorPosition(0, 0, 0);
+		RobotMap.wrist.setSelectedSensorPosition(0, 0, 0);
 		
-		SmartDashboard.putNumber("cube amount", 0);
-		SmartDashboard.putNumber("Starting position", 0);
-		SmartDashboard.putNumber("destination",0);
+		SmartDashboard.putNumber("cube amount", 3);
+		SmartDashboard.putNumber("Starting position", 3);
+		SmartDashboard.putNumber("destination",3);
 		AutoHandler.initAutoMap();
 		autoTime = new Timer();
 	}
@@ -78,6 +82,7 @@ public class Robot extends IterativeRobot {
 		SubsystemManager.masterReset();
 		RobotMap.R1.setSelectedSensorPosition(0, 0, 0);
 		RobotMap.L1.setSelectedSensorPosition(0, 0, 0);
+		RobotMap.wrist.setSelectedSensorPosition(0, 0, 0);
 		
 		RobotMap.R1.configClosedloopRamp(.5, 0);
 		RobotMap.L1.configClosedloopRamp(.5, 0);
@@ -101,7 +106,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Robot Heading", RobotMap.navx.getAngle());
 		lift.manipulateLift();
 		Intake.manipulateWrist();
-		RobotMap.wrist.setSelectedSensorPosition(0, 0, 0);
 		Scheduler.getInstance().run();
 		RobotMap.compressor.setClosedLoopControl(false);
 	}
@@ -117,7 +121,6 @@ public class Robot extends IterativeRobot {
 		RobotMap.L1.setSelectedSensorPosition(0, 0, 0);
     	RobotMap.R1.setSensorPhase(false);
     	RobotMap.L1.setSensorPhase(true);
-		Intake.setWristPosition(Constants.wristDown);
 		Vision.ledEntry.forceSetNumber(0);
 		Vision.ledEntry.forceSetNumber(1);
 		RobotMap.compressor.setClosedLoopControl(false);
@@ -129,6 +132,18 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Is lift at bottom", lift.isAtBottom());
 		SmartDashboard.putBoolean("Is lift at top", lift.isAtTop());
 				
+		if(RobotMap.driveStick.getPOV() == 180) {
+			RobotMap.wrist.setSelectedSensorPosition(1700, 0, 0);
+			wristReset = true;
+		} else if(RobotMap.driveStick.getPOV() == 0) {
+			RobotMap.wrist.setSelectedSensorPosition(0, 0, 0);
+			wristReset = true;
+		} else if(RobotMap.driveStick.getPOV() == 270) {
+			Intake.setWristSetpoint(Constants.wristUp);
+		} else if(RobotMap.driveStick.getPOV() == 90) {
+			Intake.setWristSetpoint(Constants.wristDown);
+		}
+		
 		if(ControllerMap.visionActivated() == true) {
 			Vision.cubeTrackLeft();
 		} else if(ControllerMap.carefulPlace()) {
@@ -142,7 +157,7 @@ public class Robot extends IterativeRobot {
 			} else {
 				Drive.arcadeDrive(ControllerMap.getTurnPower(), ControllerMap.getForwardPower(), ControllerMap.shift());
 			}
-			Intake.intake(ControllerMap.intakeR()*2, ControllerMap.intakeL()*.75);
+			Intake.intake(ControllerMap.intakeR()*.75, ControllerMap.intakeL()*.75);
 		}
 		
 		if(RobotMap.mechStick.getRawButton(2) == true) {
@@ -151,9 +166,9 @@ public class Robot extends IterativeRobot {
 			RobotMap.compressor.setClosedLoopControl(false);
 		}
 		
-		if(RobotMap.mechStick.getRawButton(3) == true) {
+		if(ControllerMap.matchClimb() == true) {
 			RobotMap.climber.set(Math.abs(RobotMap.mechStick.getRawAxis(0)));
-		} else if(RobotMap.mechStick.getRawButton(4) == true){
+		} else if(ControllerMap.practiceClimb() == true){
 			RobotMap.climber.set(RobotMap.mechStick.getRawAxis(0));
 		} else {
 			RobotMap.climber.set(0);
@@ -167,8 +182,12 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Safe To Lift?", lift.isSafeToLift());
 		SmartDashboard.putNumber("Intake Ultrasonic", Intake.getUltraSonic());
 		SmartDashboard.putNumber("Lift Enc", lift.getLiftEncPosition());
+		SmartDashboard.putNumber("Wrist Enc", Intake.getWristEncPosition());
 		SmartDashboard.putNumber("Robot Velocity", Drive.getLeftVelocity());
-		
+		SmartDashboard.putNumber("Robot Heading", Drive.getNavxAngle());
+		SmartDashboard.putNumber("Controller Pov", RobotMap.driveStick.getPOV());
+		SmartDashboard.putBoolean("Cube in", Intake.isCubeInIntake());
+
 		if(lift.isAtBottom() == true) {
 			RobotMap.lift1.setSelectedSensorPosition(0, 0, 0);
 		}

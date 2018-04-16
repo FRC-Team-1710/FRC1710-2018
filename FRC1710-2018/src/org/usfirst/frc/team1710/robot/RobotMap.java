@@ -23,7 +23,7 @@ public class RobotMap {
 	public static Joystick driveStick, mechStick;
 	public static AHRS navx;
 	public static DoubleSolenoid shifter, intakeRight, intakeLeft, rampDeploy, rampExtendo, rampLifto;
-	public static DigitalInput liftBottom, liftTop;
+	public static DigitalInput liftBottom, liftTop, cubeIn;
 	//public static Relay ledStrip;
 	static Relay ledStrip;
 	public static AnalogInput ultraSonic, ultraSonicR, pressureSensor;

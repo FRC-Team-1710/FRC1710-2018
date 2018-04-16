@@ -6,6 +6,7 @@ import commands.AutoTimer;
 import commands.ChangeLiftSetpoint;
 import commands.DriveToPosition;
 import commands.PitchIntake;
+import commands.ResetEncoders;
 import commands.RunIntake;
 import commands.TrackCube;
 import commands.TurnToAngle;
@@ -18,33 +19,25 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ThreeCubeRightScale extends CommandGroup {
 
     public ThreeCubeRightScale() {
-    	//addParallel(new PitchIntake(false));
-    	addParallel(new ChangeLiftSetpoint(Constants.scaleHigh));
-    	addSequential(new DriveToPosition(260, .75, true,0,false,false));
-    	addSequential(new TurnToAngle(-40));
-    	addSequential(new Wait(500));
-    	//addSequential(new RunIntake(true));
-    	addParallel(new ChangeLiftSetpoint(Constants.intake, 200));
-    	addSequential(new TurnToAngle(-150));
-    	addSequential(new DriveToPosition(60,.4,true,-150, false,false,true));
-    	//addSequential(new RunIntake(false));
-    	addSequential(new Wait(500));
-    	addParallel(new ChangeLiftSetpoint(Constants.scaleHigh));
-    	addSequential(new DriveToPosition(-60,.4,true,-150, false,true));
-    	addSequential(new TurnToAngle(-60));
-    	addSequential(new Wait(500));
-    	//addSequential(new RunIntake(true));
-    	addSequential(new DriveToPosition(-10,.4,true,-60, false,true));
-    	addParallel(new ChangeLiftSetpoint(Constants.intake, 200));
-    	addSequential(new TurnToAngle(-125));
-    	addSequential(new DriveToPosition(90,.6,true,-125, false,false,true));
-    	addSequential(new Wait(500));
-    	//addSequential(new RunIntake(false));
-    	addSequential(new DriveToPosition(-50,.6,true,-135, false,true));
-    	addParallel(new ChangeLiftSetpoint(Constants.scaleHigh));
-    	addSequential(new TurnToAngle(-90));
-    	//addSequential(new RunIntake(true));
-    	addSequential(new AutoTimer());
+    	addSequential(new DriveToPosition(Constants.wallToScale, .75, true,0,false,false));
+    	addParallel(new PitchIntake(Constants.wristDown));
+    	addParallel(new DriveToPosition(9, .3, true,-40,false,false,true));
+    	addSequential(new ChangeLiftSetpoint(Constants.scaleHigh));
+    	addSequential(new RunIntake(true));
+    	addParallel(new ChangeLiftSetpoint(Constants.intake));
+    	addSequential(new TurnToAngle(-147));
+    	addSequential(new DriveToPosition(30,.4,true,-147, false,false,true));
+    	addSequential(new RunIntake(false));
+    	addParallel(new PitchIntake(Constants.wristUp));
+    	addSequential(new DriveToPosition(-20,.5,true,-90, false,true));
+    	addParallel(new PitchIntake(Constants.wristDown));
+    	addParallel(new DriveToPosition(45,.35,true,-20,false,false));
+    	addSequential(new ChangeLiftSetpoint(Constants.scaleHigh));
+    	addSequential(new RunIntake(true));
+    	addParallel(new DriveToPosition(-25,.3,true,-40, false,true));
+    	addSequential(new ChangeLiftSetpoint(Constants.intake));
+    	addSequential(new DriveToPosition(55,.5,true,-122, false,false,true));
+    	addSequential(new RunIntake(false));
     }
     
 }

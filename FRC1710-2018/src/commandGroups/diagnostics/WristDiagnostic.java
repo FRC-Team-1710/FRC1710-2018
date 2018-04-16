@@ -11,6 +11,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class WristDiagnostic extends CommandGroup {
 
     public WristDiagnostic() {
-    	 addSequential(new RunMotor(RobotMap.wrist, 1,1000));
+    	 //addSequential(new RunMotor(RobotMap.wrist, 1,1000));
     }
 }

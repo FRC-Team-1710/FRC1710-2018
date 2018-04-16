@@ -34,6 +34,7 @@ import commandGroups.RightStartRightSwitchLeftScale;
 import commandGroups.RightStartThreeCubeLeftScale;
 import commandGroups.Testing;
 import commandGroups.ThreeCubeRightScale;
+import commandGroups.diagnostics.DriveDiagnostic;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 
@@ -80,7 +81,7 @@ public class AutoHandler {
 		autoMap.put("233LL", new RightStartLeftScaleLeftSwitch());
 		autoMap.put("233RL", new RightStartRightSwitchLeftScale());
 		
-		autoMap.put("232RR", new LeftStartRightScaleRightSwitch());
+		autoMap.put("232RR", new ThreeCubeRightScale());
 		autoMap.put("232LL", new RightStartDoubleScaleLeft());
 		
 		autoMap.put("332RR", new ThreeCubeRightScale());

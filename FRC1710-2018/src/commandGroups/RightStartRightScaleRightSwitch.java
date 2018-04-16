@@ -16,19 +16,17 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class RightStartRightScaleRightSwitch extends CommandGroup {
 
     public RightStartRightScaleRightSwitch() {
-    	//addParallel(new PitchIntake(false));
-    	addParallel(new ChangeLiftSetpoint(Constants.scaleHigh));
-    	addSequential(new DriveToPosition(260, .75, true,0,false,false));
-    	addSequential(new TurnToAngle(-40));
-    	addSequential(new Wait(500));
-    	//addSequential(new RunIntake(true));
-    	addParallel(new ChangeLiftSetpoint(Constants.intake, 200));
-    	addSequential(new TurnToAngle(-150));
-    	addSequential(new DriveToPosition(65,.5,true,-150, false,false,true));
-    	//addSequential(new RunIntake(false));
-    	addSequential(new Wait(500));
+    	addSequential(new DriveToPosition(Constants.wallToScale, .75, true,-2,false,false));
+    	addParallel(new PitchIntake(Constants.wristDown));
+    	addParallel(new DriveToPosition(10, .3, true,-40,false,false,true));
+    	addSequential(new ChangeLiftSetpoint(Constants.scaleHigh));
+    	addSequential(new RunIntake(true));
+    	addParallel(new ChangeLiftSetpoint(Constants.intake));
+    	addSequential(new TurnToAngle(-145));
+    	addSequential(new DriveToPosition(30,.5,true,-145, false,false,true));
+    	addSequential(new RunIntake(false));
     	addSequential(new ChangeLiftSetpoint(Constants.switchPosition));
-    	//addSequential(new RunIntake(true));
-    	addSequential(new Wait(500));
+    	addSequential(new RunIntake(true));
+    	addSequential(new DriveToPosition(-15,.5,true,-145, false,true));
     }
 }

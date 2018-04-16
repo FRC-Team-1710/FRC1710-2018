@@ -5,19 +5,25 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class Constants {
 	
+	public static int wallToScale = 230;
+	public static int wallToSwitchCorner = 190;
+	public static int switchCornerToScalePlacepos = 220;
+	
+	public static double[][] testPoints = {{10, 10}, {20, 10}};
+	
 	public static boolean inAuto = true;
 	//idk, run robot in auto at 60% output and look at the velocity
-	public static double liftingNotSafeVelocity = 1000;
+	public static double liftingNotSafeVelocity = 1200;
 	
 	public static CommandGroup defaultAuto = new Testing();
 	
 	public static double psiPerVolts = 44.494;
 	public static double intake = 100;
 	public static double aboveBump = 1500;
-	public static double switchPosition = 3500;
+	public static double switchPosition = 3000;
 	public static double scaleLow= 4500;
 	public static double scaleNormal = 6500;
-	public static double scaleHigh = 8500;
+	public static double scaleHigh = 9000;
 	public static String intakeLevelName = "intake";
 	public static String switchLevelName = "switch";
 	public static String lowLevelName = "low level";
@@ -28,7 +34,7 @@ public class Constants {
 	//getting too violent
 	//kpUp - comp: .0004`
 	//kpDown - comp : .00008
-	public static double kPLift = 0.00085;
+	public static double kPLift = 0.0006;
 	public static double kDLift = 0;	
 	public static double kILift = 0;
 
@@ -43,8 +49,8 @@ public class Constants {
 	public static double kpStraight = .0125;
 	public static double kiStraight = .001;
 	public static double kdStraight = .00075;
-	
-	public static double kpStraightHi = .0125;
+	//was .0125
+	public static double kpStraightHi = .012;
 	public static double kiStraightHi = .000025;
 	public static double kdStraightHi = .005;
 	
@@ -68,8 +74,8 @@ public class Constants {
 	public static int rightLeaderid=8;
 	public static int rightFollowerid=1;
 	public static int rightFollowerid2=3;
-	//practice bot messed up change this back to 9 for comp
-	public static int leftLeaderid=6;
+
+	public static int leftLeaderid=9;
 	public static int leftFollowerid= 2;
 	public static int leftFollowerid2= 4;
 	
@@ -78,15 +84,15 @@ public class Constants {
 	public static int intakeLSpark=1;
 	
 	//change back to 6
-	public static int wristTalon=9;
+	public static int wristTalon=6;
 	public static int liftRightTalon=5;
 	public static int liftLeftTalon=10;
 	
 	//constants for wrist
 	public static int wristUp = 0;
-	public static int wristLaunch = 800;
-	public static int wristDown = 1200;
-	public static double kPWrist = .0008;
+	public static int wristLaunch = 600;
+	public static int wristDown = 1750;
+	public static double kPWrist = -.001;
 	
 	//pathfinder (dimensions in meters)
 	public static double robotDriveBaseWidth = 25;
@@ -111,7 +117,7 @@ public class Constants {
 	
 	public static int ultraSonicConstant = 4;
 	public static double ultraSonic0 = 0;
-	public static double ultraSonicInIntake = 239;
+	public static double ultraSonicInIntake = 235;
 	public static double slowDownPercent = 0.1;
 	
 }

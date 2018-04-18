@@ -6,14 +6,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class Constants {
 	
 	public static int wallToScale = 230;
-	public static int wallToSwitchCorner = 190;
+	public static int wallToSwitchCorner = 192;
 	public static int switchCornerToScalePlacepos = 220;
 	
 	public static double[][] testPoints = {{10, 10}, {20, 10}};
 	
 	public static boolean inAuto = true;
 	//idk, run robot in auto at 60% output and look at the velocity
-	public static double liftingNotSafeVelocity = 1200;
+	public static double liftingNotSafeVelocity = 1600;
 	
 	public static CommandGroup defaultAuto = new Testing();
 	
@@ -92,7 +92,7 @@ public class Constants {
 	public static int wristUp = 0;
 	public static int wristLaunch = 600;
 	public static int wristDown = 1750;
-	public static double kPWrist = -.001;
+	public static double kPWrist = -.0012;
 	
 	//pathfinder (dimensions in meters)
 	public static double robotDriveBaseWidth = 25;

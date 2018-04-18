@@ -108,7 +108,7 @@ public class Intake {
 	 * @return if the cube is in the intake
 	 */
 	public static boolean isCubeInIntake() {
-		return getUltraSonic() < 240;
+		return getUltraSonic() < 238;
 	}
 }
 	

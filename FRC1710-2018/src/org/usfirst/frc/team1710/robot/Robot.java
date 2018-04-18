@@ -124,6 +124,7 @@ public class Robot extends IterativeRobot {
 		Vision.ledEntry.forceSetNumber(0);
 		Vision.ledEntry.forceSetNumber(1);
 		RobotMap.compressor.setClosedLoopControl(false);
+		Intake.setWristSetpoint(Constants.wristUp);
 	}
 	
 	@Override
@@ -132,15 +133,13 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Is lift at bottom", lift.isAtBottom());
 		SmartDashboard.putBoolean("Is lift at top", lift.isAtTop());
 				
-		if(RobotMap.driveStick.getPOV() == 180) {
+		if(RobotMap.driveStick.getPOV() == 90) {
 			RobotMap.wrist.setSelectedSensorPosition(1700, 0, 0);
-			wristReset = true;
-		} else if(RobotMap.driveStick.getPOV() == 0) {
-			RobotMap.wrist.setSelectedSensorPosition(0, 0, 0);
-			wristReset = true;
 		} else if(RobotMap.driveStick.getPOV() == 270) {
+			RobotMap.wrist.setSelectedSensorPosition(0, 0, 0);
+		} else if(RobotMap.driveStick.getPOV() == 0) {
 			Intake.setWristSetpoint(Constants.wristUp);
-		} else if(RobotMap.driveStick.getPOV() == 90) {
+		} else if(RobotMap.driveStick.getPOV() == 180) {
 			Intake.setWristSetpoint(Constants.wristDown);
 		}
 		
@@ -200,6 +199,7 @@ public class Robot extends IterativeRobot {
 	
 	@Override
 	public void disabledInit() {
+		Intake.setWristSetpoint(Constants.wristUp);
 		Vision.ledEntry.forceSetNumber(1);
 	}
 	

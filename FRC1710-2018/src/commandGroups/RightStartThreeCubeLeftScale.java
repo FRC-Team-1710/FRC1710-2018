@@ -26,15 +26,16 @@ public class RightStartThreeCubeLeftScale extends CommandGroup {
     	addParallel(new PitchIntake(Constants.wristLaunch));
     	addSequential(new RunIntake(true,100));
     	addParallel(new ChangeLiftSetpoint(Constants.intake));
-    	addSequential(new TurnToAngle(140));
-    	addSequential(new DriveToPosition(70, .4, true,140,false,false,true));
-    	//addSequential(new RunIntake(false));
-    	addSequential(new Wait(500));
-    	addSequential(new DriveToPosition(-70, .4, true,140,false,true,true));
+    	addParallel(new PitchIntake(Constants.wristDown));
+    	addSequential(new DriveToPosition(-35, .4, true,20,false,true));
+    	addSequential(new DriveToPosition(20, .4, true,130,false,false,true));
+    	addSequential(new RunIntake(false));
+    	addParallel(new PitchIntake(Constants.wristUp));
+    	addSequential(new DriveToPosition(-20, .4, true,140,false,true));
+    	addParallel(new PitchIntake(Constants.wristDown));
     	addParallel(new ChangeLiftSetpoint(Constants.scaleHigh));
-    	addSequential(new TurnToAngle(60));
-    	//addSequential(new RunIntake(true));
-    	addSequential(new Wait(500));
+    	addSequential(new DriveToPosition(25, .4, true,20,false,false,true));
+    	addSequential(new RunIntake(true));
     	addSequential(new AutoTimer());
     }
 }

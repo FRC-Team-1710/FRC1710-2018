@@ -17,8 +17,8 @@ public class RightStartRightScale extends CommandGroup {
     public RightStartRightScale() {
     	addParallel(new PitchIntake(false));
     	addParallel(new ChangeLiftSetpoint(Constants.scaleHigh));
-    	addSequential(new DriveToPosition(290, .75, true,0,false,false));
-    	addSequential(new DriveToPosition(5, .3, true,-90,false,false,true));
+    	addSequential(new DriveToPosition(Constants.wallToScale, .75, true,0,false,false));
+    	addSequential(new DriveToPosition(8, .3, true,-40,false,false,true));
     	addSequential(new RunIntake(true));
     }
 }

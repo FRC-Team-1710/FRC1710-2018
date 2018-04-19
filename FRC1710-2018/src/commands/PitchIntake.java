@@ -32,9 +32,9 @@ public class PitchIntake extends Command {
     	count ++;
     	if(_setpoint == -254) {
     		if(_isGoingUp == true) {
-    			RobotMap.wrist.set(ControlMode.PercentOutput, .5);
+    			RobotMap.wrist.set(ControlMode.PercentOutput, .65);
     		}else {
-    			RobotMap.wrist.set(ControlMode.PercentOutput, -.5);
+    			RobotMap.wrist.set(ControlMode.PercentOutput, -.65);
     		}
     	} else {
     		Intake.setWristSetpoint(_setpoint);

@@ -33,7 +33,7 @@ public class RightStartRightSwitchLeftScale extends CommandGroup {
     	addSequential(new RunIntake(false));
     	//addParallel(new PitchIntake(Constants.wristUp));
     	addSequential(new DriveToPosition(-10,.5,true,-180,true,true));
-    	addSequential(new DriveToPosition(-180,.75,true,-270,true,true));
+    	addSequential(new DriveToPosition(-200,.75,true,-270,true,true));
     	addSequential(new DriveToPosition(-10,.4,true,-320,false,true));
     	addSequential(new DriveToPosition(10,.4,true,-335,false,false));
     	//addParallel(new PitchIntake(Constants.wristDown));

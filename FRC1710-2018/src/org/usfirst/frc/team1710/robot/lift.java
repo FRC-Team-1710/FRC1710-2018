@@ -97,7 +97,7 @@ public class lift {
 			}
 			setPoint = getLiftEncPosition();
 		} else {	
-			if(Math.abs(RobotMap.navx.getPitch()) < 15 && isSafeToLift()) {
+			if(isSafeToLift()) {
 				RobotMap.lift1.set(ControlMode.PercentOutput, output);
 			} else {
 				setPoint = Constants.intake;
@@ -111,7 +111,8 @@ public class lift {
 	 * @return true if speed is below our velocity constant that is too fast to keep the lift high
 	 */
 	public static boolean isSafeToLift() {
-		return Math.abs(Drive.getRightVelocity()) < Constants.liftingNotSafeVelocity || Math.abs(Drive.getLeftVelocity()) < Constants.liftingNotSafeVelocity || override;
+		//return Math.abs(Drive.getRightVelocity()) < Constants.liftingNotSafeVelocity || Math.abs(Drive.getLeftVelocity()) < Constants.liftingNotSafeVelocity || override;
+		return true;
 	}
 	
 	/**

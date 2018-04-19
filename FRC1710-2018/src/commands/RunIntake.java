@@ -71,7 +71,8 @@ public class RunIntake extends Command {
     	if(_didCubeStartInIntake) {
         	return count > 30;
     	} else {
-    		return count > 100 || Intake.isCubeInIntake();
+    		//return count > 75 || Intake.isCubeInIntake();
+    		return count > 75;
     	}
     	//return _didCubeStartInIntake != Intake.isCubeInIntake() || (count > 150);
     }

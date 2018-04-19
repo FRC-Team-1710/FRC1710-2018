@@ -77,7 +77,7 @@ public class AutoHandler {
 		autoMap.put("223LR", new LeftStartLeftSwitch());
 		
 		autoMap.put("233RR", new RightStartRightScaleRightSwitch());
-		autoMap.put("233LR", new RightStartRightScaleLeftSwitch());
+		autoMap.put("233LR", new ThreeCubeRightScale());
 		autoMap.put("233LL", new RightStartLeftScaleLeftSwitch());
 		autoMap.put("233RL", new RightStartRightSwitchLeftScale());
 		

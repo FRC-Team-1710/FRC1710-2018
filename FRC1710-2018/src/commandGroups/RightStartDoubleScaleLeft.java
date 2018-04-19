@@ -16,15 +16,16 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class RightStartDoubleScaleLeft extends CommandGroup {
 
     public RightStartDoubleScaleLeft() {
+    	addParallel(new PitchIntake(false));
     	addSequential(new DriveToPosition(Constants.wallToSwitchCorner,.75,true,0,false,false));
     	addSequential(new DriveToPosition(Constants.switchCornerToScalePlacepos,.8,true,-90,false,false));
-    	addParallel(new PitchIntake(Constants.wristDown));
+    	//addParallel(new PitchIntake(Constants.wristDown));
     	addSequential(new TurnToAngle(20));
     	addParallel(new ChangeLiftSetpoint(Constants.scaleHigh));
     	addSequential(new DriveToPosition(42,.3,true,20,false,false,true));
     	addParallel(new PitchIntake(Constants.wristLaunch));
     	addSequential(new RunIntake(true,100));
-    	addParallel(new PitchIntake(Constants.wristDown));
+    	//addParallel(new PitchIntake(Constants.wristDown));
     	addParallel(new ChangeLiftSetpoint(Constants.intake));
     	addSequential(new DriveToPosition(-10,.3,true,20,true,true));
     	addSequential(new TurnToAngle(-180,false));

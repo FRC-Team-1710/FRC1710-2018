@@ -66,9 +66,9 @@ public class Robot extends IterativeRobot {
 		RobotMap.L1.setSelectedSensorPosition(0, 0, 0);
 		RobotMap.wrist.setSelectedSensorPosition(0, 0, 0);
 		
-		SmartDashboard.putNumber("cube amount", 1);
-		SmartDashboard.putNumber("Starting position", 1);
-		SmartDashboard.putNumber("destination",1);
+		SmartDashboard.putNumber("cube amount", Constants.defaultCubeAmount);
+		SmartDashboard.putNumber("Starting position", Constants.defaultStartPos);
+		SmartDashboard.putNumber("destination",Constants.defaultDestination);
 		AutoHandler.initAutoMap();
 		autoTime = new Timer();
 	}
@@ -90,9 +90,9 @@ public class Robot extends IterativeRobot {
 		char switchPos = DriverStation.getInstance().getGameSpecificMessage().charAt(0);
 		char scalePos = DriverStation.getInstance().getGameSpecificMessage().charAt(1);
 		
-		startingPosition = (int) SmartDashboard.getNumber("Starting position", 0);
-		destination = (int) SmartDashboard.getNumber("destination", 0);
-		cubeAmount = (int) SmartDashboard.getNumber("cube amount", 0);
+		startingPosition = (int) SmartDashboard.getNumber("Starting position", Constants.defaultStartPos);
+		destination = (int) SmartDashboard.getNumber("destination", Constants.defaultDestination);
+		cubeAmount = (int) SmartDashboard.getNumber("cube amount", Constants.defaultCubeAmount);
 		
 		CommandGroup autoMode = AutoHandler.getAuto(switchPos, scalePos, cubeAmount,
 				destination,startingPosition);
@@ -156,7 +156,7 @@ public class Robot extends IterativeRobot {
 			} else {
 				Drive.arcadeDrive(ControllerMap.getTurnPower(), ControllerMap.getForwardPower(), ControllerMap.shift());
 			}
-			Intake.intake(ControllerMap.intakeR()*.75, ControllerMap.intakeL()*.75);
+			Intake.intake(ControllerMap.intakeR()*.85, ControllerMap.intakeL()*.75);
 		}
 		
 		if(RobotMap.mechStick.getRawButton(2) == true) {

@@ -54,7 +54,8 @@ public class Intake {
 	 * controls the wrist speed proportionally to the wrist error
 	 */
 	public static void manipulateWrist() {
-		/*if(ControllerMap.getMechTrigger() == true) {
+		if(Constants.inAuto) {
+		if(ControllerMap.getMechTrigger() == true) {
 			if(getWristEncPosition() >= 1750 && RobotMap.mechStick.getRawAxis(0) > .05) {
 				wristOutput = 0;
 			} else if(getWristEncPosition() <= -300 && RobotMap.mechStick.getRawAxis(0) < -.05) {
@@ -71,8 +72,14 @@ public class Intake {
 			} else {
 				wristOutput = getWristError() * Constants.kPWrist;
 			}
-		}*/
-		wristOutput = -RobotMap.mechStick.getRawAxis(0) * .3;
+		}
+		}else {
+		if(RobotMap.mechStick.getRawButton(1)) {
+			wristOutput = -RobotMap.mechStick.getRawAxis(0) * .5;
+		} else {
+			wristOutput = 0;
+		}
+		}
 
 		SmartDashboard.putNumber("calculated output", Constants.kPWrist * getWristError());
 		SmartDashboard.putNumber("wrist output", wristOutput);

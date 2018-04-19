@@ -21,6 +21,6 @@ public class Testing extends CommandGroup {
     	addSequential(new DriveToPosition(40, 0.4, true, 0,false,false));
     	addSequential(new DriveToPosition(-150, 0.4, true, 0,false,true));*/
     	
-    	addSequential(new FollowWaypoints(Constants.testPoints, true, .5));
+    	addSequential(new DriveToPosition(100, 0.6, true, 0, false,false));
     }
 }

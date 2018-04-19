@@ -16,10 +16,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class RightStartRightScaleLeftSwitch extends CommandGroup {
 
     public RightStartRightScaleLeftSwitch() {
-    	addSequential(new DriveToPosition(Constants.wallToScale, .75, true,-2,false,false));
-    	addParallel(new PitchIntake(Constants.wristDown));
-    	addParallel(new DriveToPosition(10, .3, true,-40,false,false,true));
+    	addParallel(new PitchIntake(false));
+    	addSequential(new DriveToPosition(Constants.wallToScale, .75, true,0,false,false));
+    	//addParallel(new PitchIntake(Constants.wristDown));
     	addSequential(new ChangeLiftSetpoint(Constants.scaleHigh));
+    	addSequential(new DriveToPosition(10, .3, true,-40,false,false,true));
     	addSequential(new RunIntake(true));
     	addParallel(new ChangeLiftSetpoint(Constants.intake));
     	addSequential(new DriveToPosition(-25,.5,true,10, false,true,true));

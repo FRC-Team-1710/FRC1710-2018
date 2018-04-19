@@ -71,9 +71,9 @@ public class ControllerMap {
 		if(Math.abs(RobotMap.mechStick.getRawAxis(1)) >= 0.25) {
 			return RobotMap.mechStick.getRawAxis(1); 
 		}else if(RobotMap.driveStick.getRawButton(5) == true) {
-			return .5;
+			return .6;
 		}else if(RobotMap.driveStick.getRawButton(6) == true) {
-			return -.5;
+			return -.6;
 		}else {
 			return 0;
 		}

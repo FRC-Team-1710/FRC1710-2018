@@ -5,9 +5,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class Constants {
 	
+	public static int defaultCubeAmount = 2;
+	public static int defaultStartPos = 3;
+	public static int defaultDestination = 3;
+	
 	public static int wallToScale = 230;
 	public static int wallToSwitchCorner = 192;
-	public static int switchCornerToScalePlacepos = 220;
+	public static int switchCornerToScalePlacepos = 230;
 	
 	public static double[][] testPoints = {{10, 10}, {20, 10}};
 	
@@ -20,7 +24,7 @@ public class Constants {
 	public static double psiPerVolts = 44.494;
 	public static double intake = 100;
 	public static double aboveBump = 1500;
-	public static double switchPosition = 3000;
+	public static double switchPosition = 3500;
 	public static double scaleLow= 4500;
 	public static double scaleNormal = 6500;
 	public static double scaleHigh = 9000;
@@ -90,8 +94,8 @@ public class Constants {
 	
 	//constants for wrist
 	public static int wristUp = 0;
-	public static int wristLaunch = 600;
-	public static int wristDown = 1750;
+	public static int wristLaunch = 300;
+	public static int wristDown = 800;
 	public static double kPWrist = -.0012;
 	
 	//pathfinder (dimensions in meters)

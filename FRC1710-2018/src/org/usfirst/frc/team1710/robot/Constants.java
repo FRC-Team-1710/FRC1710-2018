@@ -84,9 +84,9 @@ public class Constants {
 	public static int intakeLSpark=1;
 	
 	//change back to 6
-	public static int wristTalon=6;
+	public static int wristTalon=10;
 	public static int liftRightTalon=5;
-	public static int liftLeftTalon=10;
+	public static int liftLeftTalon=6;
 	
 	//constants for wrist
 	public static int wristUp = 0;

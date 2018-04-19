@@ -32,8 +32,8 @@ public class Drive {
 		RobotMap.L2.follow (RobotMap.L1);
 		RobotMap.L3.follow (RobotMap.L1);
 		//these need to be inverted with robot 1 as of now... hopefully matt will fix that
-		RobotMap.R2.setInverted(true);
-		RobotMap.L3.setInverted(true);
+		RobotMap.R2.setInverted(false);
+		RobotMap.L3.setInverted(false);
 		
 		RobotMap.shifter = new DoubleSolenoid(Constants.shifterForward,Constants.shifterReverse);
 		

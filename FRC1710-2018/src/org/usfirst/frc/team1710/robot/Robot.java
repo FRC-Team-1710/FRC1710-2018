@@ -150,7 +150,7 @@ public class Robot extends IterativeRobot {
 			Intake.intake(0, .325);
 		} else {
 			if(lift.getLiftEncPosition() > Constants.scaleNormal) {
-				Drive.arcadeDrive(ControllerMap.getTurnPower() * .3, ControllerMap.getForwardPower() * .4, false);
+				Drive.arcadeDrive(ControllerMap.getTurnPower() * .4, ControllerMap.getForwardPower() * .5, false);
 			} else if( ControllerMap.intakeR() > .4) {
 				Drive.arcadeDrive(ControllerMap.getTurnPower() * .7, ControllerMap.getForwardPower() * .7, false);
 			} else {

@@ -53,12 +53,12 @@ public class RunIntake extends Command {
     	
     	if(startCondition) {
             if(_didCubeStartInIntake == true) {
-               	Intake.intake(0, .6);
+               	Intake.intake(0, .60);
         		Vision.ledEntry.forceSetNumber(2);
         		Drive.stopDriving();
             }else {
             	Intake.intake(.75, 0);
-            	Drive.arcadeDrive(0, -.325, false);
+            	Drive.arcadeDrive(0, -.35, false);
             }
     	} else {
     		Drive.stopDriving();
@@ -72,7 +72,7 @@ public class RunIntake extends Command {
         	return count > 30;
     	} else {
     		//return count > 75 || Intake.isCubeInIntake();
-    		return count > 75;
+    		return count > 65;
     	}
     	//return _didCubeStartInIntake != Intake.isCubeInIntake() || (count > 150);
     }

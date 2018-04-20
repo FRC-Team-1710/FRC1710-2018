@@ -9,9 +9,9 @@ public class Constants {
 	public static int defaultStartPos = 3;
 	public static int defaultDestination = 3;
 	
-	public static int wallToScale = 230;
+	public static int wallToScale = 225;
 	public static int wallToSwitchCorner = 192;
-	public static int switchCornerToScalePlacepos = 230;
+	public static int switchCornerToScalePlacepos = 220;
 	
 	public static double[][] testPoints = {{10, 10}, {20, 10}};
 	
@@ -25,7 +25,7 @@ public class Constants {
 	public static double intake = 100;
 	public static double aboveBump = 1500;
 	public static double switchPosition = 3500;
-	public static double scaleLow= 4500;
+	public static double scaleLow= 5000;
 	public static double scaleNormal = 6500;
 	public static double scaleHigh = 9000;
 	public static String intakeLevelName = "intake";

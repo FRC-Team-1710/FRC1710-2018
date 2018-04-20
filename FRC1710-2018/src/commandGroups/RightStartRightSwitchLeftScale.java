@@ -31,16 +31,20 @@ public class RightStartRightSwitchLeftScale extends CommandGroup {
     	addSequential(new ChangeLiftSetpoint(Constants.intake));
     	addSequential(new DriveToPosition(12,.4,true,-145,false,false,true));
     	addSequential(new RunIntake(false));
+    	addParallel(new PitchIntake(true));
     	//addParallel(new PitchIntake(Constants.wristUp));
-    	addSequential(new DriveToPosition(-10,.5,true,-180,true,true));
-    	addSequential(new DriveToPosition(-200,.75,true,-270,true,true));
-    	addSequential(new DriveToPosition(-10,.4,true,-320,false,true));
+    	addSequential(new DriveToPosition(-5,.5,true,-180,true,true));
+    	addSequential(new DriveToPosition(-215,.75,true,-270,true,true));
+    	addParallel(new PitchIntake(false));
+    	addSequential(new DriveToPosition(-20,.4,true,-320,false,true));
+    	addParallel(new ChangeLiftSetpoint(Constants.scaleHigh));
     	addSequential(new DriveToPosition(10,.4,true,-335,false,false));
     	//addParallel(new PitchIntake(Constants.wristDown));
-    	addParallel(new DriveToPosition(38,.3,true,-335,false,false));
-    	addSequential(new ChangeLiftSetpoint(Constants.scaleHigh));
+    	addSequential(new DriveToPosition(25,.3,true,-335,false,false));
+    	addSequential(new RunIntake(true));
+    	/*addSequential(new ChangeLiftSetpoint(Constants.scaleHigh));
     	//addParallel(new PitchIntake(Constants.wristLaunch));
     	addSequential(new RunIntake(true));
-    	addSequential(new AutoTimer());
+    	addSequential(new AutoTimer());*/
     }
 }

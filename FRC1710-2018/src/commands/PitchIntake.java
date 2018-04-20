@@ -32,9 +32,9 @@ public class PitchIntake extends Command {
     	count ++;
     	if(_setpoint == -254) {
     		if(_isGoingUp == true) {
-    			RobotMap.wrist.set(ControlMode.PercentOutput, .65);
+    			RobotMap.wrist.set(ControlMode.PercentOutput, .7);
     		}else {
-    			RobotMap.wrist.set(ControlMode.PercentOutput, -.65);
+    			RobotMap.wrist.set(ControlMode.PercentOutput, -.8);
     		}
     	} else {
     		Intake.setWristSetpoint(_setpoint);
@@ -44,7 +44,7 @@ public class PitchIntake extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return count > 60;
+        return count > 80;
     }
 
     // Called once after isFinished returns true

@@ -18,6 +18,9 @@ public class Constants {
 	public static boolean inAuto = true;
 	//idk, run robot in auto at 60% output and look at the velocity
 	public static double liftingNotSafeVelocity = 1600;
+	//these are the thresholds of when to shift to high and when to shift to low
+	public static double shiftHighThreshold = 2100;
+	public static double shiftLowThreshold = 2000;
 	
 	public static CommandGroup defaultAuto = new Testing();
 	

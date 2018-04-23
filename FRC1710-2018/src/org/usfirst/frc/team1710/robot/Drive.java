@@ -48,7 +48,18 @@ public class Drive {
 			RobotMap.shifter.set(Value.kForward);
 		}
 	}
-	
+	public static void autoShift(double velocityR, double velocityL, double lowThreshold, double highThreshold) {
+		velocityR = RobotMap.R1.getSelectedSensorVelocity(8); //change # to R1 motor controller
+		velocityL = RobotMap.L1.getSelectedSensorVelocity(9); //change # to L1 motor controller
+		lowThreshold = Constants.shiftLowThreshold;
+		highThreshold = Constants.shiftHighThreshold;
+		
+		if(velocityR > highThreshold && velocityL > highThreshold) {
+			setShifters(true);
+		}else if(velocityR < lowThreshold && velocityL < lowThreshold) {
+			setShifters(false);
+		}
+	}
 	public static void arcadeDrive (double side, double forward, boolean shift) {
 		if (shift == true) {
 			if(navxReset == false) {

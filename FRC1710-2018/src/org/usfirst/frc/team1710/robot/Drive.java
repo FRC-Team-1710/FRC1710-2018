@@ -5,11 +5,15 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
+
+
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+
 
 public class Drive {
 	
@@ -48,9 +52,35 @@ public class Drive {
 			RobotMap.shifter.set(Value.kForward);
 		}
 	}
+	public static double rotationsToInches(double rotations) {
+		return rotations  * (Constants.wheelDiameter * Math.PI);
+	}
+	private static double inchesToRotations(double inches) {
+        return inches / (Constants.wheelDiameter* Math.PI);
+    }
+	private static double inchesPerSecondToRpm(double inches_per_second) {
+        return inchesToRotations(inches_per_second) * 60;
+    }
+
+    public double getRightDistanceInches() {
+        return rotationsToInches(RobotMap.R1.getSelectedSensorPosition(8));
+    }
+
+    public double getLeftDistanceInches() {
+        return rotationsToInches(RobotMap.L1.getSelectedSensorPosition(6));
+    }
+	public static double rpmToInchesPerSecond(double rpm) {
+		return rotationsToInches(rpm) / 60;
+	}
+	public static double getRightVelocity1() {
+		return rpmToInchesPerSecond(RobotMap.R1.getSelectedSensorVelocity(8));
+	}
+	public static double getLeftVelocity1() {
+		return rpmToInchesPerSecond(RobotMap.L1.getSelectedSensorVelocity(6));
+	}
 	public static void autoShift(double velocityR, double velocityL, double lowThreshold, double highThreshold) {
-		velocityR = RobotMap.R1.getSelectedSensorVelocity(8); //change # to R1 motor controller
-		velocityL = RobotMap.L1.getSelectedSensorVelocity(9); //change # to L1 motor controller
+		velocityR = getRightVelocity1(); 
+		velocityL = getLeftVelocity1(); 
 		lowThreshold = Constants.shiftLowThreshold;
 		highThreshold = Constants.shiftHighThreshold;
 		
